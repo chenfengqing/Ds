@@ -1,42 +1,42 @@
 #include "stdio.h"
-#define MEMORY_SIZE  100  /* ÄÚ´æ´óĞ¡ */
-#define MAX_STACKS 10      /* Õ»µÄ¸öÊı¼Ó1*/
+#define MEMORY_SIZE  100  /* å†…å­˜å¤§å° */
+#define MAX_STACKS 10      /* æ ˆçš„ä¸ªæ•°åŠ 1*/
 typedef char element;
 element memory [MEMORY_SIZE];
 int top[MAX_STACKS-1];
 int boundary[MAX_STACKS];
-/* ÖÃÕ»¿Õ*/
+/* ç½®æ ˆç©º*/
 void Initial(int n)
-{/*½«¸÷¸öË³ĞòÕ»ÖÃ¿Õ*/
+{/*å°†å„ä¸ªé¡ºåºæ ˆç½®ç©º*/
 	int i;
 	top [0] = boundary [0] = -1;
 	for ( i =1;  i<n;  i ++ )
 		top[i]=boundary[i]= (MEMORY_SIZE/n)*i;
 	boundary[n]=MEMORY_SIZE-1;
 }
-/*½øÕ»*/
+/*è¿›æ ˆ*/
 void Push(int i, element item)
 {
 	if (top[i] == boundary[i+1] )
 	{
-		printf("µÚ%d¸öÕ»ÒÑÂú¡£",i);
+		printf("ç¬¬%dä¸ªæ ˆå·²æ»¡ã€‚",i);
 		exit(1);
 	}
 	memory[++top[i]] = item;
 }
-/*ÍËÕ»*/
+/*é€€æ ˆ*/
 element Pop(int i)
 {
 	if ( top[i] == boundary[i] )
 	{
-		printf("µÚ%d¸öÕ»ÒÑ¿Õ¡£",i);
+		printf("ç¬¬%dä¸ªæ ˆå·²ç©ºã€‚",i);
 		exit(1);
 	}
 	return memory[top[i]--];
 }
 void main()
 {
-	int  n=2;      /* Ê¹ÓÃµÄÕ»µÄ¸öÊı */
+	int  n=2;      /* ä½¿ç”¨çš„æ ˆçš„ä¸ªæ•° */
 	element first,sec;
 	Initial(n);
 	Push(1,'a');

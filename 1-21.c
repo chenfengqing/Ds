@@ -12,7 +12,7 @@ int  nfind ( char  *B,  char  *A )
              for (j=0,i=start;j<lastp&&B[i]==A[j];)
               i++,j++;
       if ( j == lastp )
-             return (start+1);    /*³É¹¦  */
+             return (start+1);    /*æˆåŠŸ  */
   }
   /*printf("%d %d %d",lasts,lastp,start); */
   if(start==0)

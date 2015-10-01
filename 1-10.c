@@ -5,20 +5,20 @@ void	Store(int x, int i, int j)
 {
 	if ( i < 0 || j <0 ||i >=n || j >=n)
 	{
-		printf("Êı×é³ö½ç£¡");
+		printf("æ•°ç»„å‡ºç•Œï¼");
 		exit(1);
 	}
 	switch (i - j) {
-		case 1: /* µÍ¶Ô½ÇÏß*/ 
+		case 1: /* ä½å¯¹è§’çº¿*/ 
 			t[i - 1] = x; break;
-		case 0: /* Ö÷¶Ô½ÇÏß*/ 
+		case 0: /* ä¸»å¯¹è§’çº¿*/ 
 			t[n + i - 1] = x; break;
-		case -1: /*  ¸ß¶Ô½ÇÏß*/ 
+		case -1: /*  é«˜å¯¹è§’çº¿*/ 
 			t[2 *n + i - 1] = x; break;
 		default:
 			if(x != 0)
 			{
-				printf("·Ç¶Ô½ÇÏßÉÏÔªËØÖµ±ØĞëÎªÁã");
+				printf("éå¯¹è§’çº¿ä¸Šå…ƒç´ å€¼å¿…é¡»ä¸ºé›¶");
 				exit(1);
 			}
 	}

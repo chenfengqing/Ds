@@ -1,64 +1,64 @@
-#include<limits.h> /* INT_MAXµÈ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<limits.h> /* INT_MAXç­‰ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define OK 1
 #define ERROR 0
-#define N 5 /* Êı¾İÔªËØ¸öÊı */
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-typedef int Boolean; /* BooleanÊÇ²¼¶ûÀàĞÍ,ÆäÖµÊÇTRUE»òFALSE */
-typedef int KeyType; /* Éè¹Ø¼ü×ÖÓòÎªÕûĞÍ */
-typedef struct /* Êı¾İÔªËØÀàĞÍ(ÒÔ½Ì¿ÆÊéÍ¼9.1¸ß¿¼³É¼¨ÎªÀı) */
+#define N 5 /* æ•°æ®å…ƒç´ ä¸ªæ•° */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+typedef int Boolean; /* Booleanæ˜¯å¸ƒå°”ç±»å‹,å…¶å€¼æ˜¯TRUEæˆ–FALSE */
+typedef int KeyType; /* è®¾å…³é”®å­—åŸŸä¸ºæ•´å‹ */
+typedef struct /* æ•°æ®å…ƒç´ ç±»å‹(ä»¥æ•™ç§‘ä¹¦å›¾9.1é«˜è€ƒæˆç»©ä¸ºä¾‹) */
 {
-  long number; /* ×¼¿¼Ö¤ºÅ */
-  char name[9]; /* ĞÕÃû(4¸öºº×Ö¼Ó1¸ö´®½áÊø±êÖ¾) */
-  int politics; /* ÕşÖÎ */
-  int Chinese; /* ÓïÎÄ */
-  int English; /* Ó¢Óï */
-  int math; /* ÊıÑ§ */
-  int physics; /* ÎïÀí */
-  int chemistry; /* »¯Ñ§ */
-  int biology; /* ÉúÎï */
-  KeyType key; /* ¹Ø¼ü×ÖÀàĞÍÓ¦ÎªKeyType,ÓòÃûÓ¦Îªkey,Óëbo9-1.cÖĞÒ»ÖÂ */
+  long number; /* å‡†è€ƒè¯å· */
+  char name[9]; /* å§“å(4ä¸ªæ±‰å­—åŠ 1ä¸ªä¸²ç»“æŸæ ‡å¿—) */
+  int politics; /* æ”¿æ²» */
+  int Chinese; /* è¯­æ–‡ */
+  int English; /* è‹±è¯­ */
+  int math; /* æ•°å­¦ */
+  int physics; /* ç‰©ç† */
+  int chemistry; /* åŒ–å­¦ */
+  int biology; /* ç”Ÿç‰© */
+  KeyType key; /* å…³é”®å­—ç±»å‹åº”ä¸ºKeyType,åŸŸååº”ä¸ºkey,ä¸bo9-1.cä¸­ä¸€è‡´ */
 } ElemType;
-ElemType r[N]={{179324,"ºÎ·¼·¼",85,89,98,100,93,80,47},
-               {179325,"³Âºì",85,86,88,100,92,90,45},
-               {179326,"Â½»ª",78,75,90,80,95,88,37},
-               {179327,"ÕÅÆ½",82,80,78,98,84,96,40},
-               {179328,"ÕÔĞ¡âù",76,85,94,57,77,69,44}}; /* È«¾Ö±äÁ¿ */
-#define total key /* ¶¨Òå×Ü·Ö(total)Îª¹Ø¼ü×Ö */
+ElemType r[N]={{179324,"ä½•èŠ³èŠ³",85,89,98,100,93,80,47},
+               {179325,"é™ˆçº¢",85,86,88,100,92,90,45},
+               {179326,"é™†å",78,75,90,80,95,88,37},
+               {179327,"å¼ å¹³",82,80,78,98,84,96,40},
+               {179328,"èµµå°æ€¡",76,85,94,57,77,69,44}}; /* å…¨å±€å˜é‡ */
+#define total key /* å®šä¹‰æ€»åˆ†(total)ä¸ºå…³é”®å­— */
 #define EQ(a,b) ((a)==(b))
 #define LT(a,b) ((a)<(b))
 #define LQ(a,b) ((a)<=(b))
 typedef struct
 {
-  ElemType *elem; /* Êı¾İÔªËØ´æ´¢¿Õ¼ä»ùÖ·£¬½¨±íÊ±°´Êµ¼Ê³¤¶È·ÖÅä£¬0ºÅµ¥ÔªÁô¿Õ */
-  int length; /* ±í³¤¶È */
+  ElemType *elem; /* æ•°æ®å…ƒç´ å­˜å‚¨ç©ºé—´åŸºå€ï¼Œå»ºè¡¨æ—¶æŒ‰å®é™…é•¿åº¦åˆ†é…ï¼Œ0å·å•å…ƒç•™ç©º */
+  int length; /* è¡¨é•¿åº¦ */
 }SSTable;
 Status Creat_Seq(SSTable *ST,int n)
-{ /* ²Ù×÷½á¹û: ¹¹ÔìÒ»¸öº¬n¸öÊı¾İÔªËØµÄ¾²Ì¬Ë³Ğò²éÕÒ±íST(Êı¾İÀ´×ÔÈ«¾ÖÊı×ér) */
+{ /* æ“ä½œç»“æœ: æ„é€ ä¸€ä¸ªå«nä¸ªæ•°æ®å…ƒç´ çš„é™æ€é¡ºåºæŸ¥æ‰¾è¡¨ST(æ•°æ®æ¥è‡ªå…¨å±€æ•°ç»„r) */
   int i;
-  (*ST).elem=(ElemType *)calloc(n+1,sizeof(ElemType)); /* ¶¯Ì¬Éú³Én¸öÊı¾İÔªËØ¿Õ¼ä(0ºÅµ¥Ôª²»ÓÃ) */
+  (*ST).elem=(ElemType *)calloc(n+1,sizeof(ElemType)); /* åŠ¨æ€ç”Ÿæˆnä¸ªæ•°æ®å…ƒç´ ç©ºé—´(0å·å•å…ƒä¸ç”¨) */
   if(!(*ST).elem)
     return ERROR;
   for(i=1;i<=n;i++)
-    *((*ST).elem+i)=r[i-1]; /* ½«È«¾ÖÊı×érµÄÖµÒÀ´Î¸³¸øST */
+    *((*ST).elem+i)=r[i-1]; /* å°†å…¨å±€æ•°ç»„rçš„å€¼ä¾æ¬¡èµ‹ç»™ST */
   (*ST).length=n;
   return OK;
 }
 
 void Ascend(SSTable *ST)
-{ /* ÖØ½¨¾²Ì¬²éÕÒ±íÎª°´¹Ø¼ü×Ö·Ç½µĞòÅÅĞò */
+{ /* é‡å»ºé™æ€æŸ¥æ‰¾è¡¨ä¸ºæŒ‰å…³é”®å­—éé™åºæ’åº */
   int i,j,k;
   for(i=1;i<(*ST).length;i++)
   {
     k=i;
-    (*ST).elem[0]=(*ST).elem[i]; /* ´ı±È½ÏÖµ´æ[0]µ¥Ôª */
+    (*ST).elem[0]=(*ST).elem[i]; /* å¾…æ¯”è¾ƒå€¼å­˜[0]å•å…ƒ */
     for(j=i+1;j<=(*ST).length;j++)
       if LT((*ST).elem[j].key,(*ST).elem[0].key)
       {
         k=j;
         (*ST).elem[0]=(*ST).elem[j];
       }
-    if(k!=i) /* ÓĞ¸üĞ¡µÄÖµÔò½»»» */
+    if(k!=i) /* æœ‰æ›´å°çš„å€¼åˆ™äº¤æ¢ */
     {
       (*ST).elem[k]=(*ST).elem[i];
       (*ST).elem[i]=(*ST).elem[0];
@@ -66,8 +66,8 @@ void Ascend(SSTable *ST)
   }
 }
 Status Creat_Ord(SSTable *ST,int n)
-{ /* ²Ù×÷½á¹û: ¹¹ÔìÒ»¸öº¬n¸öÊı¾İÔªËØµÄ¾²Ì¬°´¹Ø¼ü×Ö·Ç½µĞò²éÕÒ±íST */
-  /* Êı¾İÀ´×ÔÈ«¾ÖÊı×ér */
+{ /* æ“ä½œç»“æœ: æ„é€ ä¸€ä¸ªå«nä¸ªæ•°æ®å…ƒç´ çš„é™æ€æŒ‰å…³é”®å­—éé™åºæŸ¥æ‰¾è¡¨ST */
+  /* æ•°æ®æ¥è‡ªå…¨å±€æ•°ç»„r */
   Status f;
   f=Creat_Seq(ST,n);
   if(f)
@@ -75,67 +75,67 @@ Status Creat_Ord(SSTable *ST,int n)
   return f;
 }
 Status Destroy(SSTable *ST)
-{ /* ³õÊ¼Ìõ¼ş: ¾²Ì¬²éÕÒ±íST´æÔÚ¡£²Ù×÷½á¹û: Ïú»Ù±íST */
+{ /* åˆå§‹æ¡ä»¶: é™æ€æŸ¥æ‰¾è¡¨STå­˜åœ¨ã€‚æ“ä½œç»“æœ: é”€æ¯è¡¨ST */
   free((*ST).elem);
   (*ST).elem=NULL;
   (*ST).length=0;
   return OK;
 }
 int Search_Seq(SSTable ST,KeyType key)
-{ /* ÔÚË³Ğò±íSTÖĞË³Ğò²éÕÒÆä¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ¡£ÈôÕÒµ½£¬Ôòº¯ÊıÖµÎª */
-  /* ¸ÃÔªËØÔÚ±íÖĞµÄÎ»ÖÃ£¬·ñÔòÎª0¡£*/
+{ /* åœ¨é¡ºåºè¡¨STä¸­é¡ºåºæŸ¥æ‰¾å…¶å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ ã€‚è‹¥æ‰¾åˆ°ï¼Œåˆ™å‡½æ•°å€¼ä¸º */
+  /* è¯¥å…ƒç´ åœ¨è¡¨ä¸­çš„ä½ç½®ï¼Œå¦åˆ™ä¸º0ã€‚*/
   int i;
-  ST.elem[0].key=key; /* ÉÚ±ø */
-  for(i=ST.length;!EQ(ST.elem[i].key,key);--i); /* ´ÓºóÍùÇ°ÕÒ */
-  return i; /* ÕÒ²»µ½Ê±£¬iÎª0 */
+  ST.elem[0].key=key; /* å“¨å…µ */
+  for(i=ST.length;!EQ(ST.elem[i].key,key);--i); /* ä»åå¾€å‰æ‰¾ */
+  return i; /* æ‰¾ä¸åˆ°æ—¶ï¼Œiä¸º0 */
 }
 int Search_Bin(SSTable ST,KeyType key)
-{ /* ÔÚÓĞĞò±íSTÖĞÕÛ°ë²éÕÒÆä¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ¡£ÈôÕÒµ½£¬Ôòº¯ÊıÖµÎª */
-  /* ¸ÃÔªËØÔÚ±íÖĞµÄÎ»ÖÃ£¬·ñÔòÎª0¡£*/
+{ /* åœ¨æœ‰åºè¡¨STä¸­æŠ˜åŠæŸ¥æ‰¾å…¶å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ ã€‚è‹¥æ‰¾åˆ°ï¼Œåˆ™å‡½æ•°å€¼ä¸º */
+  /* è¯¥å…ƒç´ åœ¨è¡¨ä¸­çš„ä½ç½®ï¼Œå¦åˆ™ä¸º0ã€‚*/
   int low,high,mid;
-  low=1; /* ÖÃÇø¼ä³õÖµ */
+  low=1; /* ç½®åŒºé—´åˆå€¼ */
   high=ST.length;
   while(low<=high)
   {
     mid=(low+high)/2;
-    if EQ(key,ST.elem[mid].key)  /* ÕÒµ½´ı²éÔªËØ */
+    if EQ(key,ST.elem[mid].key)  /* æ‰¾åˆ°å¾…æŸ¥å…ƒç´  */
       return mid;
     else if LT(key,ST.elem[mid].key)
-      high=mid-1; /* ¼ÌĞøÔÚÇ°°ëÇø¼ä½øĞĞ²éÕÒ */
+      high=mid-1; /* ç»§ç»­åœ¨å‰åŠåŒºé—´è¿›è¡ŒæŸ¥æ‰¾ */
     else
-      low=mid+1; /* ¼ÌĞøÔÚºó°ëÇø¼ä½øĞĞ²éÕÒ */
+      low=mid+1; /* ç»§ç»­åœ¨ååŠåŒºé—´è¿›è¡ŒæŸ¥æ‰¾ */
   }
-  return 0; /* Ë³Ğò±íÖĞ²»´æÔÚ´ı²éÔªËØ */
+  return 0; /* é¡ºåºè¡¨ä¸­ä¸å­˜åœ¨å¾…æŸ¥å…ƒç´  */
 }
 Status Traverse(SSTable ST,void(*Visit)(ElemType))
-{ /* ³õÊ¼Ìõ¼ş: ¾²Ì¬²éÕÒ±íST´æÔÚ£¬Visit()ÊÇ¶ÔÔªËØ²Ù×÷µÄÓ¦ÓÃº¯Êı */
-  /* ²Ù×÷½á¹û: °´Ë³Ğò¶ÔSTµÄÃ¿¸öÔªËØµ÷ÓÃº¯ÊıVisit()Ò»´ÎÇÒ½öÒ»´Î¡£ */
-  /* Ò»µ©Visit()Ê§°Ü£¬Ôò²Ù×÷Ê§°Ü */
+{ /* åˆå§‹æ¡ä»¶: é™æ€æŸ¥æ‰¾è¡¨STå­˜åœ¨ï¼ŒVisit()æ˜¯å¯¹å…ƒç´ æ“ä½œçš„åº”ç”¨å‡½æ•° */
+  /* æ“ä½œç»“æœ: æŒ‰é¡ºåºå¯¹STçš„æ¯ä¸ªå…ƒç´ è°ƒç”¨å‡½æ•°Visit()ä¸€æ¬¡ä¸”ä»…ä¸€æ¬¡ã€‚ */
+  /* ä¸€æ—¦Visit()å¤±è´¥ï¼Œåˆ™æ“ä½œå¤±è´¥ */
   ElemType *p;
   int i;
-  p=++ST.elem; /* pÖ¸ÏòµÚÒ»¸öÔªËØ */
+  p=++ST.elem; /* pæŒ‡å‘ç¬¬ä¸€ä¸ªå…ƒç´  */
   for(i=1;i<=ST.length;i++)
     Visit(*p++);
   return OK;
 }
-void print(ElemType c) /* Traverse()µ÷ÓÃµÄº¯Êı */
+void print(ElemType c) /* Traverse()è°ƒç”¨çš„å‡½æ•° */
 { printf("%-8ld%-8s%4d%5d%5d%5d%5d%5d%5d%5d\n",c.number,c.name,c.politics,c.Chinese,c.English,c.math,c.physics,c.chemistry,c.biology,c.total);
 }
 void main()
 {
   SSTable st;
   int i,s;
-  for(i=0;i<N;i++) /* ¼ÆËã×Ü·Ö */
+  for(i=0;i<N;i++) /* è®¡ç®—æ€»åˆ† */
     r[i].total=r[i].politics+r[i].Chinese+r[i].English+r[i].math+r[i].physics+r[i].chemistry+r[i].biology;
-  Creat_Seq(&st,N); /* ÓÉÈ«¾ÖÊı×é²úÉú¾²Ì¬²éÕÒ±íst */
-  printf("×¼¿¼Ö¤ºÅ  ĞÕÃû  ÕşÖÎ ÓïÎÄ ÍâÓï ÊıÑ§ ÎïÀí »¯Ñ§ ÉúÎï ×Ü·Ö\n");
-  Traverse(st,print); /* °´Ë³ĞòÊä³ö¾²Ì¬²éÕÒ±íst */
-  printf("ÇëÊäÈë´ı²éÕÒÈËµÄ×Ü·Ö: ");
+  Creat_Seq(&st,N); /* ç”±å…¨å±€æ•°ç»„äº§ç”Ÿé™æ€æŸ¥æ‰¾è¡¨st */
+  printf("å‡†è€ƒè¯å·  å§“å  æ”¿æ²» è¯­æ–‡ å¤–è¯­ æ•°å­¦ ç‰©ç† åŒ–å­¦ ç”Ÿç‰© æ€»åˆ†\n");
+  Traverse(st,print); /* æŒ‰é¡ºåºè¾“å‡ºé™æ€æŸ¥æ‰¾è¡¨st */
+  printf("è¯·è¾“å…¥å¾…æŸ¥æ‰¾äººçš„æ€»åˆ†: ");
   scanf("%d",&s);
-  i=Search_Seq(st,s); /* Ë³Ğò²éÕÒ */
+  i=Search_Seq(st,s); /* é¡ºåºæŸ¥æ‰¾ */
   if(i)
     print(*(st.elem+i));
   else
-    printf("Ã»ÕÒµ½\n");
+    printf("æ²¡æ‰¾åˆ°\n");
   Destroy(&st);
 }

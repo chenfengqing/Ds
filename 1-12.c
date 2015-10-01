@@ -5,7 +5,7 @@ void Store(int x,int i,int j)
 {
     if(x<0||j<0||i>=n||j>=n)
     {
-        printf("Êý×é³ö½ç£¡");
+        printf("æ•°ç»„å‡ºç•Œï¼");
         exit(1);
     }
     else if(i>=j)

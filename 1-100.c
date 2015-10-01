@@ -1,104 +1,104 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define OK 1
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-#define N 16 /* Êı¾İÔªËØ¸öÊı */
-#define LENGTH 27 /* ½áµãµÄ×î´ó¶È+1(´óĞ´Ó¢ÎÄ×ÖÄ¸) */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+#define N 16 /* æ•°æ®å…ƒç´ ä¸ªæ•° */
+#define LENGTH 27 /* ç»“ç‚¹çš„æœ€å¤§åº¦+1(å¤§å†™è‹±æ–‡å­—æ¯) */
 typedef struct
 {
   int ord;
-}Others; /* ¼ÇÂ¼µÄÆäËü²¿·Ö */
-#define Nil ' ' /* ¶¨Òå½áÊø·ûÎª¿Õ¸ñ(Óë½Ì¿ÆÊé²»Í¬) */
-#define MAXKEYLEN 16 /* ¹Ø¼ü×ÖµÄ×î´ó³¤¶È£¬Í¬c9-4.h */
+}Others; /* è®°å½•çš„å…¶å®ƒéƒ¨åˆ† */
+#define Nil ' ' /* å®šä¹‰ç»“æŸç¬¦ä¸ºç©ºæ ¼(ä¸æ•™ç§‘ä¹¦ä¸åŒ) */
+#define MAXKEYLEN 16 /* å…³é”®å­—çš„æœ€å¤§é•¿åº¦ï¼ŒåŒc9-4.h */
 typedef struct
 {
-  char ch[MAXKEYLEN]; /* ¹Ø¼ü×Ö */
-  int num; /* ¹Ø¼ü×Ö³¤¶È */
+  char ch[MAXKEYLEN]; /* å…³é”®å­— */
+  int num; /* å…³é”®å­—é•¿åº¦ */
 }KeysType; 
 typedef struct
 {
-  KeysType key; /* ¹Ø¼ü×Ö */
-  Others others; /* ÆäËü²¿·Ö(ÓÉÖ÷³Ì¶¨Òå) */
+  KeysType key; /* å…³é”®å­— */
+  Others others; /* å…¶å®ƒéƒ¨åˆ†(ç”±ä¸»ç¨‹å®šä¹‰) */
 }Record; 
 typedef enum{LEAF,BRANCH}NodeKind; 
-typedef struct TrieNode /* Trie¼üÊ÷ÀàĞÍ */
+typedef struct TrieNode /* Trieé”®æ ‘ç±»å‹ */
 {
   NodeKind kind;
   union
   {
-    struct /* Ò¶×Ó½áµã */
+    struct /* å¶å­ç»“ç‚¹ */
     {
       KeysType K;
       Record *infoptr;
     }lf;
-    struct /* ·ÖÖ§½áµã */
+    struct /* åˆ†æ”¯ç»“ç‚¹ */
     {
-      struct TrieNode *ptr[LENGTH]; /* LENGTHÎª½áµãµÄ×î´ó¶È+1,ÔÚÖ÷³Ì¶¨Òå */
-    /*  int num; ¸Ä */
+      struct TrieNode *ptr[LENGTH]; /* LENGTHä¸ºç»“ç‚¹çš„æœ€å¤§åº¦+1,åœ¨ä¸»ç¨‹å®šä¹‰ */
+    /*  int num; æ”¹ */
     }bh;
   }a;
 }TrieNode,*TrieTree;
 #define EQ(a,b) (!strcmp((a),(b)))
 Status InitDSTable(TrieTree *T)
-{ /* ²Ù×÷½á¹û: ¹¹ÔìÒ»¸ö¿ÕµÄTrie¼üÊ÷T */
+{ /* æ“ä½œç»“æœ: æ„é€ ä¸€ä¸ªç©ºçš„Trieé”®æ ‘T */
   *T=NULL;
   return OK;
 }
 void DestroyDSTable(TrieTree *T)
-{ /* ³õÊ¼Ìõ¼ş: TrieÊ÷T´æÔÚ¡£²Ù×÷½á¹û: Ïú»ÙTrieÊ÷T */
+{ /* åˆå§‹æ¡ä»¶: Trieæ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: é”€æ¯Trieæ ‘T */
   int i;
-  if(*T) /* ·Ç¿ÕÊ÷ */
+  if(*T) /* éç©ºæ ‘ */
   {
     for(i=0;i<LENGTH;i++)
-      if((*T)->kind==BRANCH&&(*T)->a.bh.ptr[i]) /* µÚi¸ö½áµã²»¿Õ */
-        if((*T)->a.bh.ptr[i]->kind==BRANCH) /* ÊÇ×ÓÊ÷ */
+      if((*T)->kind==BRANCH&&(*T)->a.bh.ptr[i]) /* ç¬¬iä¸ªç»“ç‚¹ä¸ç©º */
+        if((*T)->a.bh.ptr[i]->kind==BRANCH) /* æ˜¯å­æ ‘ */
           DestroyDSTable(&(*T)->a.bh.ptr[i]);
-        else /* ÊÇÒ¶×Ó */
+        else /* æ˜¯å¶å­ */
         {
           free((*T)->a.bh.ptr[i]);
           (*T)->a.bh.ptr[i]=NULL;
         }
-    free(*T); /* ÊÍ·Å¸ù½áµã */
-    *T=NULL; /* ¿ÕÖ¸Õë¸³0 */
+    free(*T); /* é‡Šæ”¾æ ¹ç»“ç‚¹ */
+    *T=NULL; /* ç©ºæŒ‡é’ˆèµ‹0 */
   }
 }
 int ord(char c)
 {
   c=toupper(c);
   if(c>='A'&&c<='Z')
-    return c-'A'+1; /* Ó¢ÎÄ×ÖÄ¸·µ»ØÆäÔÚ×ÖÄ¸±íÖĞµÄĞòºÅ */
+    return c-'A'+1; /* è‹±æ–‡å­—æ¯è¿”å›å…¶åœ¨å­—æ¯è¡¨ä¸­çš„åºå· */
   else
-    return 0; /* ÆäÓà×Ö·û·µ»Ø0 */
+    return 0; /* å…¶ä½™å­—ç¬¦è¿”å›0 */
 }
 Record *SearchTrie(TrieTree T,KeysType K)
-{ /* ÔÚ¼üÊ÷TÖĞ²éÕÒ¹Ø¼ü×ÖµÈÓÚKµÄ¼ÇÂ¼¡£*/
+{ /* åœ¨é”®æ ‘Tä¸­æŸ¥æ‰¾å…³é”®å­—ç­‰äºKçš„è®°å½•ã€‚*/
   TrieTree p;
   int i;
   for(p=T,i=0;p&&p->kind==BRANCH&&i<K.num;p=p->a.bh.ptr[ord(K.ch[i])],++i);
-  /* ¶ÔKµÄÃ¿¸ö×Ö·ûÖğ¸ö²éÕÒ,*pÎª·ÖÖ§½áµã,ord()Çó×Ö·ûÔÚ×ÖÄ¸±íÖĞĞòºÅ */
-  if(p&&p->kind==LEAF&&p->a.lf.K.num==K.num&&EQ(p->a.lf.K.ch,K.ch)) /* ²éÕÒ³É¹¦ */
+  /* å¯¹Kçš„æ¯ä¸ªå­—ç¬¦é€ä¸ªæŸ¥æ‰¾,*pä¸ºåˆ†æ”¯ç»“ç‚¹,ord()æ±‚å­—ç¬¦åœ¨å­—æ¯è¡¨ä¸­åºå· */
+  if(p&&p->kind==LEAF&&p->a.lf.K.num==K.num&&EQ(p->a.lf.K.ch,K.ch)) /* æŸ¥æ‰¾æˆåŠŸ */
     return p->a.lf.infoptr;
-  else /* ²éÕÒ²»³É¹¦ */
+  else /* æŸ¥æ‰¾ä¸æˆåŠŸ */
     return NULL;
 }
 void InsertTrie(TrieTree *T,Record *r)
-{ /* ³õÊ¼Ìõ¼ş: Trie¼üÊ÷T´æÔÚ£¬rÎª´ı²åÈëµÄÊı¾İÔªËØµÄÖ¸Õë */
-  /* ²Ù×÷½á¹û: ÈôTÖĞ²»´æÔÚÆä¹Ø¼ü×ÖµÈÓÚ(*r).key.chµÄÊı¾İÔªËØ£¬ */
-  /*           Ôò°´¹Ø¼ü×ÖË³Ğò²årµ½TÖĞ */
+{ /* åˆå§‹æ¡ä»¶: Trieé”®æ ‘Tå­˜åœ¨ï¼Œrä¸ºå¾…æ’å…¥çš„æ•°æ®å…ƒç´ çš„æŒ‡é’ˆ */
+  /* æ“ä½œç»“æœ: è‹¥Tä¸­ä¸å­˜åœ¨å…¶å…³é”®å­—ç­‰äº(*r).key.chçš„æ•°æ®å…ƒç´ ï¼Œ */
+  /*           åˆ™æŒ‰å…³é”®å­—é¡ºåºæ’råˆ°Tä¸­ */
   TrieTree p,q,ap;
   int i=0,j;
   KeysType K1,K=r->key;
-  if(!*T) /* ¿ÕÊ÷ */
+  if(!*T) /* ç©ºæ ‘ */
   {
     *T=(TrieTree)malloc(sizeof(TrieNode));
     (*T)->kind=BRANCH;
-    for(i=0;i<LENGTH;i++) /* Ö¸ÕëÁ¿¸³³õÖµNULL */
+    for(i=0;i<LENGTH;i++) /* æŒ‡é’ˆé‡èµ‹åˆå€¼NULL */
       (*T)->a.bh.ptr[i]=NULL;
     p=(*T)->a.bh.ptr[ord(K.ch[0])]=(TrieTree)malloc(sizeof(TrieNode));
     p->kind=LEAF;
     p->a.lf.K=K;
     p->a.lf.infoptr=r;
   }
-  else /* ·Ç¿ÕÊ÷ */
+  else /* éç©ºæ ‘ */
   {
     for(p=*T,i=0;p&&p->kind==BRANCH&&i<K.num;++i)
     {
@@ -106,25 +106,25 @@ void InsertTrie(TrieTree *T,Record *r)
       p=p->a.bh.ptr[ord(K.ch[i])];
     }
     i--;
-    if(p&&p->kind==LEAF&&p->a.lf.K.num==K.num&&EQ(p->a.lf.K.ch,K.ch)) /* TÖĞ´æÔÚ¸Ã¹Ø¼ü×Ö */
+    if(p&&p->kind==LEAF&&p->a.lf.K.num==K.num&&EQ(p->a.lf.K.ch,K.ch)) /* Tä¸­å­˜åœ¨è¯¥å…³é”®å­— */
       return;
-    else /* TÖĞ²»´æÔÚ¸Ã¹Ø¼ü×Ö,²åÈëÖ® */
+    else /* Tä¸­ä¸å­˜åœ¨è¯¥å…³é”®å­—,æ’å…¥ä¹‹ */
     {
-      if(!p) /* ·ÖÖ§¿Õ */
+      if(!p) /* åˆ†æ”¯ç©º */
       {
         p=q->a.bh.ptr[ord(K.ch[i])]=(TrieTree)malloc(sizeof(TrieNode));
         p->kind=LEAF;
         p->a.lf.K=K;
         p->a.lf.infoptr=r;
       }
-      else if(p->kind==LEAF) /* ÓĞ²»ÍêÈ«ÏàÍ¬µÄÒ¶×Ó */
+      else if(p->kind==LEAF) /* æœ‰ä¸å®Œå…¨ç›¸åŒçš„å¶å­ */
       {
         K1=p->a.lf.K;
         do
        {
           ap=q->a.bh.ptr[ord(K.ch[i])]=(TrieTree)malloc(sizeof(TrieNode));
           ap->kind=BRANCH;
-          for(j=0;j<LENGTH;j++) /* Ö¸ÕëÁ¿¸³³õÖµNULL */
+          for(j=0;j<LENGTH;j++) /* æŒ‡é’ˆé‡èµ‹åˆå€¼NULL */
             ap->a.bh.ptr[j]=NULL;
           q=ap;
           i++;
@@ -139,8 +139,8 @@ void InsertTrie(TrieTree *T,Record *r)
   }
 }
 void TraverseDSTable(TrieTree T,Status(*Vi)(Record*))
-{ /* ³õÊ¼Ìõ¼ş: Trie¼üÊ÷T´æÔÚ£¬ViÊÇ¶Ô¼ÇÂ¼Ö¸Õë²Ù×÷µÄÓ¦ÓÃº¯Êı */
-  /* ²Ù×÷½á¹û: °´¹Ø¼ü×ÖµÄË³ĞòÊä³ö¹Ø¼ü×Ö¼°Æä¶ÔÓ¦µÄ¼ÇÂ¼ */
+{ /* åˆå§‹æ¡ä»¶: Trieé”®æ ‘Tå­˜åœ¨ï¼ŒViæ˜¯å¯¹è®°å½•æŒ‡é’ˆæ“ä½œçš„åº”ç”¨å‡½æ•° */
+  /* æ“ä½œç»“æœ: æŒ‰å…³é”®å­—çš„é¡ºåºè¾“å‡ºå…³é”®å­—åŠå…¶å¯¹åº”çš„è®°å½• */
   TrieTree p;
   int i;
   if(T)
@@ -171,28 +171,28 @@ void main()
                {{"CHA"},5},{{"CHANG"},6},{{"WEN"},7},{{"CHAO"},8},
                {{"YUN"},9},{{"YANG"},10},{{"LONG"},11},{{"WANG"},12},
                {{"ZHAO"},13},{{"LIU"},14},{{"WU"},15},{{"CHEN"},16}};
-  /* Êı¾İÔªËØ(ÒÔ½Ì¿ÆÊéÊ½9-24ÎªÀı) */
+  /* æ•°æ®å…ƒç´ (ä»¥æ•™ç§‘ä¹¦å¼9-24ä¸ºä¾‹) */
   InitDSTable(&t);
   for(i=0;i<N;i++)
   {
     r[i].key.num=strlen(r[i].key.ch)+1;
-    r[i].key.ch[r[i].key.num]=Nil; /* ÔÚ¹Ø¼ü×Ö·û´®×îºó¼Ó½áÊø·û */
+    r[i].key.ch[r[i].key.num]=Nil; /* åœ¨å…³é”®å­—ç¬¦ä¸²æœ€ååŠ ç»“æŸç¬¦ */
     p=SearchTrie(t,r[i].key);
     if(!p)
       InsertTrie(&t,&r[i]);
   }
-  printf("°´¹Ø¼ü×Ö·û´®µÄË³Ğò±éÀúTrieÊ÷(¼üÊ÷):\n");
+  printf("æŒ‰å…³é”®å­—ç¬¦ä¸²çš„é¡ºåºéå†Trieæ ‘(é”®æ ‘):\n");
   TraverseDSTable(t,pr);
-  printf("\nÇëÊäÈë´ı²éÕÒ¼ÇÂ¼µÄ¹Ø¼ü×Ö·û´®: ");
+  printf("\nè¯·è¾“å…¥å¾…æŸ¥æ‰¾è®°å½•çš„å…³é”®å­—ç¬¦ä¸²: ");
   scanf("%s",s);
   k.num=strlen(s)+1;
   strcpy(k.ch,s);
-  k.ch[k.num]=Nil; /* ÔÚ¹Ø¼ü×Ö·û´®×îºó¼Ó½áÊø·û */
+  k.ch[k.num]=Nil; /* åœ¨å…³é”®å­—ç¬¦ä¸²æœ€ååŠ ç»“æŸç¬¦ */
   p=SearchTrie(t,k);
   if(p)
     pr(p);
   else
-    printf("Ã»ÕÒµ½");
+    printf("æ²¡æ‰¾åˆ°");
   printf("\n");
   DestroyDSTable(&t);
 }

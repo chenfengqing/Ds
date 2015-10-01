@@ -1,52 +1,52 @@
 #include "stdio.h"
-#define QueueSize 100 /*¼Ù¶¨Ô¤·ÖÅäµÄ¶ÓÁÐ¿Õ¼ä×î¶àÎª100¸öÔªËØ*/  	
-typedef int DataType;/*¼Ù¶¨¶ÓÁÐÔªËØµÄÊý¾ÝÀàÐÍÎª×Ö·û*/  	
+#define QueueSize 100 /*å‡å®šé¢„åˆ†é…çš„é˜Ÿåˆ—ç©ºé—´æœ€å¤šä¸º100ä¸ªå…ƒç´ */  	
+typedef int DataType;/*å‡å®šé˜Ÿåˆ—å…ƒç´ çš„æ•°æ®ç±»åž‹ä¸ºå­—ç¬¦*/  	
 typedef struct{
       DataType data[QueueSize];
-      int front;/*Í·Ö¸Õë*/
-	  int rear;/*Î²Ö¸Õë*/
+      int front;/*å¤´æŒ‡é’ˆ*/
+	  int rear;/*å°¾æŒ‡é’ˆ*/
 }SeqQueue;   
-/* ÖÃ¶ÓÁÐ¿Õ*/
+/* ç½®é˜Ÿåˆ—ç©º*/
 void Initial(SeqQueue *Q)
-{/*½«Ë³Ðò¶ÓÁÐÖÃ¿Õ*/
+{/*å°†é¡ºåºé˜Ÿåˆ—ç½®ç©º*/
       Q->front=Q->rear=0;
 } 
-/*ÅÐ¶ÓÁÐ¿Õ*/
+/*åˆ¤é˜Ÿåˆ—ç©º*/
 int IsEmpty(SeqQueue *Q)
 {
     return Q->front==Q->rear;
 }
-/*ÅÐ¶ÓÁÐÂú*/
+/*åˆ¤é˜Ÿåˆ—æ»¡*/
 int IsFull(SeqQueue *Q)
 {
 	return Q->rear==QueueSize-1+Q->front;
 }
-/*½ø¶ÓÁÐ*/
+/*è¿›é˜Ÿåˆ—*/
 void Push(SeqQueue *Q,DataType x)
 {
     if (IsFull(Q))
 	{
-		printf("¶ÓÁÐÉÏÒç"); /*ÉÏÒç,ÍË³öÔËÐÐ*/
+		printf("é˜Ÿåˆ—ä¸Šæº¢"); /*ä¸Šæº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
-    Q->data[Q->rear++]=x;/*¶ÓÁÐ¶¥Ö¸Õë¼Ó1ºó½«xÈë¶ÓÁÐ*/
+    Q->data[Q->rear++]=x;/*é˜Ÿåˆ—é¡¶æŒ‡é’ˆåŠ 1åŽå°†xå…¥é˜Ÿåˆ—*/
 }
-/*³ö¶ÓÁÐ*/
+/*å‡ºé˜Ÿåˆ—*/
 DataType Pop(SeqQueue *Q)
 {
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁÐÎª¿Õ"); /*ÏÂÒç,ÍË³öÔËÐÐ*/
+		printf("é˜Ÿåˆ—ä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
-	return Q->data[Q->front++];/*¶ÓÁÐ¶¥ÔªËØ·µ»Øºó½«¶ÓÁÐ¶¥Ö¸Õë¼õ1*/
+	return Q->data[Q->front++];/*é˜Ÿåˆ—é¡¶å…ƒç´ è¿”å›žåŽå°†é˜Ÿåˆ—é¡¶æŒ‡é’ˆå‡1*/
 }
-/* È¡¶ÓÁÐ¶¥ÔªËØ*/
+/* å–é˜Ÿåˆ—é¡¶å…ƒç´ */
 DataType Top(SeqQueue *Q)
 {
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁÐÎª¿Õ"); /*ÏÂÒç,ÍË³öÔËÐÐ*/
+		printf("é˜Ÿåˆ—ä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
 	return Q->data[Q->front];

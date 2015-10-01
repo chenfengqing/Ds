@@ -1,39 +1,39 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define N 8
-#define MAXSIZE 20 /* Ò»¸öÓÃ×÷Ê¾ÀıµÄĞ¡Ë³Ğò±íµÄ×î´ó³¤¶È */
+#define MAXSIZE 20 /* ä¸€ä¸ªç”¨ä½œç¤ºä¾‹çš„å°é¡ºåºè¡¨çš„æœ€å¤§é•¿åº¦ */
 #define LT(a,b) ((a)<(b))
-typedef int InfoType; /* ¶¨ÒåÆäËüÊı¾İÏîµÄÀàĞÍ */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàĞÍÎªÕûĞÍ */
+typedef int InfoType; /* å®šä¹‰å…¶å®ƒæ•°æ®é¡¹çš„ç±»å‹ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»å‹ä¸ºæ•´å‹ */
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊı¾İÏî£¬¾ßÌåÀàĞÍÔÚÖ÷³ÌÖĞ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàĞÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»å‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»å‹ */
 
 typedef struct
 {
-  RedType r[MAXSIZE+1]; /* r[0]ÏĞÖÃ»òÓÃ×÷ÉÚ±øµ¥Ôª */
-  int length; /* Ë³Ğò±í³¤¶È */
-}SqList; /* Ë³Ğò±íÀàĞÍ */
+  RedType r[MAXSIZE+1]; /* r[0]é—²ç½®æˆ–ç”¨ä½œå“¨å…µå•å…ƒ */
+  int length; /* é¡ºåºè¡¨é•¿åº¦ */
+}SqList; /* é¡ºåºè¡¨ç±»å‹ */
  void BInsertSort(SqList *L)
-{ /* ¶ÔË³Ğò±íL×÷ÕÛ°ë²åÈëÅÅĞò¡£*/
+{ /* å¯¹é¡ºåºè¡¨Lä½œæŠ˜åŠæ’å…¥æ’åºã€‚*/
   int i,j,m,low,high;
   for(i=2;i<=(*L).length;++i)
   {
-    (*L).r[0]=(*L).r[i]; /* ½«L.r[i]Ôİ´æµ½L.r[0] */
+    (*L).r[0]=(*L).r[i]; /* å°†L.r[i]æš‚å­˜åˆ°L.r[0] */
     low=1;
     high=i-1;
     while(low<=high)
-    { /* ÔÚr[low..high]ÖĞÕÛ°ë²éÕÒÓĞĞò²åÈëµÄÎ»ÖÃ */
-      m=(low+high)/2; /* ÕÛ°ë */
+    { /* åœ¨r[low..high]ä¸­æŠ˜åŠæŸ¥æ‰¾æœ‰åºæ’å…¥çš„ä½ç½® */
+      m=(low+high)/2; /* æŠ˜åŠ */
       if LT((*L).r[0].key,(*L).r[m].key)
-        high=m-1; /* ²åÈëµãÔÚµÍ°ëÇø */
+        high=m-1; /* æ’å…¥ç‚¹åœ¨ä½åŠåŒº */
       else
-        low=m+1; /* ²åÈëµãÔÚ¸ß°ëÇø */
+        low=m+1; /* æ’å…¥ç‚¹åœ¨é«˜åŠåŒº */
     }
     for(j=i-1;j>=high+1;--j)
-      (*L).r[j+1]=(*L).r[j]; /* ¼ÇÂ¼ºóÒÆ */
-    (*L).r[high+1]=(*L).r[0]; /* ²åÈë */
+      (*L).r[j+1]=(*L).r[j]; /* è®°å½•åç§» */
+    (*L).r[high+1]=(*L).r[0]; /* æ’å…¥ */
   }
 }
 void print(SqList L)
@@ -48,12 +48,12 @@ void main()
   RedType d[N]={{49,1},{38,2},{65,3},{97,4},{76,5},{13,6},{27,7},{49,8}};
   SqList l1;
   int i;
-  for(i=0;i<N;i++) /* ¸øl1.r¸³Öµ */
+  for(i=0;i<N;i++) /* ç»™l1.rèµ‹å€¼ */
     l1.r[i+1]=d[i];
   l1.length=N;
-  printf("ÅÅĞòÇ°:\n");
+  printf("æ’åºå‰:\n");
   print(l1);
   BInsertSort(&l1);
-  printf("ÕÛ°ë²åÈëÅÅĞòºó:\n");
+  printf("æŠ˜åŠæ’å…¥æ’åºå:\n");
   print(l1);
 }

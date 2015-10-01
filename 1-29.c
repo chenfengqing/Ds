@@ -1,61 +1,61 @@
 #include "stdio.h"
-#define QueueSize 100 /*¼Ù¶¨Ô¤·ÖÅäµÄ¶ÓÁÐ¿Õ¼ä×î¶àÎª100¸öÔªËØ*/  	
-typedef int DataType;/*¼Ù¶¨¶ÓÁÐÔªËØµÄÊý¾ÝÀàÐÍÎª×Ö·û*/  	
+#define QueueSize 100 /*å‡å®šé¢„åˆ†é…çš„é˜Ÿåˆ—ç©ºé—´æœ€å¤šä¸º100ä¸ªå…ƒç´ */  	
+typedef int DataType;/*å‡å®šé˜Ÿåˆ—å…ƒç´ çš„æ•°æ®ç±»åž‹ä¸ºå­—ç¬¦*/  	
 typedef struct{
 	DataType data[QueueSize];
-	int front;/*Í·Ö¸Õë*/
-	int rear;/*Î²Ö¸Õë*/
-	int count; /*¼ÆÊýÆ÷£¬¼ÇÂ¼¶ÓÖÐÔªËØ×ÜÊý*/           
+	int front;/*å¤´æŒ‡é’ˆ*/
+	int rear;/*å°¾æŒ‡é’ˆ*/
+	int count; /*è®¡æ•°å™¨ï¼Œè®°å½•é˜Ÿä¸­å…ƒç´ æ€»æ•°*/           
 }CirQueue;   
-/* ÖÃ¶ÓÁÐ¿Õ*/
+/* ç½®é˜Ÿåˆ—ç©º*/
 void Initial(CirQueue *Q)
-{/*½«Ë³Ðò¶ÓÁÐÖÃ¿Õ*/
+{/*å°†é¡ºåºé˜Ÿåˆ—ç½®ç©º*/
 	Q->front=Q->rear=0;
-	Q->count=0;     /*¼ÆÊýÆ÷ÖÃ0*/       
+	Q->count=0;     /*è®¡æ•°å™¨ç½®0*/       
 } 
-/* ÅÐ¶ÓÁÐ¿Õ*/
+/* åˆ¤é˜Ÿåˆ—ç©º*/
 int IsEmpty(CirQueue *Q)
 {
 	return Q->front==Q->rear;
 }
-/*ÅÐ¶ÓÁÐÂú*/
+/*åˆ¤é˜Ÿåˆ—æ»¡*/
 int IsFull(CirQueue *Q)
 {
 	return Q->rear==QueueSize-1+Q->front;
 }
-/*½ø¶ÓÁÐ*/
+/*è¿›é˜Ÿåˆ—*/
 void EnQueue(CirQueue *Q,DataType x)
 {
 	if (IsFull(Q))
 	{
-		printf("¶ÓÁÐÉÏÒç"); /*ÉÏÒç,ÍË³öÔËÐÐ*/
+		printf("é˜Ÿåˆ—ä¸Šæº¢"); /*ä¸Šæº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
-	Q->count ++;                        /*¶ÓÁÐÔªËØ¸öÊý¼Ó1*/
-	Q->data[Q->rear]=x;                 /*ÐÂÔªËØ²åÈë¶ÓÎ²*/
-	Q->rear=(Q->rear+1)%QueueSize;      /*Ñ­»·ÒâÒåÏÂ½«Î²Ö¸Õë¼Ó1*/
+	Q->count ++;                        /*é˜Ÿåˆ—å…ƒç´ ä¸ªæ•°åŠ 1*/
+	Q->data[Q->rear]=x;                 /*æ–°å…ƒç´ æ’å…¥é˜Ÿå°¾*/
+	Q->rear=(Q->rear+1)%QueueSize;      /*å¾ªçŽ¯æ„ä¹‰ä¸‹å°†å°¾æŒ‡é’ˆåŠ 1*/
 }
-/*³ö¶ÓÁÐ*/
+/*å‡ºé˜Ÿåˆ—*/
 DataType DeQueue(CirQueue *Q)
 {
 	DataType temp;
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁÐÎª¿Õ"); /*ÏÂÒç,ÍË³öÔËÐÐ*/
+		printf("é˜Ÿåˆ—ä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
 	temp=Q->data[Q->front];
-	Q->count--;                        /*¶ÓÁÐÔªËØ¸öÊý¼õ1*/
-	Q->front=(Q->front+1)&QueueSize;   /*Ñ­»·ÒâÒåÏÂµÄÍ·Ö¸Õë¼Ó1*/
+	Q->count--;                        /*é˜Ÿåˆ—å…ƒç´ ä¸ªæ•°å‡1*/
+	Q->front=(Q->front+1)&QueueSize;   /*å¾ªçŽ¯æ„ä¹‰ä¸‹çš„å¤´æŒ‡é’ˆåŠ 1*/
 	return temp; 
 	
 }
-/* È¡¶ÓÁÐ¶¥ÔªËØ*/
+/* å–é˜Ÿåˆ—é¡¶å…ƒç´ */
 DataType Front(CirQueue *Q)
 {
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁÐÎª¿Õ"); /*ÏÂÒç,ÍË³öÔËÐÐ*/
+		printf("é˜Ÿåˆ—ä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
 	return Q->data[Q->front];

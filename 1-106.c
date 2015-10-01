@@ -1,36 +1,36 @@
-#include<limits.h> /* INT_MAXµÈ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<limits.h> /* INT_MAXç­‰ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 typedef int VRType;
 typedef char InfoType;
-#define MAX_NAME 3 /* ¶¥µã×Ö·û´®µÄ×î´ó³¤¶È+1 */
-#define MAX_INFO 20 /* Ïà¹ØĞÅÏ¢×Ö·û´®µÄ×î´ó³¤¶È+1 */
+#define MAX_NAME 3 /* é¡¶ç‚¹å­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦+1 */
+#define MAX_INFO 20 /* ç›¸å…³ä¿¡æ¯å­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦+1 */
 typedef char VertexType[MAX_NAME];
-#define INFINITY INT_MAX /* ÓÃÕûĞÍ×î´óÖµ´úÌæ¡Ş */
-#define MAX_VERTEX_NUM 20 /* ×î´ó¶¥µã¸öÊı */
-typedef enum{DG,DN,AG,AN}GraphKind; /* {ÓĞÏòÍ¼,ÓĞÏòÍø,ÎŞÏòÍ¼,ÎŞÏòÍø} */
+#define INFINITY INT_MAX /* ç”¨æ•´å‹æœ€å¤§å€¼ä»£æ›¿âˆ */
+#define MAX_VERTEX_NUM 20 /* æœ€å¤§é¡¶ç‚¹ä¸ªæ•° */
+typedef enum{DG,DN,AG,AN}GraphKind; /* {æœ‰å‘å›¾,æœ‰å‘ç½‘,æ— å‘å›¾,æ— å‘ç½‘} */
 typedef struct
 {
-  VRType adj; /* ¶¥µã¹ØÏµÀàĞÍ¡£¶ÔÎŞÈ¨Í¼£¬ÓÃ1(ÊÇ)»ò0(·ñ)±íÊ¾ÏàÁÚ·ñ£» */
-       /* ¶Ô´øÈ¨Í¼£¬cÔòÎªÈ¨ÖµÀàĞÍ */
-  InfoType *info; /* ¸Ã»¡Ïà¹ØĞÅÏ¢µÄÖ¸Õë(¿ÉÎŞ) */
+  VRType adj; /* é¡¶ç‚¹å…³ç³»ç±»å‹ã€‚å¯¹æ— æƒå›¾ï¼Œç”¨1(æ˜¯)æˆ–0(å¦)è¡¨ç¤ºç›¸é‚»å¦ï¼› */
+       /* å¯¹å¸¦æƒå›¾ï¼Œcåˆ™ä¸ºæƒå€¼ç±»å‹ */
+  InfoType *info; /* è¯¥å¼§ç›¸å…³ä¿¡æ¯çš„æŒ‡é’ˆ(å¯æ— ) */
 }ArcCell,AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 typedef struct
 {
-  VertexType vexs[MAX_VERTEX_NUM]; /* ¶¥µãÏòÁ¿ */
-  AdjMatrix arcs; /* ÁÚ½Ó¾ØÕó */
-  int vexnum,arcnum; /* Í¼µÄµ±Ç°¶¥µãÊıºÍ»¡Êı */
-  GraphKind kind; /* Í¼µÄÖÖÀà±êÖ¾ */
+  VertexType vexs[MAX_VERTEX_NUM]; /* é¡¶ç‚¹å‘é‡ */
+  AdjMatrix arcs; /* é‚»æ¥çŸ©é˜µ */
+  int vexnum,arcnum; /* å›¾çš„å½“å‰é¡¶ç‚¹æ•°å’Œå¼§æ•° */
+  GraphKind kind; /* å›¾çš„ç§ç±»æ ‡å¿— */
 }MGraph;
-/*Í¼µÄÊı×é(ÁÚ½Ó¾ØÕó)´æ´¢(´æ´¢½á¹¹ÓÉc7-1.h¶¨Òå)µÄ»ù±¾²Ù×÷*/
+/*å›¾çš„æ•°ç»„(é‚»æ¥çŸ©é˜µ)å­˜å‚¨(å­˜å‚¨ç»“æ„ç”±c7-1.hå®šä¹‰)çš„åŸºæœ¬æ“ä½œ*/
 int LocateVex(MGraph G,VertexType u)
-{ /* ³õÊ¼Ìõ¼ş:Í¼G´æÔÚ,uºÍGÖĞ¶¥µãÓĞÏàÍ¬ÌØÕ÷ */
-  /* ²Ù×÷½á¹û:ÈôGÖĞ´æÔÚ¶¥µãu,Ôò·µ»Ø¸Ã¶¥µãÔÚÍ¼ÖĞÎ»ÖÃ;·ñÔò·µ»Ø-1 */
+{ /* åˆå§‹æ¡ä»¶:å›¾Gå­˜åœ¨,uå’ŒGä¸­é¡¶ç‚¹æœ‰ç›¸åŒç‰¹å¾ */
+  /* æ“ä½œç»“æœ:è‹¥Gä¸­å­˜åœ¨é¡¶ç‚¹u,åˆ™è¿”å›è¯¥é¡¶ç‚¹åœ¨å›¾ä¸­ä½ç½®;å¦åˆ™è¿”å›-1 */
   int i;
   for(i=0;i<G.vexnum;++i)
     if(strcmp(u,G.vexs[i])==0)
@@ -38,38 +38,38 @@ int LocateVex(MGraph G,VertexType u)
   return -1;
 }
 Status CreateAN(MGraph *G)
-{ /* ²ÉÓÃÊı×é(ÁÚ½Ó¾ØÕó)±íÊ¾·¨,¹¹ÔìÎŞÏòÍøG¡£*/
+{ /* é‡‡ç”¨æ•°ç»„(é‚»æ¥çŸ©é˜µ)è¡¨ç¤ºæ³•,æ„é€ æ— å‘ç½‘Gã€‚*/
   int i,j,k,w,IncInfo;
   char s[MAX_INFO],*info;
   VertexType va,vb;
-  printf("ÇëÊäÈëÎŞÏòÍøGµÄ¶¥µãÊı,±ßÊı,±ßÊÇ·ñº¬ÆäËüĞÅÏ¢(ÊÇ:1,·ñ:0): ");
+  printf("è¯·è¾“å…¥æ— å‘ç½‘Gçš„é¡¶ç‚¹æ•°,è¾¹æ•°,è¾¹æ˜¯å¦å«å…¶å®ƒä¿¡æ¯(æ˜¯:1,å¦:0): ");
   scanf("%d,%d,%d",&(*G).vexnum,&(*G).arcnum,&IncInfo);
-  printf("ÇëÊäÈë%d¸ö¶¥µãµÄÖµ(<%d¸ö×Ö·û):\n",(*G).vexnum,MAX_NAME);
-  for(i=0;i<(*G).vexnum;++i) /* ¹¹Ôì¶¥µãÏòÁ¿ */
+  printf("è¯·è¾“å…¥%dä¸ªé¡¶ç‚¹çš„å€¼(<%dä¸ªå­—ç¬¦):\n",(*G).vexnum,MAX_NAME);
+  for(i=0;i<(*G).vexnum;++i) /* æ„é€ é¡¶ç‚¹å‘é‡ */
     scanf("%s",(*G).vexs[i]);
-  for(i=0;i<(*G).vexnum;++i) /* ³õÊ¼»¯ÁÚ½Ó¾ØÕó */
+  for(i=0;i<(*G).vexnum;++i) /* åˆå§‹åŒ–é‚»æ¥çŸ©é˜µ */
     for(j=0;j<(*G).vexnum;++j)
     {
-      (*G).arcs[i][j].adj=INFINITY; /* Íø */
+      (*G).arcs[i][j].adj=INFINITY; /* ç½‘ */
       (*G).arcs[i][j].info=NULL;
     }
-  printf("ÇëÊäÈë%dÌõ±ßµÄ¶¥µã1 ¶¥µã2 È¨Öµ(ÒÔ¿Õ¸ñ×÷Îª¼ä¸ô): \n",(*G).arcnum);
+  printf("è¯·è¾“å…¥%dæ¡è¾¹çš„é¡¶ç‚¹1 é¡¶ç‚¹2 æƒå€¼(ä»¥ç©ºæ ¼ä½œä¸ºé—´éš”): \n",(*G).arcnum);
   for(k=0;k<(*G).arcnum;++k)
   {
-    scanf("%s%s%d%*c",va,vb,&w); /* %*c³Ôµô»Ø³µ·û */
+    scanf("%s%s%d%*c",va,vb,&w); /* %*cåƒæ‰å›è½¦ç¬¦ */
     i=LocateVex(*G,va);
     j=LocateVex(*G,vb);
-    (*G).arcs[i][j].adj=(*G).arcs[j][i].adj=w; /* ÎŞÏò */
+    (*G).arcs[i][j].adj=(*G).arcs[j][i].adj=w; /* æ— å‘ */
     if(IncInfo)
     {
-      printf("ÇëÊäÈë¸Ã±ßµÄÏà¹ØĞÅÏ¢(<%d¸ö×Ö·û): ",MAX_INFO);
+      printf("è¯·è¾“å…¥è¯¥è¾¹çš„ç›¸å…³ä¿¡æ¯(<%dä¸ªå­—ç¬¦): ",MAX_INFO);
       gets(s);
       w=strlen(s);
       if(w)
       {
         info=(char*)malloc((w+1)*sizeof(char));
         strcpy(info,s);
-        (*G).arcs[i][j].info=(*G).arcs[j][i].info=info; /* ÎŞÏò */
+        (*G).arcs[i][j].info=(*G).arcs[j][i].info=info; /* æ— å‘ */
       }
     }
   }
@@ -77,16 +77,16 @@ Status CreateAN(MGraph *G)
   return OK;
 }
 typedef struct
-{ /* ¼ÇÂ¼´Ó¶¥µã¼¯Uµ½V-UµÄ´ú¼Û×îĞ¡µÄ±ßµÄ¸¨ÖúÊı×é¶¨Òå */
+{ /* è®°å½•ä»é¡¶ç‚¹é›†Uåˆ°V-Uçš„ä»£ä»·æœ€å°çš„è¾¹çš„è¾…åŠ©æ•°ç»„å®šä¹‰ */
   VertexType adjvex;
   VRType lowcost;
 }minside[MAX_VERTEX_NUM];
 int minimum(minside SZ,MGraph G)
-{ /* Çóclosedge.lowcostµÄ×îĞ¡ÕıÖµ */
+{ /* æ±‚closedge.lowcostçš„æœ€å°æ­£å€¼ */
   int i=0,j,k,min;
   while(!SZ[i].lowcost)
     i++;
-  min=SZ[i].lowcost; /* µÚÒ»¸ö²»Îª0µÄÖµ */
+  min=SZ[i].lowcost; /* ç¬¬ä¸€ä¸ªä¸ä¸º0çš„å€¼ */
   k=i;
   for(j=i+1;j<G.vexnum;j++)
     if(SZ[j].lowcost>0)
@@ -98,11 +98,11 @@ int minimum(minside SZ,MGraph G)
   return k;
 }
 void MiniSpanTree_PRIM(MGraph G,VertexType u)
-{ /* ÓÃÆÕÀïÄ·Ëã·¨´ÓµÚu¸ö¶¥µã³ö·¢¹¹ÔìÍøGµÄ×îĞ¡Éú³ÉÊ÷T,Êä³öTµÄ¸÷Ìõ±ß*/
+{ /* ç”¨æ™®é‡Œå§†ç®—æ³•ä»ç¬¬uä¸ªé¡¶ç‚¹å‡ºå‘æ„é€ ç½‘Gçš„æœ€å°ç”Ÿæˆæ ‘T,è¾“å‡ºTçš„å„æ¡è¾¹*/
   int i,j,k;
   minside closedge;
   k=LocateVex(G,u);
-  for(j=0;j<G.vexnum;++j) /* ¸¨ÖúÊı×é³õÊ¼»¯ */
+  for(j=0;j<G.vexnum;++j) /* è¾…åŠ©æ•°ç»„åˆå§‹åŒ– */
   {
     if(j!=k)
     {
@@ -110,16 +110,16 @@ void MiniSpanTree_PRIM(MGraph G,VertexType u)
       closedge[j].lowcost=G.arcs[k][j].adj;
     }
   }
-  closedge[k].lowcost=0; /* ³õÊ¼,U={u} */
-  printf("×îĞ¡´ú¼ÛÉú³ÉÊ÷µÄ¸÷Ìõ±ßÎª:\n");
+  closedge[k].lowcost=0; /* åˆå§‹,U={u} */
+  printf("æœ€å°ä»£ä»·ç”Ÿæˆæ ‘çš„å„æ¡è¾¹ä¸º:\n");
   for(i=1;i<G.vexnum;++i)
-  { /* Ñ¡ÔñÆäÓàG.vexnum-1¸ö¶¥µã */
-    k=minimum(closedge,G); /* Çó³öTµÄÏÂÒ»¸ö½áµã£ºµÚK¶¥µã */
-    printf("(%s-%s)\n",closedge[k].adjvex,G.vexs[k]); /* Êä³öÉú³ÉÊ÷µÄ±ß */
-    closedge[k].lowcost=0; /* µÚK¶¥µã²¢ÈëU¼¯ */
+  { /* é€‰æ‹©å…¶ä½™G.vexnum-1ä¸ªé¡¶ç‚¹ */
+    k=minimum(closedge,G); /* æ±‚å‡ºTçš„ä¸‹ä¸€ä¸ªç»“ç‚¹ï¼šç¬¬Ké¡¶ç‚¹ */
+    printf("(%s-%s)\n",closedge[k].adjvex,G.vexs[k]); /* è¾“å‡ºç”Ÿæˆæ ‘çš„è¾¹ */
+    closedge[k].lowcost=0; /* ç¬¬Ké¡¶ç‚¹å¹¶å…¥Ué›† */
     for(j=0;j<G.vexnum;++j)
       if(G.arcs[k][j].adj<closedge[j].lowcost)
-      { /* ĞÂ¶¥µã²¢ÈëU¼¯ºóÖØĞÂÑ¡Ôñ×îĞ¡±ß */
+      { /* æ–°é¡¶ç‚¹å¹¶å…¥Ué›†åé‡æ–°é€‰æ‹©æœ€å°è¾¹ */
         strcpy(closedge[j].adjvex,G.vexs[k]);
         closedge[j].lowcost=G.arcs[k][j].adj;
       }

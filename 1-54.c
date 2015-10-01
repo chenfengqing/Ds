@@ -1,5 +1,5 @@
 #include "stdio.h"
-#define MAX_SIZE  50   /* ����ϡ����� */
+#define MAX_SIZE  50   /* 最大的稀疏矩阵 */
 typedef enum  {head, entry} tagfield;
 struct entry_node  {
       int  row;
@@ -35,14 +35,14 @@ matrix_pointer Create(void)
     printf("Enter the number of rows, columns and number of nonzero terms: ");
     scanf("%d%d%d",&num_rows,&num_cols,&num_terms);
     num_heads = (num_cols > num_rows) ? num_cols :num_rows;
-		/* �����½�� */
+		/* 建立新结点 */
     node = new_node(); 
 	node->tag = entry;
     node->u.entry.row = num_rows;
     node->u.entry.col = num_cols;
 	if ( !num_heads )
 		node->right = node;
-    else {	/*��ʼ��ͷ�����ͼ5-5-4*/
+    else {	/*初始化头结点如图5-5-4*/
         for ( i = 0; i<num_heads; i++ ) {
             temp = new_node();
             hdnode[i] = temp;
@@ -56,7 +56,7 @@ matrix_pointer Create(void)
             printf("Enter row, column and value: ");
             scanf("%d%d%d",&row,&col,&value);
             if ( row > current_row ) {
-                /* ת��row������ȥ*/
+                /* 转到row所在行去*/
                 last->right = hdnode[current_row];
                 current_row = row; 
 				last = hdnode[row];
@@ -66,19 +66,19 @@ matrix_pointer Create(void)
 			temp->u.entry.row = row;
             temp->u.entry.col = col;
             temp->u.entry.value = value;
-			/* ���ӵ��н������ͼ5-5-5��ʾ */
+			/* 链接到行结点上如图5-5-5所示 */
             last->right = temp;	
             last = temp;
-			/*���ӵ��н���� */
+			/*链接到列结点上 */
             hdnode[col]->u.next->down = temp;  
             hdnode[col]->u.next = temp;  
         }
-			/* ������һ�н�� */
+			/* 结束上一行结点 */
         last->right = hdnode[current_row]; 
-			/*���������н��*/
+			/*结束所有行结点*/
         for ( i=0; i<num_cols; i++ )
 			hdnode[i]->u.next->down= hdnode[i];  
-			/*�������е�ͷ��� */
+			/*链接所有的头结点 */
         for ( i=0; i<num_heads-1; i++ )
              hdnode[i]->u.next = hdnode[i+1];
         hdnode[num_heads-1]->u.next = node;
@@ -90,7 +90,7 @@ void erase(matrix_pointer *node)
 {
 		matrix_pointer x,y,head = (*node)->right;
 		int i;
-		/* ����ÿ�У�ɾ��Ԫ�ؽ���ͷ��� */
+		/* 遍历每行，删除元素结点和头结点 */
 		for ( i = 0; i< (*node)->u.entry.row; i++ ) {
 			y = head->right;
 			while ( y != head ) {
@@ -99,7 +99,7 @@ void erase(matrix_pointer *node)
 			}
 			x = head; head = head->u.next; free(x);
 		}
-		/* ɾ��ʣ���ͷ���*/
+		/* 删除剩余的头结点*/
 		y = head;
 		while ( y != *node ) {
 			x = y; 

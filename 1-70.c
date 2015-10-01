@@ -2,19 +2,19 @@
 #define MAX_PARENT 100
 int 	parent[MAX_PARENT];
 void Initialize(int n)
-{/* ³õÊ¼»¯£¬Ã¿¸öÀà/Ê÷ÓĞÒ»¸öÔªËØ*/
+{/* åˆå§‹åŒ–ï¼Œæ¯ä¸ªç±»/æ ‘æœ‰ä¸€ä¸ªå…ƒç´ */
 	int e ;
 	for (e=1; e <= n&&n<MAX_PARENT; e++)
 		parent[e] = 0;
 }
 int Find(int e)
-{ /*·µ»Ø°üº¬eµÄÊ÷µÄ¸ù½Úµã*/
+{ /*è¿”å›åŒ…å«eçš„æ ‘çš„æ ¹èŠ‚ç‚¹*/
 	while (parent[e]&&e<MAX_PARENT)
-		e = parent[e]; /* ÉÏÒÆÒ»²ã*/
+		e = parent[e]; /* ä¸Šç§»ä¸€å±‚*/
 	return e;
 }
 void Union(int i, int j)
-{/* ½«¸ùÎªi ºÍjµÄÁ½¿ÃÊ÷½øĞĞºÏ²¢*/
+{/* å°†æ ¹ä¸ºi å’Œjçš„ä¸¤æ£µæ ‘è¿›è¡Œåˆå¹¶*/
 	if(j<MAX_PARENT)
 		parent[j]=i;
 }

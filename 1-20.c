@@ -6,7 +6,7 @@ void insert (char *s,  char  *t,  int i)
 	char string[MAX_SIZE],  *temp =string;
 	if  ( i < 0||i > strlen (s) )
     {
-		printf ( "插入位置不正确！\n");
+		printf ( "鎻掑叆浣嶇疆涓嶆纭紒\n");
 		exit (1);
 	}
 	if  (!strlen (s))

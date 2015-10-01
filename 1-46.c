@@ -1,57 +1,57 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 typedef int ElemType;
 struct LNode
 {
   ElemType data;
   struct LNode *next;
 };
-typedef struct LNode *LinkList; /* ÁíÒ»ÖÖ¶¨ÒåLinkListµÄ·½·¨ */
+typedef struct LNode *LinkList; /* å¦ä¸€ç§å®šä¹‰LinkListçš„æ–¹æ³• */
 Status InitList_CL(LinkList *L)
-{ /* ²Ù×÷½á¹û£º¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔ±íL */
-  *L=(LinkList)malloc(sizeof(struct LNode)); /* ²úÉúÍ·½áµã,²¢Ê¹LÖ¸Ïò´ËÍ·½áµã */
-  if(!*L) /* ´æ´¢·ÖÅäÊ§°Ü */
+{ /* æ“ä½œç»“æœï¼šæ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§è¡¨L */
+  *L=(LinkList)malloc(sizeof(struct LNode)); /* äº§ç”Ÿå¤´ç»“ç‚¹,å¹¶ä½¿LæŒ‡å‘æ­¤å¤´ç»“ç‚¹ */
+  if(!*L) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     exit(OVERFLOW);
-  (*L)->next=*L; /* Ö¸ÕëÓòÖ¸ÏòÍ·½áµã */
+  (*L)->next=*L; /* æŒ‡é’ˆåŸŸæŒ‡å‘å¤´ç»“ç‚¹ */
   return OK;
 }
 int ListLength_CL(LinkList L)
-{ /* ³õÊ¼Ìõ¼ş£ºLÒÑ´æÔÚ¡£²Ù×÷½á¹û£º·µ»ØLÖĞÊı¾İÔªËØ¸öÊı */
+{ /* åˆå§‹æ¡ä»¶ï¼šLå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šè¿”å›Lä¸­æ•°æ®å…ƒç´ ä¸ªæ•° */
   int i=0;
-  LinkList p=L->next; /* pÖ¸ÏòÍ·½áµã */
-  while(p!=L) /* Ã»µ½±íÎ² */
+  LinkList p=L->next; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
+  while(p!=L) /* æ²¡åˆ°è¡¨å°¾ */
   {
     i++;
     p=p->next;
   }
   return i;
 }
-Status ListInsert_CL(LinkList *L,int i,ElemType e) /* ¸Ä±äL */
-{ /* ÔÚLµÄµÚi¸öÎ»ÖÃÖ®Ç°²åÈëÔªËØe */
-  LinkList p=(*L)->next,s; /* pÖ¸ÏòÍ·½áµã */
+Status ListInsert_CL(LinkList *L,int i,ElemType e) /* æ”¹å˜L */
+{ /* åœ¨Lçš„ç¬¬iä¸ªä½ç½®ä¹‹å‰æ’å…¥å…ƒç´ e */
+  LinkList p=(*L)->next,s; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
   int j=0;
-  if(i<=0||i>ListLength_CL(*L)+1) /* ÎŞ·¨ÔÚµÚi¸öÔªËØÖ®Ç°²åÈë */
+  if(i<=0||i>ListLength_CL(*L)+1) /* æ— æ³•åœ¨ç¬¬iä¸ªå…ƒç´ ä¹‹å‰æ’å…¥ */
     return ERROR;
-  while(j<i-1) /* Ñ°ÕÒµÚi-1¸ö½áµã */
+  while(j<i-1) /* å¯»æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹ */
   {
     p=p->next;
     j++;
   }
-  s=(LinkList)malloc(sizeof(struct LNode)); /* Éú³ÉĞÂ½áµã */
-  s->data=e; /* ²åÈëLÖĞ */
+  s=(LinkList)malloc(sizeof(struct LNode)); /* ç”Ÿæˆæ–°ç»“ç‚¹ */
+  s->data=e; /* æ’å…¥Lä¸­ */
   s->next=p->next;
   p->next=s;
-  if(p==*L) /* ¸Ä±äÎ²½áµã */
+  if(p==*L) /* æ”¹å˜å°¾ç»“ç‚¹ */
     *L=s;
   return OK;
 }
 Status ListTraverse_CL(LinkList L,void(*vi)(ElemType))
-{ /* ³õÊ¼Ìõ¼ş:LÒÑ´æÔÚ¡£²Ù×÷½á¹û:ÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯Êıvi()¡£Ò»µ©vi()Ê§°Ü,Ôò²Ù×÷Ê§°Ü */
+{ /* åˆå§‹æ¡ä»¶:Lå·²å­˜åœ¨ã€‚æ“ä½œç»“æœ:ä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°vi()ã€‚ä¸€æ—¦vi()å¤±è´¥,åˆ™æ“ä½œå¤±è´¥ */
   LinkList p=L->next->next;
   while(p!=L->next)
   {
@@ -80,14 +80,14 @@ void main()
   InitList_CL(&La);
   for(i=1;i<=n;i++)
     ListInsert_CL(&La,i,i);
-  printf("La="); /* Êä³öÁ´±íLaµÄÄÚÈİ */
+  printf("La="); /* è¾“å‡ºé“¾è¡¨Laçš„å†…å®¹ */
   ListTraverse_CL(La,visit);
   InitList_CL(&Lb);
   for(i=1;i<=n;i++)
     ListInsert_CL(&Lb,1,i*2);
-  printf("Lb="); /* Êä³öÁ´±íLbµÄÄÚÈİ */
+  printf("Lb="); /* è¾“å‡ºé“¾è¡¨Lbçš„å†…å®¹ */
   ListTraverse_CL(Lb,visit);
   MergeList_CL(&La,Lb);
-  printf("La+Lb="); /* Êä³öºÏ²¢ºóµÄÁ´±íµÄÄÚÈİ */
+  printf("La+Lb="); /* è¾“å‡ºåˆå¹¶åçš„é“¾è¡¨çš„å†…å®¹ */
   ListTraverse_CL(La,visit);
 }

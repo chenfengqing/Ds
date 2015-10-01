@@ -1,65 +1,65 @@
 #include "stdio.h"
-#define StackSize 100 /*¼Ù¶¨Ô¤·ÖÅäµÄÕ»¿Õ¼ä×î¶àÎª100¸öÔªËØ*/  	
-typedef int DataType;/*¼Ù¶¨Õ»ÔªËØµÄÊı¾İÀàĞÍÎª×Ö·û*/  	
+#define StackSize 100 /*å‡å®šé¢„åˆ†é…çš„æ ˆç©ºé—´æœ€å¤šä¸º100ä¸ªå…ƒç´ */  	
+typedef int DataType;/*å‡å®šæ ˆå…ƒç´ çš„æ•°æ®ç±»å‹ä¸ºå­—ç¬¦*/  	
 typedef struct{
       DataType data[StackSize];
       int top;
 }SeqStack;   
-/* ÖÃÕ»¿Õ*/
+/* ç½®æ ˆç©º*/
 void Initial(SeqStack *S)
-{/*½«Ë³ĞòÕ»ÖÃ¿Õ*/
+{/*å°†é¡ºåºæ ˆç½®ç©º*/
       S->top=-1;
 } 
-/*ÅĞÕ»¿Õ*/
+/*åˆ¤æ ˆç©º*/
 int IsEmpty(SeqStack *S)
 {
     return S->top==-1;
 }
-/*ÅĞÕ»Âú*/
+/*åˆ¤æ ˆæ»¡*/
 int IsFull(SeqStack *S)
 {
 	return S->top==StackSize-1;
 }
-/*½øÕ»*/
+/*è¿›æ ˆ*/
 void Push(SeqStack *S,DataType x)
 {
     if (IsFull(S))
 	{
-		printf("Õ»ÉÏÒç"); /*ÉÏÒç,ÍË³öÔËĞĞ*/
+		printf("æ ˆä¸Šæº¢"); /*ä¸Šæº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
-    S->data[++S->top]=x;/*Õ»¶¥Ö¸Õë¼Ó1ºó½«xÈëÕ»*/
+    S->data[++S->top]=x;/*æ ˆé¡¶æŒ‡é’ˆåŠ 1åå°†xå…¥æ ˆ*/
 }
-/*³öÕ»*/
+/*å‡ºæ ˆ*/
 DataType Pop(SeqStack *S)
 {
 	if(IsEmpty(S))
 	{
-		printf("Õ»Îª¿Õ"); /*ÏÂÒç,ÍË³öÔËĞĞ*/
+		printf("æ ˆä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
-	return S->data[S->top--];/*Õ»¶¥ÔªËØ·µ»Øºó½«Õ»¶¥Ö¸Õë¼õ1*/
+	return S->data[S->top--];/*æ ˆé¡¶å…ƒç´ è¿”å›åå°†æ ˆé¡¶æŒ‡é’ˆå‡1*/
 }
-/* È¡Õ»¶¥ÔªËØ*/
+/* å–æ ˆé¡¶å…ƒç´ */
 DataType Top(SeqStack *S)
 {
 	if(IsEmpty(S))
 	{
-		printf("Õ»Îª¿Õ"); /*ÏÂÒç,ÍË³öÔËĞĞ*/
+		printf("æ ˆä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
 	return S->data[S->top];
 }
 void MultiBaseOutput (int N,int B)
-{/*¼ÙÉèNÊÇ·Ç¸ºµÄÊ®½øÖÆÕûÊı£¬Êä³öµÈÖµµÄB½øÖÆÊı*/
+{/*å‡è®¾Næ˜¯éè´Ÿçš„åè¿›åˆ¶æ•´æ•°ï¼Œè¾“å‡ºç­‰å€¼çš„Bè¿›åˆ¶æ•°*/
 	int i;
 	SeqStack S;
 	Initial(&S);
-	while(N){  /*´ÓÓÒÏò×ó²úÉúB½øÖÆµÄ¸÷Î»Êı×Ö£¬²¢½«Æä½øÕ»*/
-		Push(&S,N%B); /*½«bi½øÕ»0<=i<=j*/
+	while(N){  /*ä»å³å‘å·¦äº§ç”ŸBè¿›åˆ¶çš„å„ä½æ•°å­—ï¼Œå¹¶å°†å…¶è¿›æ ˆ*/
+		Push(&S,N%B); /*å°†biè¿›æ ˆ0<=i<=j*/
 		N=N/B;
 	}
-	while(!IsEmpty(&S)){  /*Õ»·Ç¿ÕÊ±ÍËÕ»Êä³ö*/
+	while(!IsEmpty(&S)){  /*æ ˆéç©ºæ—¶é€€æ ˆè¾“å‡º*/
 		i=Pop(&S);
 		printf("%d",i);
 	}

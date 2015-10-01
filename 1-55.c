@@ -1,92 +1,92 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define OK 1
 #define ERROR 0
 #define TRUE 1
 #define FALSE 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 #if CHAR
 typedef char TElemType;
-  TElemType Nil=' '; /* Éè×Ö·ûĞÍÒÔ¿Õ¸ñ·ûÎª¿Õ */
+  TElemType Nil=' '; /* è®¾å­—ç¬¦å‹ä»¥ç©ºæ ¼ç¬¦ä¸ºç©º */
 #else
   typedef int TElemType;
-  TElemType Nil=0; /* ÉèÕûĞÍÒÔ0Îª¿Õ */
+  TElemType Nil=0; /* è®¾æ•´å‹ä»¥0ä¸ºç©º */
 #endif
-#define MAX_TREE_SIZE 100 /* ¶ş²æÊ÷µÄ×î´ó½áµãÊı */
-typedef TElemType SqBiTree[MAX_TREE_SIZE]; /* 0ºÅµ¥Ôª´æ´¢¸ù½áµã */
+#define MAX_TREE_SIZE 100 /* äºŒå‰æ ‘çš„æœ€å¤§ç»“ç‚¹æ•° */
+typedef TElemType SqBiTree[MAX_TREE_SIZE]; /* 0å·å•å…ƒå­˜å‚¨æ ¹ç»“ç‚¹ */
 Status InitBiTree(SqBiTree T)
-{ /* ¹¹Ôì¿Õ¶ş²æÊ÷T¡£ÒòÎªTÊÇ¹Ì¶¨Êı×é£¬²»»á¸Ä±ä£¬¹Ê²»ĞèÒª& */
+{ /* æ„é€ ç©ºäºŒå‰æ ‘Tã€‚å› ä¸ºTæ˜¯å›ºå®šæ•°ç»„ï¼Œä¸ä¼šæ”¹å˜ï¼Œæ•…ä¸éœ€è¦& */
   int i;
   for(i=0;i<MAX_TREE_SIZE;i++)
-    T[i]=Nil; /* ³õÖµÎª¿Õ */
+    T[i]=Nil; /* åˆå€¼ä¸ºç©º */
   return OK;
 }
 Status CreateBiTree(SqBiTree T)
-{ /* °´²ãĞò´ÎĞòÊäÈë¶ş²æÊ÷ÖĞ½áµãµÄÖµ(×Ö·ûĞÍ»òÕûĞÍ), ¹¹ÔìË³Ğò´æ´¢µÄ¶ş²æÊ÷T */
+{ /* æŒ‰å±‚åºæ¬¡åºè¾“å…¥äºŒå‰æ ‘ä¸­ç»“ç‚¹çš„å€¼(å­—ç¬¦å‹æˆ–æ•´å‹), æ„é€ é¡ºåºå­˜å‚¨çš„äºŒå‰æ ‘T */
   int i=0;
 #if CHAR
   int l;
   char s[MAX_TREE_SIZE];
-  printf("Çë°´²ãĞòÊäÈë½áµãµÄÖµ(×Ö·û)£¬¿Õ¸ñ±íÊ¾¿Õ½áµã£¬½áµãÊı¡Ü%d:\n",MAX_TREE_SIZE);
-  gets(s); /* ÊäÈë×Ö·û´® */
-  l=strlen(s); /* Çó×Ö·û´®µÄ³¤¶È */
-  for(;i<l;i++) /* ½«×Ö·û´®¸³Öµ¸øT */
+  printf("è¯·æŒ‰å±‚åºè¾“å…¥ç»“ç‚¹çš„å€¼(å­—ç¬¦)ï¼Œç©ºæ ¼è¡¨ç¤ºç©ºç»“ç‚¹ï¼Œç»“ç‚¹æ•°â‰¤%d:\n",MAX_TREE_SIZE);
+  gets(s); /* è¾“å…¥å­—ç¬¦ä¸² */
+  l=strlen(s); /* æ±‚å­—ç¬¦ä¸²çš„é•¿åº¦ */
+  for(;i<l;i++) /* å°†å­—ç¬¦ä¸²èµ‹å€¼ç»™T */
   {
     T[i]=s[i];
-    if(i!=0&&T[(i+1)/2-1]==Nil&&T[i]!=Nil) /* ´Ë½áµã(²»¿Õ)ÎŞË«Ç×ÇÒ²»ÊÇ¸ù */
+    if(i!=0&&T[(i+1)/2-1]==Nil&&T[i]!=Nil) /* æ­¤ç»“ç‚¹(ä¸ç©º)æ— åŒäº²ä¸”ä¸æ˜¯æ ¹ */
     {
-      printf("³öÏÖÎŞË«Ç×µÄ·Ç¸ù½áµã%c\n",T[i]);
+      printf("å‡ºç°æ— åŒäº²çš„éæ ¹ç»“ç‚¹%c\n",T[i]);
       exit(ERROR);
     }
   }
-  for(i=l;i<MAX_TREE_SIZE;i++) /* ½«¿Õ¸³Öµ¸øTµÄºóÃæµÄ½áµã */
+  for(i=l;i<MAX_TREE_SIZE;i++) /* å°†ç©ºèµ‹å€¼ç»™Tçš„åé¢çš„ç»“ç‚¹ */
     T[i]=Nil;
 #else
-  printf("Çë°´²ãĞòÊäÈë½áµãµÄÖµ(ÕûĞÍ)£¬0±íÊ¾¿Õ½áµã£¬Êä999½áÊø¡£½áµãÊı¡Ü%d:\n",MAX_TREE_SIZE);
+  printf("è¯·æŒ‰å±‚åºè¾“å…¥ç»“ç‚¹çš„å€¼(æ•´å‹)ï¼Œ0è¡¨ç¤ºç©ºç»“ç‚¹ï¼Œè¾“999ç»“æŸã€‚ç»“ç‚¹æ•°â‰¤%d:\n",MAX_TREE_SIZE);
   while(1)
   {
     scanf("%d",&T[i]);
     if(T[i]==999)
       break;
-    if(i!=0&&T[(i+1)/2-1]==Nil&&T[i]!=Nil) /* ´Ë½áµã(²»¿Õ)ÎŞË«Ç×ÇÒ²»ÊÇ¸ù */
+    if(i!=0&&T[(i+1)/2-1]==Nil&&T[i]!=Nil) /* æ­¤ç»“ç‚¹(ä¸ç©º)æ— åŒäº²ä¸”ä¸æ˜¯æ ¹ */
     {
-      printf("³öÏÖÎŞË«Ç×µÄ·Ç¸ù½áµã%d\n",T[i]);
+      printf("å‡ºç°æ— åŒäº²çš„éæ ¹ç»“ç‚¹%d\n",T[i]);
       exit(ERROR);
     }
     i++;
   }
   while(i<MAX_TREE_SIZE)
   {
-    T[i]=Nil; /* ½«¿Õ¸³Öµ¸øTµÄºóÃæµÄ½áµã */
+    T[i]=Nil; /* å°†ç©ºèµ‹å€¼ç»™Tçš„åé¢çš„ç»“ç‚¹ */
     i++;
   }
 #endif
   return OK;
 }
 Status BiTreeEmpty(SqBiTree T)
-{ /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ */
-  /* ²Ù×÷½á¹û: ÈôTÎª¿Õ¶ş²æÊ÷,Ôò·µ»ØTRUE,·ñÔòFALSE */
-  if(T[0]==Nil) /* ¸ù½áµãÎª¿Õ,ÔòÊ÷¿Õ */
+{ /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ */
+  /* æ“ä½œç»“æœ: è‹¥Tä¸ºç©ºäºŒå‰æ ‘,åˆ™è¿”å›TRUE,å¦åˆ™FALSE */
+  if(T[0]==Nil) /* æ ¹ç»“ç‚¹ä¸ºç©º,åˆ™æ ‘ç©º */
     return TRUE;
   else
     return FALSE;
 }
 int BiTreeDepth(SqBiTree T)
-{ /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ¡£²Ù×÷½á¹û: ·µ»ØTµÄÉî¶È */
+{ /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: è¿”å›Tçš„æ·±åº¦ */
   int i,j=-1;
-  for(i=MAX_TREE_SIZE-1;i>=0;i--) /* ÕÒµ½×îºóÒ»¸ö½áµã */
+  for(i=MAX_TREE_SIZE-1;i>=0;i--) /* æ‰¾åˆ°æœ€åä¸€ä¸ªç»“ç‚¹ */
     if(T[i]!=Nil)
       break;
-  i++; /* ÎªÁË±ãÓÚ¼ÆËã */
+  i++; /* ä¸ºäº†ä¾¿äºè®¡ç®— */
   do
     j++;
   while(i>=pow(2,j));
   return j;
 }
 Status Root(SqBiTree T,TElemType *e)
-{ /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ */
-  /* ²Ù×÷½á¹û:  µ±T²»¿Õ,ÓÃe·µ»ØTµÄ¸ù,·µ»ØOK;·ñÔò·µ»ØERROR,eÎŞ¶¨Òå */
-  if(BiTreeEmpty(T)) /* T¿Õ */
+{ /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ */
+  /* æ“ä½œç»“æœ:  å½“Tä¸ç©º,ç”¨eè¿”å›Tçš„æ ¹,è¿”å›OK;å¦åˆ™è¿”å›ERROR,eæ— å®šä¹‰ */
+  if(BiTreeEmpty(T)) /* Tç©º */
     return ERROR;
   else
   {
@@ -101,10 +101,10 @@ void main()
   SqBiTree T;
   InitBiTree(T);
   CreateBiTree(T);
-  printf("½¨Á¢¶ş²æÊ÷ºó,Ê÷¿Õ·ñ£¿%d(1:ÊÇ 0:·ñ) Ê÷µÄÉî¶È=%d\n",BiTreeEmpty(T),BiTreeDepth(T));
+  printf("å»ºç«‹äºŒå‰æ ‘å,æ ‘ç©ºå¦ï¼Ÿ%d(1:æ˜¯ 0:å¦) æ ‘çš„æ·±åº¦=%d\n",BiTreeEmpty(T),BiTreeDepth(T));
   i=Root(T,&e);
   if(i)
-    printf("¶ş²æÊ÷µÄ¸ùÎª£º%d\n",e);
+    printf("äºŒå‰æ ‘çš„æ ¹ä¸ºï¼š%d\n",e);
   else
-    printf("Ê÷¿Õ£¬ÎŞ¸ù\n");
+    printf("æ ‘ç©ºï¼Œæ— æ ¹\n");
 }

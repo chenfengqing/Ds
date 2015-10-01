@@ -1,29 +1,29 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define N 8
-#define MAXSIZE 20 /* Ò»¸öÓÃ×÷Ê¾ÀıµÄĞ¡Ë³Ğò±íµÄ×î´ó³¤¶È */
+#define MAXSIZE 20 /* ä¸€ä¸ªç”¨ä½œç¤ºä¾‹çš„å°é¡ºåºè¡¨çš„æœ€å¤§é•¿åº¦ */
 #define LT(a,b) ((a)<(b))
-typedef int InfoType; /* ¶¨ÒåÆäËüÊı¾İÏîµÄÀàĞÍ */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàĞÍÎªÕûĞÍ */
+typedef int InfoType; /* å®šä¹‰å…¶å®ƒæ•°æ®é¡¹çš„ç±»å‹ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»å‹ä¸ºæ•´å‹ */
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊı¾İÏî£¬¾ßÌåÀàĞÍÔÚÖ÷³ÌÖĞ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàĞÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»å‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»å‹ */
 typedef struct
 {
-  RedType r[MAXSIZE+1]; /* r[0]ÏĞÖÃ»òÓÃ×÷ÉÚ±øµ¥Ôª */
-  int length; /* Ë³Ğò±í³¤¶È */
-}SqList; /* Ë³Ğò±íÀàĞÍ */
+  RedType r[MAXSIZE+1]; /* r[0]é—²ç½®æˆ–ç”¨ä½œå“¨å…µå•å…ƒ */
+  int length; /* é¡ºåºè¡¨é•¿åº¦ */
+}SqList; /* é¡ºåºè¡¨ç±»å‹ */
 void InsertSort(SqList *L)
-{ /* ¶ÔË³Ğò±íL×÷Ö±½Ó²åÈëÅÅĞò¡£*/
+{ /* å¯¹é¡ºåºè¡¨Lä½œç›´æ¥æ’å…¥æ’åºã€‚*/
   int i,j;
   for(i=2;i<=(*L).length;++i)
-    if LT((*L).r[i].key,(*L).r[i-1].key) /* "<",Ğè½«L.r[i]²åÈëÓĞĞò×Ó±í */
+    if LT((*L).r[i].key,(*L).r[i-1].key) /* "<",éœ€å°†L.r[i]æ’å…¥æœ‰åºå­è¡¨ */
     {
-      (*L).r[0]=(*L).r[i]; /* ¸´ÖÆÎªÉÚ±ø */
+      (*L).r[0]=(*L).r[i]; /* å¤åˆ¶ä¸ºå“¨å…µ */
       for(j=i-1;LT((*L).r[0].key,(*L).r[j].key);--j)
- (*L).r[j+1]=(*L).r[j]; /* ¼ÇÂ¼ºóÒÆ */
-      (*L).r[j+1]=(*L).r[0]; /* ²åÈëµ½ÕıÈ·Î»ÖÃ */
+ (*L).r[j+1]=(*L).r[j]; /* è®°å½•åç§» */
+      (*L).r[j+1]=(*L).r[0]; /* æ’å…¥åˆ°æ­£ç¡®ä½ç½® */
     }
 }
 void print(SqList L)
@@ -38,12 +38,12 @@ void main()
   RedType d[N]={{49,1},{38,2},{65,3},{97,4},{76,5},{13,6},{27,7},{49,8}};
   SqList l1;
   int i;
-  for(i=0;i<N;i++) /* ¸øl1.r¸³Öµ */
+  for(i=0;i<N;i++) /* ç»™l1.rèµ‹å€¼ */
     l1.r[i+1]=d[i];
   l1.length=N;
-  printf("ÅÅĞòÇ°:\n");
+  printf("æ’åºå‰:\n");
   print(l1);
   InsertSort(&l1);
-  printf("Ö±½Ó²åÈëÅÅĞòºó:\n");
+  printf("ç›´æ¥æ’å…¥æ’åºå:\n");
   print(l1);
 }

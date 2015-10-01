@@ -16,7 +16,7 @@ int COMPARE(int coef1,int coef2)
 		return 1;
 }
 void attach (float coefficient, int exponent)
-{  /* ¼ÓÒ»¸öĞÂÏîµ½¶àÏîÊ½ÖĞ */
+{  /* åŠ ä¸€ä¸ªæ–°é¡¹åˆ°å¤šé¡¹å¼ä¸­ */
      if (avail > MAX_TERMS)  {
         printf("Too many terms in the polynomial \n");
         exit(1);
@@ -26,30 +26,30 @@ void attach (float coefficient, int exponent)
 }
 void padd( int starta, int  finisha, int startb, int finishb, 
 		  int *startd,int *finishd)
-{ /* A(x)£«B(x)£½D (x) */
+{ /* A(x)ï¼‹B(x)ï¼D (x) */
     float coefficient;
     *startd = avail;
     while ( starta <= finisha && startb <=finishb)
         switch (COMPARE(terms[starta].expon, terms[startb].expon))  {
-           case -1:  /* a Ö¸ÊıĞ¡ÓÚ bÖ¸Êı*/
+           case -1:  /* a æŒ‡æ•°å°äº bæŒ‡æ•°*/
               attach(terms[startb].coef, terms[startb].expon);
                   startb ++;
                   break;
-           case 0:  /*Á½Ö¸ÊıÏàµÈ*/
+           case 0:  /*ä¸¤æŒ‡æ•°ç›¸ç­‰*/
                   coefficient = terms[starta].coef + terms[startb].coef;
                   if (coefficient)
                           attach(coefficient, terms[starta].expon);
                    starta++;
                    startb ++;
                    break;
-          case 1:  /* aÖ¸Êı´óÓÚbÖ¸Êı*/
+          case 1:  /* aæŒ‡æ•°å¤§äºbæŒ‡æ•°*/
                     attach(terms[starta].coef,terms[starta].expon);
                     starta++;
 	}
-	/* °ÑÆäÓàµÄA(x)Ïà¼Ó */
+	/* æŠŠå…¶ä½™çš„A(x)ç›¸åŠ  */
     for (; starta <= finisha;  starta++)
             attach(terms[starta].coef,terms[starta].expon);
-	/* °ÑÆäÓàµÄB(x)Ïà¼Ó */
+	/* æŠŠå…¶ä½™çš„B(x)ç›¸åŠ  */
     for (; startb <= finishb;  startb++)
            attach(terms[startb].coef,terms[startb].expon);
     *finishd = avail -1;

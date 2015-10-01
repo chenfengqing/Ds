@@ -1,36 +1,36 @@
-#include<limits.h> /* INT_MAXµÈ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<limits.h> /* INT_MAXç­‰ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-#define MAX_NAME 5 /* ¶¥µã×Ö·û´®µÄ×î´ó³¤¶È+1 */
-#define MAX_INFO 20 /* Ïà¹ØĞÅÏ¢×Ö·û´®µÄ×î´ó³¤¶È+1 */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+#define MAX_NAME 5 /* é¡¶ç‚¹å­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦+1 */
+#define MAX_INFO 20 /* ç›¸å…³ä¿¡æ¯å­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦+1 */
 typedef int VRType;
 typedef char InfoType;
 typedef char VertexType[MAX_NAME];
-#define INFINITY INT_MAX /* ÓÃÕûĞÍ×î´óÖµ´úÌæ¡Ş */
-#define MAX_VERTEX_NUM 20 /* ×î´ó¶¥µã¸öÊı */
-typedef enum{DG,DN,AG,AN}GraphKind; /* {ÓĞÏòÍ¼,ÓĞÏòÍø,ÎŞÏòÍ¼,ÎŞÏòÍø} */
+#define INFINITY INT_MAX /* ç”¨æ•´å‹æœ€å¤§å€¼ä»£æ›¿âˆ */
+#define MAX_VERTEX_NUM 20 /* æœ€å¤§é¡¶ç‚¹ä¸ªæ•° */
+typedef enum{DG,DN,AG,AN}GraphKind; /* {æœ‰å‘å›¾,æœ‰å‘ç½‘,æ— å‘å›¾,æ— å‘ç½‘} */
 typedef struct
 {
-  VRType adj; /* ¶¥µã¹ØÏµÀàĞÍ¡£¶ÔÎŞÈ¨Í¼£¬ÓÃ1(ÊÇ)»ò0(·ñ)±íÊ¾ÏàÁÚ·ñ£» */
-       /* ¶Ô´øÈ¨Í¼£¬cÔòÎªÈ¨ÖµÀàĞÍ */
-  InfoType *info; /* ¸Ã»¡Ïà¹ØĞÅÏ¢µÄÖ¸Õë(¿ÉÎŞ) */
+  VRType adj; /* é¡¶ç‚¹å…³ç³»ç±»å‹ã€‚å¯¹æ— æƒå›¾ï¼Œç”¨1(æ˜¯)æˆ–0(å¦)è¡¨ç¤ºç›¸é‚»å¦ï¼› */
+       /* å¯¹å¸¦æƒå›¾ï¼Œcåˆ™ä¸ºæƒå€¼ç±»å‹ */
+  InfoType *info; /* è¯¥å¼§ç›¸å…³ä¿¡æ¯çš„æŒ‡é’ˆ(å¯æ— ) */
 }ArcCell,AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 typedef struct
 {
-  VertexType vexs[MAX_VERTEX_NUM]; /* ¶¥µãÏòÁ¿ */
-  AdjMatrix arcs; /* ÁÚ½Ó¾ØÕó */
-  int vexnum,arcnum; /* Í¼µÄµ±Ç°¶¥µãÊıºÍ»¡Êı */
-  GraphKind kind; /* Í¼µÄÖÖÀà±êÖ¾ */
+  VertexType vexs[MAX_VERTEX_NUM]; /* é¡¶ç‚¹å‘é‡ */
+  AdjMatrix arcs; /* é‚»æ¥çŸ©é˜µ */
+  int vexnum,arcnum; /* å›¾çš„å½“å‰é¡¶ç‚¹æ•°å’Œå¼§æ•° */
+  GraphKind kind; /* å›¾çš„ç§ç±»æ ‡å¿— */
 }MGraph;
 typedef int PathMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 typedef int ShortPathTable[MAX_VERTEX_NUM];
 int LocateVex(MGraph G,VertexType u)
-{ /* ³õÊ¼Ìõ¼ş:Í¼G´æÔÚ,uºÍGÖĞ¶¥µãÓĞÏàÍ¬ÌØÕ÷ */
-  /* ²Ù×÷½á¹û:ÈôGÖĞ´æÔÚ¶¥µãu,Ôò·µ»Ø¸Ã¶¥µãÔÚÍ¼ÖĞÎ»ÖÃ;·ñÔò·µ»Ø-1 */
+{ /* åˆå§‹æ¡ä»¶:å›¾Gå­˜åœ¨,uå’ŒGä¸­é¡¶ç‚¹æœ‰ç›¸åŒç‰¹å¾ */
+  /* æ“ä½œç»“æœ:è‹¥Gä¸­å­˜åœ¨é¡¶ç‚¹u,åˆ™è¿”å›è¯¥é¡¶ç‚¹åœ¨å›¾ä¸­ä½ç½®;å¦åˆ™è¿”å›-1 */
   int i;
   for(i=0;i<G.vexnum;++i)
     if(strcmp(u,G.vexs[i])==0)
@@ -38,38 +38,38 @@ int LocateVex(MGraph G,VertexType u)
   return -1;
 }
 Status CreateDN(MGraph *G)
-{ /* ²ÉÓÃÊı×é(ÁÚ½Ó¾ØÕó)±íÊ¾·¨,¹¹ÔìÓĞÏòÍøG */
+{ /* é‡‡ç”¨æ•°ç»„(é‚»æ¥çŸ©é˜µ)è¡¨ç¤ºæ³•,æ„é€ æœ‰å‘ç½‘G */
   int i,j,k,w,IncInfo;
   char s[MAX_INFO],*info;
   VertexType va,vb;
-  printf("ÇëÊäÈëÓĞÏòÍøGµÄ¶¥µãÊı,»¡Êı,»¡ÊÇ·ñº¬ÆäËüĞÅÏ¢(ÊÇ:1,·ñ:0): ");
+  printf("è¯·è¾“å…¥æœ‰å‘ç½‘Gçš„é¡¶ç‚¹æ•°,å¼§æ•°,å¼§æ˜¯å¦å«å…¶å®ƒä¿¡æ¯(æ˜¯:1,å¦:0): ");
   scanf("%d,%d,%d",&(*G).vexnum,&(*G).arcnum,&IncInfo);
-  printf("ÇëÊäÈë%d¸ö¶¥µãµÄÖµ(<%d¸ö×Ö·û):\n",(*G).vexnum,MAX_NAME);
-  for(i=0;i<(*G).vexnum;++i) /* ¹¹Ôì¶¥µãÏòÁ¿ */
+  printf("è¯·è¾“å…¥%dä¸ªé¡¶ç‚¹çš„å€¼(<%dä¸ªå­—ç¬¦):\n",(*G).vexnum,MAX_NAME);
+  for(i=0;i<(*G).vexnum;++i) /* æ„é€ é¡¶ç‚¹å‘é‡ */
     scanf("%s",(*G).vexs[i]);
-  for(i=0;i<(*G).vexnum;++i) /* ³õÊ¼»¯ÁÚ½Ó¾ØÕó */
+  for(i=0;i<(*G).vexnum;++i) /* åˆå§‹åŒ–é‚»æ¥çŸ©é˜µ */
     for(j=0;j<(*G).vexnum;++j)
     {
-      (*G).arcs[i][j].adj=INFINITY; /* Íø */
+      (*G).arcs[i][j].adj=INFINITY; /* ç½‘ */
       (*G).arcs[i][j].info=NULL;
     }
-  printf("ÇëÊäÈë%dÌõ»¡µÄ»¡Î² »¡Í· È¨Öµ(ÒÔ¿Õ¸ñ×÷Îª¼ä¸ô): \n",(*G).arcnum);
+  printf("è¯·è¾“å…¥%dæ¡å¼§çš„å¼§å°¾ å¼§å¤´ æƒå€¼(ä»¥ç©ºæ ¼ä½œä¸ºé—´éš”): \n",(*G).arcnum);
   for(k=0;k<(*G).arcnum;++k)
   {
-    scanf("%s%s%d%*c",va,vb,&w);  /* %*c³Ôµô»Ø³µ·û */
+    scanf("%s%s%d%*c",va,vb,&w);  /* %*cåƒæ‰å›è½¦ç¬¦ */
     i=LocateVex(*G,va);
     j=LocateVex(*G,vb);
-    (*G).arcs[i][j].adj=w; /* ÓĞÏòÍø */
+    (*G).arcs[i][j].adj=w; /* æœ‰å‘ç½‘ */
     if(IncInfo)
     {
-      printf("ÇëÊäÈë¸Ã»¡µÄÏà¹ØĞÅÏ¢(<%d¸ö×Ö·û): ",MAX_INFO);
+      printf("è¯·è¾“å…¥è¯¥å¼§çš„ç›¸å…³ä¿¡æ¯(<%dä¸ªå­—ç¬¦): ",MAX_INFO);
       gets(s);
       w=strlen(s);
       if(w)
       {
         info=(char*)malloc((w+1)*sizeof(char));
         strcpy(info,s);
-        (*G).arcs[i][j].info=info; /* ÓĞÏò */
+        (*G).arcs[i][j].info=info; /* æœ‰å‘ */
       }
     }
   }
@@ -77,9 +77,9 @@ Status CreateDN(MGraph *G)
   return OK;
 }
 void ShortestPath_DIJ(MGraph G,int v0,PathMatrix *P,ShortPathTable *D)
-{ /* ÓÃDijkstraËã·¨ÇóÓĞÏòÍøGµÄv0¶¥µãµ½ÆäÓà¶¥µãvµÄ×î¶ÌÂ·¾¶P[v]¼°´øÈ¨³¤¶È */
-  /* D[v]¡£ÈôP[v][w]ÎªTRUE,ÔòwÊÇ´Óv0µ½vµ±Ç°ÇóµÃ×î¶ÌÂ·¾¶ÉÏµÄ¶¥µã¡£ */
-  /* final[v]ÎªTRUEµ±ÇÒ½öµ±v¡ÊS*/
+{ /* ç”¨Dijkstraç®—æ³•æ±‚æœ‰å‘ç½‘Gçš„v0é¡¶ç‚¹åˆ°å…¶ä½™é¡¶ç‚¹vçš„æœ€çŸ­è·¯å¾„P[v]åŠå¸¦æƒé•¿åº¦ */
+  /* D[v]ã€‚è‹¥P[v][w]ä¸ºTRUE,åˆ™wæ˜¯ä»v0åˆ°vå½“å‰æ±‚å¾—æœ€çŸ­è·¯å¾„ä¸Šçš„é¡¶ç‚¹ã€‚ */
+  /* final[v]ä¸ºTRUEå½“ä¸”ä»…å½“vâˆˆS*/
   int v,w,i,j,min;
   Status final[MAX_VERTEX_NUM];
   for(v=0;v<G.vexnum;++v)
@@ -87,7 +87,7 @@ void ShortestPath_DIJ(MGraph G,int v0,PathMatrix *P,ShortPathTable *D)
     final[v]=FALSE;
     (*D)[v]=G.arcs[v0][v].adj;
     for(w=0;w<G.vexnum;++w)
-      (*P)[v][w]=FALSE; /* Éè¿ÕÂ·¾¶ */
+      (*P)[v][w]=FALSE; /* è®¾ç©ºè·¯å¾„ */
     if((*D)[v]<INFINITY)
     {
       (*P)[v][v0]=TRUE;
@@ -95,22 +95,22 @@ void ShortestPath_DIJ(MGraph G,int v0,PathMatrix *P,ShortPathTable *D)
     }
   }
   (*D)[v0]=0;
-  final[v0]=TRUE; /* ³õÊ¼»¯,v0¶¥µãÊôÓÚS¼¯ */
-  for(i=1;i<G.vexnum;++i) /* ÆäÓàG.vexnum-1¸ö¶¥µã */
-  { /* ¿ªÊ¼Ö÷Ñ­»·,Ã¿´ÎÇóµÃv0µ½Ä³¸öv¶¥µãµÄ×î¶ÌÂ·¾¶,²¢¼Óvµ½S¼¯ */
-    min=INFINITY; /* µ±Ç°ËùÖªÀëv0¶¥µãµÄ×î½ü¾àÀë */
+  final[v0]=TRUE; /* åˆå§‹åŒ–,v0é¡¶ç‚¹å±äºSé›† */
+  for(i=1;i<G.vexnum;++i) /* å…¶ä½™G.vexnum-1ä¸ªé¡¶ç‚¹ */
+  { /* å¼€å§‹ä¸»å¾ªç¯,æ¯æ¬¡æ±‚å¾—v0åˆ°æŸä¸ªvé¡¶ç‚¹çš„æœ€çŸ­è·¯å¾„,å¹¶åŠ våˆ°Sé›† */
+    min=INFINITY; /* å½“å‰æ‰€çŸ¥ç¦»v0é¡¶ç‚¹çš„æœ€è¿‘è·ç¦» */
     for(w=0;w<G.vexnum;++w)
-      if(!final[w]) /* w¶¥µãÔÚV-SÖĞ */
+      if(!final[w]) /* wé¡¶ç‚¹åœ¨V-Sä¸­ */
 		 if((*D)[w]<min)
 		 {
 		   v=w;
 		   min=(*D)[w];
-		 } /* w¶¥µãÀëv0¶¥µã¸ü½ü */
-    final[v]=TRUE; /* Àëv0¶¥µã×î½üµÄv¼ÓÈëS¼¯ */
-    for(w=0;w<G.vexnum;++w) /* ¸üĞÂµ±Ç°×î¶ÌÂ·¾¶¼°¾àÀë */
+		 } /* wé¡¶ç‚¹ç¦»v0é¡¶ç‚¹æ›´è¿‘ */
+    final[v]=TRUE; /* ç¦»v0é¡¶ç‚¹æœ€è¿‘çš„våŠ å…¥Sé›† */
+    for(w=0;w<G.vexnum;++w) /* æ›´æ–°å½“å‰æœ€çŸ­è·¯å¾„åŠè·ç¦» */
     {
       if(!final[w]&&min<INFINITY&&G.arcs[v][w].adj<INFINITY&&(min+G.arcs[v][w].adj<(*D)[w]))
-      { /* ĞŞ¸ÄD[w]ºÍP[w],w¡ÊV-S */
+      { /* ä¿®æ”¹D[w]å’ŒP[w],wâˆˆV-S */
         (*D)[w]=min+G.arcs[v][w].adj;
         for(j=0;j<G.vexnum;++j)
           (*P)[w][j]=(*P)[v][j];
@@ -121,20 +121,20 @@ void ShortestPath_DIJ(MGraph G,int v0,PathMatrix *P,ShortPathTable *D)
 }
 void main()
 {
-  int i,j,v0=0; /* v0ÎªÔ´µã */
+  int i,j,v0=0; /* v0ä¸ºæºç‚¹ */
   MGraph g;
   PathMatrix p;
   ShortPathTable d;
   CreateDN(&g);
   ShortestPath_DIJ(g,v0,&p,&d);
-  printf("×î¶ÌÂ·¾¶Êı×ép[i][j]ÈçÏÂ:\n");
+  printf("æœ€çŸ­è·¯å¾„æ•°ç»„p[i][j]å¦‚ä¸‹:\n");
   for(i=0;i<g.vexnum;++i)
   {
     for(j=0;j<g.vexnum;++j)
       printf("%2d",p[i][j]);
     printf("\n");
   }
-  printf("%sµ½¸÷¶¥µãµÄ×î¶ÌÂ·¾¶³¤¶ÈÎª£º\n",g.vexs[0]);
+  printf("%såˆ°å„é¡¶ç‚¹çš„æœ€çŸ­è·¯å¾„é•¿åº¦ä¸ºï¼š\n",g.vexs[0]);
   for(i=1;i<g.vexnum;++i)
     printf("%s-%s:%d\n",g.vexs[0],g.vexs[i],d[i]);
 }

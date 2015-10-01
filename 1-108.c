@@ -1,37 +1,37 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
 #define INFEASIBLE -1
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-typedef int Boolean; /* BooleanÊÇ²¼¶ûÀàĞÍ,ÆäÖµÊÇTRUE»òFALSE */
-#define MAX_NAME 5 /* ¶¥µã×Ö·û´®µÄ×î´ó³¤¶È */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+typedef int Boolean; /* Booleanæ˜¯å¸ƒå°”ç±»å‹,å…¶å€¼æ˜¯TRUEæˆ–FALSE */
+#define MAX_NAME 5 /* é¡¶ç‚¹å­—ç¬¦ä¸²çš„æœ€å¤§é•¿åº¦ */
 typedef int InfoType;
-typedef char VertexType[MAX_NAME]; /* ×Ö·û´®ÀàĞÍ */
+typedef char VertexType[MAX_NAME]; /* å­—ç¬¦ä¸²ç±»å‹ */
 #define MAX_VERTEX_NUM 20
-typedef enum{DG,DN,AG,AN}GraphKind; /* {ÓĞÏòÍ¼,ÓĞÏòÍø,ÎŞÏòÍ¼,ÎŞÏòÍø} */
+typedef enum{DG,DN,AG,AN}GraphKind; /* {æœ‰å‘å›¾,æœ‰å‘ç½‘,æ— å‘å›¾,æ— å‘ç½‘} */
 typedef struct ArcNode
 {
-  int adjvex; /* ¸Ã»¡ËùÖ¸ÏòµÄ¶¥µãµÄÎ»ÖÃ */
-  struct ArcNode *nextarc; /* Ö¸ÏòÏÂÒ»Ìõ»¡µÄÖ¸Õë */
-  InfoType *info; /* ÍøµÄÈ¨ÖµÖ¸Õë£© */
-}ArcNode; /* ±í½áµã */
+  int adjvex; /* è¯¥å¼§æ‰€æŒ‡å‘çš„é¡¶ç‚¹çš„ä½ç½® */
+  struct ArcNode *nextarc; /* æŒ‡å‘ä¸‹ä¸€æ¡å¼§çš„æŒ‡é’ˆ */
+  InfoType *info; /* ç½‘çš„æƒå€¼æŒ‡é’ˆï¼‰ */
+}ArcNode; /* è¡¨ç»“ç‚¹ */
 typedef struct
 {
-  VertexType data; /* ¶¥µãĞÅÏ¢ */
-  ArcNode *firstarc; /* µÚÒ»¸ö±í½áµãµÄµØÖ·,Ö¸ÏòµÚÒ»ÌõÒÀ¸½¸Ã¶¥µãµÄ»¡µÄÖ¸Õë */
-}VNode,AdjList[MAX_VERTEX_NUM]; /* Í·½áµã */
+  VertexType data; /* é¡¶ç‚¹ä¿¡æ¯ */
+  ArcNode *firstarc; /* ç¬¬ä¸€ä¸ªè¡¨ç»“ç‚¹çš„åœ°å€,æŒ‡å‘ç¬¬ä¸€æ¡ä¾é™„è¯¥é¡¶ç‚¹çš„å¼§çš„æŒ‡é’ˆ */
+}VNode,AdjList[MAX_VERTEX_NUM]; /* å¤´ç»“ç‚¹ */
 typedef struct
 {
   AdjList vertices;
-  int vexnum,arcnum; /* Í¼µÄµ±Ç°¶¥µãÊıºÍ»¡Êı */
-  int kind; /* Í¼µÄÖÖÀà±êÖ¾ */
+  int vexnum,arcnum; /* å›¾çš„å½“å‰é¡¶ç‚¹æ•°å’Œå¼§æ•° */
+  int kind; /* å›¾çš„ç§ç±»æ ‡å¿— */
 }ALGraph;
 int LocateVex(ALGraph G,VertexType u)
-{ /* ³õÊ¼Ìõ¼ş: Í¼G´æÔÚ,uºÍGÖĞ¶¥µãÓĞÏàÍ¬ÌØÕ÷ */
-  /* ²Ù×÷½á¹û: ÈôGÖĞ´æÔÚ¶¥µãu,Ôò·µ»Ø¸Ã¶¥µãÔÚÍ¼ÖĞÎ»ÖÃ;·ñÔò·µ»Ø-1 */
+{ /* åˆå§‹æ¡ä»¶: å›¾Gå­˜åœ¨,uå’ŒGä¸­é¡¶ç‚¹æœ‰ç›¸åŒç‰¹å¾ */
+  /* æ“ä½œç»“æœ: è‹¥Gä¸­å­˜åœ¨é¡¶ç‚¹u,åˆ™è¿”å›è¯¥é¡¶ç‚¹åœ¨å›¾ä¸­ä½ç½®;å¦åˆ™è¿”å›-1 */
   int i;
   for(i=0;i<G.vexnum;++i)
     if(strcmp(u,G.vertices[i].data)==0)
@@ -39,73 +39,73 @@ int LocateVex(ALGraph G,VertexType u)
   return -1;
 }
 Status CreateGraph(ALGraph *G)
-{ /* ²ÉÓÃÁÚ½Ó±í´æ´¢½á¹¹,¹¹ÔìÃ»ÓĞÏà¹ØĞÅÏ¢µÄÍ¼G(ÓÃÒ»¸öº¯Êı¹¹Ôì4ÖÖÍ¼) */
+{ /* é‡‡ç”¨é‚»æ¥è¡¨å­˜å‚¨ç»“æ„,æ„é€ æ²¡æœ‰ç›¸å…³ä¿¡æ¯çš„å›¾G(ç”¨ä¸€ä¸ªå‡½æ•°æ„é€ 4ç§å›¾) */
   int i,j,k;
-  int w; /* È¨Öµ */
+  int w; /* æƒå€¼ */
   VertexType va,vb;
   ArcNode *p;
-  printf("ÇëÊäÈëÍ¼µÄÀàĞÍ(ÓĞÏòÍ¼:0,ÓĞÏòÍø:1,ÎŞÏòÍ¼:2,ÎŞÏòÍø:3): ");
+  printf("è¯·è¾“å…¥å›¾çš„ç±»å‹(æœ‰å‘å›¾:0,æœ‰å‘ç½‘:1,æ— å‘å›¾:2,æ— å‘ç½‘:3): ");
   scanf("%d",&(*G).kind);
-  printf("ÇëÊäÈëÍ¼µÄ¶¥µãÊı,±ßÊı: ");
+  printf("è¯·è¾“å…¥å›¾çš„é¡¶ç‚¹æ•°,è¾¹æ•°: ");
   scanf("%d,%d",&(*G).vexnum,&(*G).arcnum);
-  printf("ÇëÊäÈë%d¸ö¶¥µãµÄÖµ(<%d¸ö×Ö·û):\n",(*G).vexnum,MAX_NAME);
-  for(i=0;i<(*G).vexnum;++i) /* ¹¹Ôì¶¥µãÏòÁ¿ */
+  printf("è¯·è¾“å…¥%dä¸ªé¡¶ç‚¹çš„å€¼(<%dä¸ªå­—ç¬¦):\n",(*G).vexnum,MAX_NAME);
+  for(i=0;i<(*G).vexnum;++i) /* æ„é€ é¡¶ç‚¹å‘é‡ */
   {
     scanf("%s",(*G).vertices[i].data);
     (*G).vertices[i].firstarc=NULL;
   }
-  if((*G).kind==1||(*G).kind==3) /* Íø */
-    printf("ÇëË³ĞòÊäÈëÃ¿Ìõ»¡(±ß)µÄÈ¨Öµ¡¢»¡Î²ºÍ»¡Í·(ÒÔ¿Õ¸ñ×÷Îª¼ä¸ô):\n");
-  else /* Í¼ */
-    printf("ÇëË³ĞòÊäÈëÃ¿Ìõ»¡(±ß)µÄ»¡Î²ºÍ»¡Í·(ÒÔ¿Õ¸ñ×÷Îª¼ä¸ô):\n");
-  for(k=0;k<(*G).arcnum;++k) /* ¹¹Ôì±í½áµãÁ´±í */
+  if((*G).kind==1||(*G).kind==3) /* ç½‘ */
+    printf("è¯·é¡ºåºè¾“å…¥æ¯æ¡å¼§(è¾¹)çš„æƒå€¼ã€å¼§å°¾å’Œå¼§å¤´(ä»¥ç©ºæ ¼ä½œä¸ºé—´éš”):\n");
+  else /* å›¾ */
+    printf("è¯·é¡ºåºè¾“å…¥æ¯æ¡å¼§(è¾¹)çš„å¼§å°¾å’Œå¼§å¤´(ä»¥ç©ºæ ¼ä½œä¸ºé—´éš”):\n");
+  for(k=0;k<(*G).arcnum;++k) /* æ„é€ è¡¨ç»“ç‚¹é“¾è¡¨ */
   {
-    if((*G).kind==1||(*G).kind==3) /* Íø */
+    if((*G).kind==1||(*G).kind==3) /* ç½‘ */
       scanf("%d%s%s",&w,va,vb);
-    else /* Í¼ */
+    else /* å›¾ */
       scanf("%s%s",va,vb);
-    i=LocateVex(*G,va); /* »¡Î² */
-    j=LocateVex(*G,vb); /* »¡Í· */
+    i=LocateVex(*G,va); /* å¼§å°¾ */
+    j=LocateVex(*G,vb); /* å¼§å¤´ */
     p=(ArcNode*)malloc(sizeof(ArcNode));
     p->adjvex=j;
-    if((*G).kind==1||(*G).kind==3) /* Íø */
+    if((*G).kind==1||(*G).kind==3) /* ç½‘ */
     {
       p->info=(int *)malloc(sizeof(int));
       *(p->info)=w;
     }
     else
-      p->info=NULL; /* Í¼ */
-    p->nextarc=(*G).vertices[i].firstarc; /* ²åÔÚ±íÍ· */
+      p->info=NULL; /* å›¾ */
+    p->nextarc=(*G).vertices[i].firstarc; /* æ’åœ¨è¡¨å¤´ */
     (*G).vertices[i].firstarc=p;
-    if((*G).kind>=2) /* ÎŞÏòÍ¼»òÍø,²úÉúµÚ¶ş¸ö±í½áµã */
+    if((*G).kind>=2) /* æ— å‘å›¾æˆ–ç½‘,äº§ç”Ÿç¬¬äºŒä¸ªè¡¨ç»“ç‚¹ */
     {
       p=(ArcNode*)malloc(sizeof(ArcNode));
       p->adjvex=i;
-      if((*G).kind==3) /* ÎŞÏòÍø */
+      if((*G).kind==3) /* æ— å‘ç½‘ */
       {
         p->info=(int*)malloc(sizeof(int));
         *(p->info)=w;
       }
       else
-        p->info=NULL; /* ÎŞÏòÍ¼ */
-      p->nextarc=(*G).vertices[j].firstarc; /* ²åÔÚ±íÍ· */
+        p->info=NULL; /* æ— å‘å›¾ */
+      p->nextarc=(*G).vertices[j].firstarc; /* æ’åœ¨è¡¨å¤´ */
       (*G).vertices[j].firstarc=p;
     }
   }
   return OK;
 }
 VertexType* GetVex(ALGraph G,int v)
-{ /* ³õÊ¼Ìõ¼ş: Í¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µãµÄĞòºÅ¡£²Ù×÷½á¹û: ·µ»ØvµÄÖµ */
+{ /* åˆå§‹æ¡ä»¶: å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹çš„åºå·ã€‚æ“ä½œç»“æœ: è¿”å›vçš„å€¼ */
   if(v>=G.vexnum||v<0)
     exit(ERROR);
   return &G.vertices[v].data;
 }
 int FirstAdjVex(ALGraph G,VertexType v)
-{ /* ³õÊ¼Ìõ¼ş: Í¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã */
-  /* ²Ù×÷½á¹û: ·µ»ØvµÄµÚÒ»¸öÁÚ½Ó¶¥µãµÄĞòºÅ¡£Èô¶¥µãÔÚGÖĞÃ»ÓĞÁÚ½Ó¶¥µã,Ôò·µ»Ø-1 */
+{ /* åˆå§‹æ¡ä»¶: å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹ */
+  /* æ“ä½œç»“æœ: è¿”å›vçš„ç¬¬ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹çš„åºå·ã€‚è‹¥é¡¶ç‚¹åœ¨Gä¸­æ²¡æœ‰é‚»æ¥é¡¶ç‚¹,åˆ™è¿”å›-1 */
   ArcNode *p;
   int v1;
-  v1=LocateVex(G,v); /* v1Îª¶¥µãvÔÚÍ¼GÖĞµÄĞòºÅ */
+  v1=LocateVex(G,v); /* v1ä¸ºé¡¶ç‚¹våœ¨å›¾Gä¸­çš„åºå· */
   p=G.vertices[v1].firstarc;
   if(p)
     return p->adjvex;
@@ -113,35 +113,35 @@ int FirstAdjVex(ALGraph G,VertexType v)
     return -1;
 }
 int NextAdjVex(ALGraph G,VertexType v,VertexType w)
-{ /* ³õÊ¼Ìõ¼ş: Í¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã,wÊÇvµÄÁÚ½Ó¶¥µã */
-  /* ²Ù×÷½á¹û: ·µ»ØvµÄ(Ïà¶ÔÓÚwµÄ)ÏÂÒ»¸öÁÚ½Ó¶¥µãµÄĞòºÅ¡£ */
-  /*           ÈôwÊÇvµÄ×îºóÒ»¸öÁÚ½Óµã,Ôò·µ»Ø-1 */
+{ /* åˆå§‹æ¡ä»¶: å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹,wæ˜¯vçš„é‚»æ¥é¡¶ç‚¹ */
+  /* æ“ä½œç»“æœ: è¿”å›vçš„(ç›¸å¯¹äºwçš„)ä¸‹ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹çš„åºå·ã€‚ */
+  /*           è‹¥wæ˜¯vçš„æœ€åä¸€ä¸ªé‚»æ¥ç‚¹,åˆ™è¿”å›-1 */
   ArcNode *p;
   int v1,w1;
-  v1=LocateVex(G,v); /* v1Îª¶¥µãvÔÚÍ¼GÖĞµÄĞòºÅ */
-  w1=LocateVex(G,w); /* w1Îª¶¥µãwÔÚÍ¼GÖĞµÄĞòºÅ */
+  v1=LocateVex(G,v); /* v1ä¸ºé¡¶ç‚¹våœ¨å›¾Gä¸­çš„åºå· */
+  w1=LocateVex(G,w); /* w1ä¸ºé¡¶ç‚¹wåœ¨å›¾Gä¸­çš„åºå· */
   p=G.vertices[v1].firstarc;
-  while(p&&p->adjvex!=w1) /* Ö¸Õëp²»¿ÕÇÒËùÖ¸±í½áµã²»ÊÇw */
+  while(p&&p->adjvex!=w1) /* æŒ‡é’ˆpä¸ç©ºä¸”æ‰€æŒ‡è¡¨ç»“ç‚¹ä¸æ˜¯w */
     p=p->nextarc;
-  if(!p||!p->nextarc) /* Ã»ÕÒµ½w»òwÊÇ×îºóÒ»¸öÁÚ½Óµã */
+  if(!p||!p->nextarc) /* æ²¡æ‰¾åˆ°wæˆ–wæ˜¯æœ€åä¸€ä¸ªé‚»æ¥ç‚¹ */
     return -1;
   else /* p->adjvex==w */
-    return p->nextarc->adjvex; /* ·µ»ØvµÄ(Ïà¶ÔÓÚwµÄ)ÏÂÒ»¸öÁÚ½Ó¶¥µãµÄĞòºÅ */
+    return p->nextarc->adjvex; /* è¿”å›vçš„(ç›¸å¯¹äºwçš„)ä¸‹ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹çš„åºå· */
 }
-Boolean visited[MAX_VERTEX_NUM]; /* ·ÃÎÊ±êÖ¾Êı×é(È«¾ÖÁ¿) */
-void(*VisitFunc)(char* v); /* º¯Êı±äÁ¿(È«¾ÖÁ¿) */
+Boolean visited[MAX_VERTEX_NUM]; /* è®¿é—®æ ‡å¿—æ•°ç»„(å…¨å±€é‡) */
+void(*VisitFunc)(char* v); /* å‡½æ•°å˜é‡(å…¨å±€é‡) */
 void DFS(ALGraph G,int v)
-{ /* ´ÓµÚv¸ö¶¥µã³ö·¢µİ¹éµØÉî¶ÈÓÅÏÈ±éÀúÍ¼G¡£*/
+{ /* ä»ç¬¬vä¸ªé¡¶ç‚¹å‡ºå‘é€’å½’åœ°æ·±åº¦ä¼˜å…ˆéå†å›¾Gã€‚*/
   int w;
   VertexType v1,w1;
   strcpy(v1,*GetVex(G,v));
-  visited[v]=TRUE; /* ÉèÖÃ·ÃÎÊ±êÖ¾ÎªTRUE(ÒÑ·ÃÎÊ) */
-  VisitFunc(G.vertices[v].data); /* ·ÃÎÊµÚv¸ö¶¥µã */
+  visited[v]=TRUE; /* è®¾ç½®è®¿é—®æ ‡å¿—ä¸ºTRUE(å·²è®¿é—®) */
+  VisitFunc(G.vertices[v].data); /* è®¿é—®ç¬¬vä¸ªé¡¶ç‚¹ */
   for(w=FirstAdjVex(G,v1);w>=0;w=NextAdjVex(G,v1,strcpy(w1,*GetVex(G,w))))
     if(!visited[w])
-      DFS(G,w); /* ¶ÔvµÄÉĞÎ´·ÃÎÊµÄÁÚ½Óµãwµİ¹éµ÷ÓÃDFS */
+      DFS(G,w); /* å¯¹vçš„å°šæœªè®¿é—®çš„é‚»æ¥ç‚¹wé€’å½’è°ƒç”¨DFS */
 }
-typedef int QElemType; /* ¶ÓÁĞÀàĞÍ */
+typedef int QElemType; /* é˜Ÿåˆ—ç±»å‹ */
 typedef struct QNode
 {
   QElemType data;
@@ -150,10 +150,10 @@ typedef struct QNode
 
 typedef struct
 {
-  QueuePtr front,rear; /* ¶ÓÍ·¡¢¶ÓÎ²Ö¸Õë */
+  QueuePtr front,rear; /* é˜Ÿå¤´ã€é˜Ÿå°¾æŒ‡é’ˆ */
 }LinkQueue;
 Status InitQueue(LinkQueue *Q)
-{ /* ¹¹ÔìÒ»¸ö¿Õ¶ÓÁĞQ */
+{ /* æ„é€ ä¸€ä¸ªç©ºé˜Ÿåˆ—Q */
   (*Q).front=(*Q).rear=(QueuePtr)malloc(sizeof(QNode));
   if(!(*Q).front)
     exit(OVERFLOW);
@@ -161,16 +161,16 @@ Status InitQueue(LinkQueue *Q)
   return OK;
 }
 Status QueueEmpty(LinkQueue Q)
-{ /* ÈôQÎª¿Õ¶ÓÁĞ,Ôò·µ»ØTRUE,·ñÔò·µ»ØFALSE */
+{ /* è‹¥Qä¸ºç©ºé˜Ÿåˆ—,åˆ™è¿”å›TRUE,å¦åˆ™è¿”å›FALSE */
   if(Q.front==Q.rear)
     return TRUE;
   else
     return FALSE;
 }
 Status EnQueue(LinkQueue *Q,QElemType e)
-{ /* ²åÈëÔªËØeÎªQµÄĞÂµÄ¶ÓÎ²ÔªËØ */
+{ /* æ’å…¥å…ƒç´ eä¸ºQçš„æ–°çš„é˜Ÿå°¾å…ƒç´  */
   QueuePtr p=(QueuePtr)malloc(sizeof(QNode));
-  if(!p) /* ´æ´¢·ÖÅäÊ§°Ü */
+  if(!p) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     exit(OVERFLOW);
   p->data=e;
   p->next=NULL;
@@ -179,7 +179,7 @@ Status EnQueue(LinkQueue *Q,QElemType e)
   return OK;
 }
 Status DeQueue(LinkQueue *Q,QElemType *e)
-{ /* Èô¶ÓÁĞ²»¿Õ,É¾³ıQµÄ¶ÓÍ·ÔªËØ,ÓÃe·µ»ØÆäÖµ,²¢·µ»ØOK,·ñÔò·µ»ØERROR */
+{ /* è‹¥é˜Ÿåˆ—ä¸ç©º,åˆ é™¤Qçš„é˜Ÿå¤´å…ƒç´ ,ç”¨eè¿”å›å…¶å€¼,å¹¶è¿”å›OK,å¦åˆ™è¿”å›ERROR */
   QueuePtr p;
   if((*Q).front==(*Q).rear)
     return ERROR;
@@ -192,29 +192,29 @@ Status DeQueue(LinkQueue *Q,QElemType *e)
   return OK;
 }
 void BFSTraverse(ALGraph G,void(*Visit)(char*))
-{/*°´¹ã¶ÈÓÅÏÈ·Çµİ¹é±éÀúÍ¼G¡£Ê¹ÓÃ¸¨Öú¶ÓÁĞQºÍ·ÃÎÊ±êÖ¾Êı×évisited¡£Ëã·¨7.6 */
+{/*æŒ‰å¹¿åº¦ä¼˜å…ˆéé€’å½’éå†å›¾Gã€‚ä½¿ç”¨è¾…åŠ©é˜Ÿåˆ—Qå’Œè®¿é—®æ ‡å¿—æ•°ç»„visitedã€‚ç®—æ³•7.6 */
   int v,u,w;
   VertexType u1,w1;
   LinkQueue Q;
   for(v=0;v<G.vexnum;++v)
-    visited[v]=FALSE; /* ÖÃ³õÖµ */
-  InitQueue(&Q); /* ÖÃ¿ÕµÄ¸¨Öú¶ÓÁĞQ */
-  for(v=0;v<G.vexnum;v++) /* Èç¹ûÊÇÁ¬Í¨Í¼,Ö»v=0¾Í±éÀúÈ«Í¼ */
-    if(!visited[v]) /* vÉĞÎ´·ÃÎÊ */
+    visited[v]=FALSE; /* ç½®åˆå€¼ */
+  InitQueue(&Q); /* ç½®ç©ºçš„è¾…åŠ©é˜Ÿåˆ—Q */
+  for(v=0;v<G.vexnum;v++) /* å¦‚æœæ˜¯è¿é€šå›¾,åªv=0å°±éå†å…¨å›¾ */
+    if(!visited[v]) /* vå°šæœªè®¿é—® */
     {
       visited[v]=TRUE;
       Visit(G.vertices[v].data);
-      EnQueue(&Q,v); /* vÈë¶ÓÁĞ */
-      while(!QueueEmpty(Q)) /* ¶ÓÁĞ²»¿Õ */
+      EnQueue(&Q,v); /* vå…¥é˜Ÿåˆ— */
+      while(!QueueEmpty(Q)) /* é˜Ÿåˆ—ä¸ç©º */
       {
-        DeQueue(&Q,&u); /* ¶ÓÍ·ÔªËØ³ö¶Ó²¢ÖÃÎªu */
+        DeQueue(&Q,&u); /* é˜Ÿå¤´å…ƒç´ å‡ºé˜Ÿå¹¶ç½®ä¸ºu */
         strcpy(u1,*GetVex(G,u));
         for(w=FirstAdjVex(G,u1);w>=0;w=NextAdjVex(G,u1,strcpy(w1,*GetVex(G,w))))
-          if(!visited[w]) /* wÎªuµÄÉĞÎ´·ÃÎÊµÄÁÚ½Ó¶¥µã */
+          if(!visited[w]) /* wä¸ºuçš„å°šæœªè®¿é—®çš„é‚»æ¥é¡¶ç‚¹ */
           {
             visited[w]=TRUE;
             Visit(G.vertices[w].data);
-            EnQueue(&Q,w); /* wÈë¶Ó */
+            EnQueue(&Q,w); /* wå…¥é˜Ÿ */
           }
       }
     }
@@ -222,40 +222,40 @@ void BFSTraverse(ALGraph G,void(*Visit)(char*))
 }
 
 void Display(ALGraph G)
-{ /* Êä³öÍ¼µÄÁÚ½Ó¾ØÕóG */
+{ /* è¾“å‡ºå›¾çš„é‚»æ¥çŸ©é˜µG */
   int i;
   ArcNode *p;
   switch(G.kind)
   {
-    case DG: printf("ÓĞÏòÍ¼\n");
+    case DG: printf("æœ‰å‘å›¾\n");
              break;
-    case DN: printf("ÓĞÏòÍø\n");
+    case DN: printf("æœ‰å‘ç½‘\n");
              break;
-    case AG: printf("ÎŞÏòÍ¼\n");
+    case AG: printf("æ— å‘å›¾\n");
              break;
-    case AN: printf("ÎŞÏòÍø\n");
+    case AN: printf("æ— å‘ç½‘\n");
   }
-  printf("%d¸ö¶¥µã£º\n",G.vexnum);
+  printf("%dä¸ªé¡¶ç‚¹ï¼š\n",G.vexnum);
   for(i=0;i<G.vexnum;++i)
     printf("%s ",G.vertices[i].data);
-  printf("\n%dÌõ»¡(±ß):\n",G.arcnum);
+  printf("\n%dæ¡å¼§(è¾¹):\n",G.arcnum);
   for(i=0;i<G.vexnum;i++)
   {
     p=G.vertices[i].firstarc;
     while(p)
     {
-      if(G.kind<=1) /* ÓĞÏò */
+      if(G.kind<=1) /* æœ‰å‘ */
       {
-        printf("%s¡ú%s ",G.vertices[i].data,G.vertices[p->adjvex].data);
-        if(G.kind==DN) /* Íø */
+        printf("%sâ†’%s ",G.vertices[i].data,G.vertices[p->adjvex].data);
+        if(G.kind==DN) /* ç½‘ */
           printf(":%d ",*(p->info));
       }
-      else /* ÎŞÏò(±ÜÃâÊä³öÁ½´Î) */
+      else /* æ— å‘(é¿å…è¾“å‡ºä¸¤æ¬¡) */
       {
         if(i<p->adjvex)
         {
-          printf("%s£­%s ",G.vertices[i].data,G.vertices[p->adjvex].data);
-          if(G.kind==AN) /* Íø */
+          printf("%sï¼%s ",G.vertices[i].data,G.vertices[p->adjvex].data);
+          if(G.kind==AN) /* ç½‘ */
             printf(":%d ",*(p->info));
         }
       }
@@ -265,11 +265,11 @@ void Display(ALGraph G)
   }
 }
 void FindInDegree(ALGraph G,int indegree[])
-{ /* Çó¶¥µãµÄÈë¶È*/
+{ /* æ±‚é¡¶ç‚¹çš„å…¥åº¦*/
   int i;
   ArcNode *p;
   for(i=0;i<G.vexnum;i++)
-    indegree[i]=0; /* ¸³³õÖµ */
+    indegree[i]=0; /* èµ‹åˆå€¼ */
   for(i=0;i<G.vexnum;i++)
   {
     p=G.vertices[i].firstarc;
@@ -280,38 +280,38 @@ void FindInDegree(ALGraph G,int indegree[])
     }
   }
 }
-typedef int SElemType; /* Õ»ÀàĞÍ */
-#define STACK_INIT_SIZE 10 /* ´æ´¢¿Õ¼ä³õÊ¼·ÖÅäÁ¿ */
-#define STACKINCREMENT 2 /* ´æ´¢¿Õ¼ä·ÖÅäÔöÁ¿ */
+typedef int SElemType; /* æ ˆç±»å‹ */
+#define STACK_INIT_SIZE 10 /* å­˜å‚¨ç©ºé—´åˆå§‹åˆ†é…é‡ */
+#define STACKINCREMENT 2 /* å­˜å‚¨ç©ºé—´åˆ†é…å¢é‡ */
 typedef struct SqStack
 {
-  SElemType *base; /* ÔÚÕ»¹¹ÔìÖ®Ç°ºÍÏú»ÙÖ®ºó£¬baseµÄÖµÎªNULL */
-  SElemType *top; /* Õ»¶¥Ö¸Õë */
-  int stacksize; /* µ±Ç°ÒÑ·ÖÅäµÄ´æ´¢¿Õ¼ä£¬ÒÔÔªËØÎªµ¥Î» */
-}SqStack; /* Ë³ĞòÕ» */
+  SElemType *base; /* åœ¨æ ˆæ„é€ ä¹‹å‰å’Œé”€æ¯ä¹‹åï¼Œbaseçš„å€¼ä¸ºNULL */
+  SElemType *top; /* æ ˆé¡¶æŒ‡é’ˆ */
+  int stacksize; /* å½“å‰å·²åˆ†é…çš„å­˜å‚¨ç©ºé—´ï¼Œä»¥å…ƒç´ ä¸ºå•ä½ */
+}SqStack; /* é¡ºåºæ ˆ */
 Status InitStack(SqStack *S)
-{ /* ¹¹ÔìÒ»¸ö¿ÕÕ»S */
+{ /* æ„é€ ä¸€ä¸ªç©ºæ ˆS */
   (*S).base=(SElemType *)malloc(STACK_INIT_SIZE*sizeof(SElemType));
   if(!(*S).base)
-    exit(OVERFLOW); /* ´æ´¢·ÖÅäÊ§°Ü */
+    exit(OVERFLOW); /* å­˜å‚¨åˆ†é…å¤±è´¥ */
   (*S).top=(*S).base;
   (*S).stacksize=STACK_INIT_SIZE;
   return OK;
 }
 Status StackEmpty(SqStack S)
-{ /* ÈôÕ»SÎª¿ÕÕ»£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE */
+{ /* è‹¥æ ˆSä¸ºç©ºæ ˆï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE */
   if(S.top==S.base)
     return TRUE;
   else
     return FALSE;
 }
 Status Push(SqStack *S,SElemType e)
-{ /* ²åÈëÔªËØeÎªĞÂµÄÕ»¶¥ÔªËØ */
-  if((*S).top-(*S).base>=(*S).stacksize) /* Õ»Âú£¬×·¼Ó´æ´¢¿Õ¼ä */
+{ /* æ’å…¥å…ƒç´ eä¸ºæ–°çš„æ ˆé¡¶å…ƒç´  */
+  if((*S).top-(*S).base>=(*S).stacksize) /* æ ˆæ»¡ï¼Œè¿½åŠ å­˜å‚¨ç©ºé—´ */
   {
     (*S).base=(SElemType *)realloc((*S).base,((*S).stacksize+STACKINCREMENT)*sizeof(SElemType));
     if(!(*S).base)
-      exit(OVERFLOW); /* ´æ´¢·ÖÅäÊ§°Ü */
+      exit(OVERFLOW); /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     (*S).top=(*S).base+(*S).stacksize;
     (*S).stacksize+=STACKINCREMENT;
   }
@@ -319,51 +319,51 @@ Status Push(SqStack *S,SElemType e)
   return OK;
 }
 Status Pop(SqStack *S,SElemType *e)
-{ /* ÈôÕ»²»¿Õ£¬ÔòÉ¾³ıSµÄÕ»¶¥ÔªËØ£¬ÓÃe·µ»ØÆäÖµ£¬²¢·µ»ØOK£»·ñÔò·µ»ØERROR */
+{ /* è‹¥æ ˆä¸ç©ºï¼Œåˆ™åˆ é™¤Sçš„æ ˆé¡¶å…ƒç´ ï¼Œç”¨eè¿”å›å…¶å€¼ï¼Œå¹¶è¿”å›OKï¼›å¦åˆ™è¿”å›ERROR */
   if((*S).top==(*S).base)
     return ERROR;
   *e=*--(*S).top;
   return OK;
 }
 Status TopologicalSort(ALGraph G)
-{ /* ÓĞÏòÍ¼G²ÉÓÃÁÚ½Ó±í´æ´¢½á¹¹¡£ÈôGÎŞ»ØÂ·,ÔòÊä³öGµÄ¶¥µãµÄÒ»¸öÍØÆËĞòÁĞ²¢·µ»ØOK, */
-  /* ·ñÔò·µ»ØERROR¡£*/
+{ /* æœ‰å‘å›¾Gé‡‡ç”¨é‚»æ¥è¡¨å­˜å‚¨ç»“æ„ã€‚è‹¥Gæ— å›è·¯,åˆ™è¾“å‡ºGçš„é¡¶ç‚¹çš„ä¸€ä¸ªæ‹“æ‰‘åºåˆ—å¹¶è¿”å›OK, */
+  /* å¦åˆ™è¿”å›ERRORã€‚*/
   int i,k,count,indegree[MAX_VERTEX_NUM];
   SqStack S;
   ArcNode *p;
-  FindInDegree(G,indegree); /* ¶Ô¸÷¶¥µãÇóÈë¶Èindegree[0..vernum-1] */
-  InitStack(&S); /* ³õÊ¼»¯Õ» */
-  for(i=0;i<G.vexnum;++i) /* ½¨ÁãÈë¶È¶¥µãÕ»S */
+  FindInDegree(G,indegree); /* å¯¹å„é¡¶ç‚¹æ±‚å…¥åº¦indegree[0..vernum-1] */
+  InitStack(&S); /* åˆå§‹åŒ–æ ˆ */
+  for(i=0;i<G.vexnum;++i) /* å»ºé›¶å…¥åº¦é¡¶ç‚¹æ ˆS */
     if(!indegree[i])
-      Push(&S,i); /* Èë¶ÈÎª0Õß½øÕ» */
-  count=0; /* ¶ÔÊä³ö¶¥µã¼ÆÊı */
+      Push(&S,i); /* å…¥åº¦ä¸º0è€…è¿›æ ˆ */
+  count=0; /* å¯¹è¾“å‡ºé¡¶ç‚¹è®¡æ•° */
   while(!StackEmpty(S))
-  { /* Õ»²»¿Õ */
+  { /* æ ˆä¸ç©º */
     Pop(&S,&i);
-    printf("%s ",G.vertices[i].data); /* Êä³öiºÅ¶¥µã²¢¼ÆÊı */
+    printf("%s ",G.vertices[i].data); /* è¾“å‡ºiå·é¡¶ç‚¹å¹¶è®¡æ•° */
     ++count;
     for(p=G.vertices[i].firstarc;p;p=p->nextarc)
-    { /* ¶ÔiºÅ¶¥µãµÄÃ¿¸öÁÚ½ÓµãµÄÈë¶È¼õ1 */
+    { /* å¯¹iå·é¡¶ç‚¹çš„æ¯ä¸ªé‚»æ¥ç‚¹çš„å…¥åº¦å‡1 */
       k=p->adjvex;
-      if(!(--indegree[k])) /* ÈôÈë¶È¼õÎª0,ÔòÈëÕ» */
+      if(!(--indegree[k])) /* è‹¥å…¥åº¦å‡ä¸º0,åˆ™å…¥æ ˆ */
         Push(&S,k);
     }
   }
   if(count<G.vexnum)
   {
-    printf("´ËÓĞÏòÍ¼ÓĞ»ØÂ·\n");
+    printf("æ­¤æœ‰å‘å›¾æœ‰å›è·¯\n");
     return ERROR;
   }
   else
   {
-    printf("ÎªÒ»¸öÍØÆËĞòÁĞ¡£\n");
+    printf("ä¸ºä¸€ä¸ªæ‹“æ‰‘åºåˆ—ã€‚\n");
     return OK;
   }
 }
 void main()
 {
   ALGraph f;
-  printf("ÇëÑ¡ÔñÓĞÏòÍ¼\n");
+  printf("è¯·é€‰æ‹©æœ‰å‘å›¾\n");
   CreateGraph(&f);
   Display(f);
   TopologicalSort(f);

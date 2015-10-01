@@ -1,47 +1,47 @@
-#include<limits.h> /* INT_MAXµÈ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<limits.h> /* INT_MAXç­‰ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define N 8
-#define SIZE 100 /* ¾²Ì¬Á´±íÈİÁ¿ */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàĞÍÎªÕûĞÍ */
-typedef int InfoType; /* ¶¨ÒåÆäËüÊı¾İÏîµÄÀàĞÍ */
+#define SIZE 100 /* é™æ€é“¾è¡¨å®¹é‡ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»å‹ä¸ºæ•´å‹ */
+typedef int InfoType; /* å®šä¹‰å…¶å®ƒæ•°æ®é¡¹çš„ç±»å‹ */
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊı¾İÏî£¬¾ßÌåÀàĞÍÔÚÖ÷³ÌÖĞ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàĞÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»å‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»å‹ */
 
 typedef struct
 {
-  RedType rc; /* ¼ÇÂ¼Ïî */
-  int next; /* Ö¸ÕëÏî */
-}SLNode; /* ±í½áµãÀàĞÍ */
+  RedType rc; /* è®°å½•é¡¹ */
+  int next; /* æŒ‡é’ˆé¡¹ */
+}SLNode; /* è¡¨ç»“ç‚¹ç±»å‹ */
 typedef struct
 {
-  SLNode r[SIZE]; /* 0ºÅµ¥ÔªÎª±íÍ·½áµã */
-  int length; /* Á´±íµ±Ç°³¤¶È */
-}SLinkListType; /* ¾²Ì¬Á´±íÀàĞÍ */
+  SLNode r[SIZE]; /* 0å·å•å…ƒä¸ºè¡¨å¤´ç»“ç‚¹ */
+  int length; /* é“¾è¡¨å½“å‰é•¿åº¦ */
+}SLinkListType; /* é™æ€é“¾è¡¨ç±»å‹ */
 void TableInsert(SLinkListType *SL,RedType D[],int n)
-{ /* ÓÉÊı×éD½¨Á¢n¸öÔªËØµÄ±í²åÈëÅÅĞòµÄ¾²Ì¬Á´±íSL */
+{ /* ç”±æ•°ç»„Då»ºç«‹nä¸ªå…ƒç´ çš„è¡¨æ’å…¥æ’åºçš„é™æ€é“¾è¡¨SL */
   int i,p,q;
-  (*SL).r[0].rc.key=INT_MAX; /* ±íÍ·½áµã¼ÇÂ¼µÄ¹Ø¼ü×ÖÈ¡×î´óÕûÊı(·Ç½µĞòÁ´±íµÄ±íÎ²) */
-  (*SL).r[0].next=0; /* nextÓòÎª0±íÊ¾±íÎ²(ÏÖÎª¿Õ±í£¬³õÊ¼»¯) */
+  (*SL).r[0].rc.key=INT_MAX; /* è¡¨å¤´ç»“ç‚¹è®°å½•çš„å…³é”®å­—å–æœ€å¤§æ•´æ•°(éé™åºé“¾è¡¨çš„è¡¨å°¾) */
+  (*SL).r[0].next=0; /* nextåŸŸä¸º0è¡¨ç¤ºè¡¨å°¾(ç°ä¸ºç©ºè¡¨ï¼Œåˆå§‹åŒ–) */
   for(i=0;i<n;i++)
   {
-    (*SL).r[i+1].rc=D[i]; /* ½«Êı×éDµÄÖµ¸³¸ø¾²Ì¬Á´±íSL */
+    (*SL).r[i+1].rc=D[i]; /* å°†æ•°ç»„Dçš„å€¼èµ‹ç»™é™æ€é“¾è¡¨SL */
     q=0;
     p=(*SL).r[0].next;
     while((*SL).r[p].rc.key<=(*SL).r[i+1].rc.key)
-    { /* ¾²Ì¬Á´±íÏòºóÒÆ */
+    { /* é™æ€é“¾è¡¨å‘åç§» */
       q=p;
       p=(*SL).r[p].next;
     }
-    (*SL).r[i+1].next=p; /* ½«µ±Ç°¼ÇÂ¼²åÈë¾²Ì¬Á´±í */
+    (*SL).r[i+1].next=p; /* å°†å½“å‰è®°å½•æ’å…¥é™æ€é“¾è¡¨ */
     (*SL).r[q].next=i+1;
   }
   (*SL).length=n;
 }
 void Sort(SLinkListType L,int adr[])
-{ /* ÇóµÃadr[1..L.length]£¬adr[i]Îª¾²Ì¬Á´±íLµÄµÚi¸ö×îĞ¡¼ÇÂ¼µÄĞòºÅ */
+{ /* æ±‚å¾—adr[1..L.length]ï¼Œadr[i]ä¸ºé™æ€é“¾è¡¨Lçš„ç¬¬iä¸ªæœ€å°è®°å½•çš„åºå· */
   int i=1,p=L.r[0].next;
   while(p)
   {
@@ -50,19 +50,19 @@ void Sort(SLinkListType L,int adr[])
   }
 }
 void Rearrange(SLinkListType *L,int adr[])
-{ /* adr¸ø³ö¾²Ì¬Á´±íLµÄÓĞĞò´ÎĞò£¬¼´L.r[adr[i]]ÊÇµÚiĞ¡µÄ¼ÇÂ¼¡£ */
+{ /* adrç»™å‡ºé™æ€é“¾è¡¨Lçš„æœ‰åºæ¬¡åºï¼Œå³L.r[adr[i]]æ˜¯ç¬¬iå°çš„è®°å½•ã€‚ */
   int i,j,k;
   for(i=1;i<(*L).length;++i)
     if(adr[i]!=i)
     {
       j=i;
-      (*L).r[0]=(*L).r[i]; /* Ôİ´æ¼ÇÂ¼(*L).r[i] */
+      (*L).r[0]=(*L).r[i]; /* æš‚å­˜è®°å½•(*L).r[i] */
       while(adr[j]!=i)
-      { /* µ÷Õû(*L).r[adr[j]]µÄ¼ÇÂ¼µ½Î»Ö±µ½adr[j]=iÎªÖ¹ */
+      { /* è°ƒæ•´(*L).r[adr[j]]çš„è®°å½•åˆ°ä½ç›´åˆ°adr[j]=iä¸ºæ­¢ */
         k=adr[j];
         (*L).r[j]=(*L).r[k];
         adr[j]=j;
-        j=k; /* ¼ÇÂ¼°´Ğòµ½Î» */
+        j=k; /* è®°å½•æŒ‰åºåˆ°ä½ */
       }
       (*L).r[j]=(*L).r[0];
       adr[j]=j;
@@ -80,7 +80,7 @@ void main()
   SLinkListType l1;
   int *adr,i;
   TableInsert(&l1,d,N);
-  printf("ÅÅĞòÇ°:\n");
+  printf("æ’åºå‰:\n");
   print(l1);
   adr=(int*)malloc((l1.length+1)*sizeof(int));
   Sort(l1,adr);
@@ -88,6 +88,6 @@ void main()
     printf("adr[%d]=%d ",i,adr[i]);
   printf("\n");
   Rearrange(&l1,adr);
-  printf("l1ÅÅĞòºó:\n");
+  printf("l1æ’åºå:\n");
   print(l1);
 }

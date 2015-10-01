@@ -1,34 +1,34 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
-/* º¯Êı½á¹û×´Ì¬´úÂë */
+/* å‡½æ•°ç»“æœçŠ¶æ€ä»£ç  */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-/* #define OVERFLOW -2 ÒòÎªÔÚmath.hÖĞÒÑ¶¨ÒåOVERFLOWµÄÖµÎª3,¹ÊÈ¥µô´ËĞĞ */
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-typedef int Boolean; /* BooleanÊÇ²¼¶ûÀàĞÍ,ÆäÖµÊÇTRUE»òFALSE */
+/* #define OVERFLOW -2 å› ä¸ºåœ¨math.hä¸­å·²å®šä¹‰OVERFLOWçš„å€¼ä¸º3,æ•…å»æ‰æ­¤è¡Œ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+typedef int Boolean; /* Booleanæ˜¯å¸ƒå°”ç±»å‹,å…¶å€¼æ˜¯TRUEæˆ–FALSE */
 typedef int ElemType;
 struct LNode
 {
   ElemType data;
   struct LNode *next;
 };
-typedef struct LNode *LinkList; /* ÁíÒ»ÖÖ¶¨ÒåLinkListµÄ·½·¨ */
+typedef struct LNode *LinkList; /* å¦ä¸€ç§å®šä¹‰LinkListçš„æ–¹æ³• */
 Status InitList_CL(LinkList *L)
-{ /* ²Ù×÷½á¹û£º¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔ±íL */
-  *L=(LinkList)malloc(sizeof(struct LNode)); /* ²úÉúÍ·½áµã,²¢Ê¹LÖ¸Ïò´ËÍ·½áµã */
-  if(!*L) /* ´æ´¢·ÖÅäÊ§°Ü */
+{ /* æ“ä½œç»“æœï¼šæ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§è¡¨L */
+  *L=(LinkList)malloc(sizeof(struct LNode)); /* äº§ç”Ÿå¤´ç»“ç‚¹,å¹¶ä½¿LæŒ‡å‘æ­¤å¤´ç»“ç‚¹ */
+  if(!*L) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     exit(OVERFLOW);
-  (*L)->next=*L; /* Ö¸ÕëÓòÖ¸ÏòÍ·½áµã */
+  (*L)->next=*L; /* æŒ‡é’ˆåŸŸæŒ‡å‘å¤´ç»“ç‚¹ */
   return OK;
 }
 
 int ListLength_CL(LinkList L)
-{ /* ³õÊ¼Ìõ¼ş£ºLÒÑ´æÔÚ¡£²Ù×÷½á¹û£º·µ»ØLÖĞÊı¾İÔªËØ¸öÊı */
+{ /* åˆå§‹æ¡ä»¶ï¼šLå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šè¿”å›Lä¸­æ•°æ®å…ƒç´ ä¸ªæ•° */
   int i=0;
-  LinkList p=L->next; /* pÖ¸ÏòÍ·½áµã */
-  while(p!=L) /* Ã»µ½±íÎ² */
+  LinkList p=L->next; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
+  while(p!=L) /* æ²¡åˆ°è¡¨å°¾ */
   {
     i++;
     p=p->next;
@@ -36,60 +36,60 @@ int ListLength_CL(LinkList L)
   return i;
 }
 int LocateElem_CL(LinkList L,ElemType e,Status(*compare)(ElemType,ElemType))
-{ /* ³õÊ¼Ìõ¼ş£ºÏßĞÔ±íLÒÑ´æÔÚ£¬compare()ÊÇÊı¾İÔªËØÅĞ¶¨º¯Êı */
-  /* ²Ù×÷½á¹û£º·µ»ØLÖĞµÚ1¸öÓëeÂú×ã¹ØÏµcompare()µÄÊı¾İÔªËØµÄÎ»Ğò¡£ */
-  /*           ÈôÕâÑùµÄÊı¾İÔªËØ²»´æÔÚ£¬Ôò·µ»ØÖµÎª0 */
+{ /* åˆå§‹æ¡ä»¶ï¼šçº¿æ€§è¡¨Lå·²å­˜åœ¨ï¼Œcompare()æ˜¯æ•°æ®å…ƒç´ åˆ¤å®šå‡½æ•° */
+  /* æ“ä½œç»“æœï¼šè¿”å›Lä¸­ç¬¬1ä¸ªä¸eæ»¡è¶³å…³ç³»compare()çš„æ•°æ®å…ƒç´ çš„ä½åºã€‚ */
+  /*           è‹¥è¿™æ ·çš„æ•°æ®å…ƒç´ ä¸å­˜åœ¨ï¼Œåˆ™è¿”å›å€¼ä¸º0 */
   int i=0;
-  LinkList p=L->next->next; /* pÖ¸ÏòµÚÒ»¸ö½áµã */
+  LinkList p=L->next->next; /* pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹ */
   while(p!=L->next)
   {
     i++;
-    if(compare(p->data,e)) /* Âú×ã¹ØÏµ */
+    if(compare(p->data,e)) /* æ»¡è¶³å…³ç³» */
       return i;
     p=p->next;
   }
   return 0;
 }
-Status ListInsert_CL(LinkList *L,int i,ElemType e) /* ¸Ä±äL */
-{ /* ÔÚLµÄµÚi¸öÎ»ÖÃÖ®Ç°²åÈëÔªËØe */
-  LinkList p=(*L)->next,s; /* pÖ¸ÏòÍ·½áµã */
+Status ListInsert_CL(LinkList *L,int i,ElemType e) /* æ”¹å˜L */
+{ /* åœ¨Lçš„ç¬¬iä¸ªä½ç½®ä¹‹å‰æ’å…¥å…ƒç´ e */
+  LinkList p=(*L)->next,s; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
   int j=0;
-  if(i<=0||i>ListLength_CL(*L)+1) /* ÎŞ·¨ÔÚµÚi¸öÔªËØÖ®Ç°²åÈë */
+  if(i<=0||i>ListLength_CL(*L)+1) /* æ— æ³•åœ¨ç¬¬iä¸ªå…ƒç´ ä¹‹å‰æ’å…¥ */
     return ERROR;
-  while(j<i-1) /* Ñ°ÕÒµÚi-1¸ö½áµã */
+  while(j<i-1) /* å¯»æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹ */
   {
     p=p->next;
     j++;
   }
-  s=(LinkList)malloc(sizeof(struct LNode)); /* Éú³ÉĞÂ½áµã */
-  s->data=e; /* ²åÈëLÖĞ */
+  s=(LinkList)malloc(sizeof(struct LNode)); /* ç”Ÿæˆæ–°ç»“ç‚¹ */
+  s->data=e; /* æ’å…¥Lä¸­ */
   s->next=p->next;
   p->next=s;
-  if(p==*L) /* ¸Ä±äÎ²½áµã */
+  if(p==*L) /* æ”¹å˜å°¾ç»“ç‚¹ */
     *L=s;
   return OK;
 }
-Status ListDelete_CL(LinkList *L,int i,ElemType *e) /* ¸Ä±äL */
-{ /* É¾³ıLµÄµÚi¸öÔªËØ,²¢ÓÉe·µ»ØÆäÖµ */
-  LinkList p=(*L)->next,q; /* pÖ¸ÏòÍ·½áµã */
+Status ListDelete_CL(LinkList *L,int i,ElemType *e) /* æ”¹å˜L */
+{ /* åˆ é™¤Lçš„ç¬¬iä¸ªå…ƒç´ ,å¹¶ç”±eè¿”å›å…¶å€¼ */
+  LinkList p=(*L)->next,q; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
   int j=0;
-  if(i<=0||i>ListLength_CL(*L)) /* µÚi¸öÔªËØ²»´æÔÚ */
+  if(i<=0||i>ListLength_CL(*L)) /* ç¬¬iä¸ªå…ƒç´ ä¸å­˜åœ¨ */
     return ERROR;
-  while(j<i-1) /* Ñ°ÕÒµÚi-1¸ö½áµã */
+  while(j<i-1) /* å¯»æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹ */
   {
     p=p->next;
     j++;
   }
-  q=p->next; /* qÖ¸Ïò´ıÉ¾³ı½áµã */
+  q=p->next; /* qæŒ‡å‘å¾…åˆ é™¤ç»“ç‚¹ */
   p->next=q->next;
   *e=q->data;
-  if(*L==q) /* É¾³ıµÄÊÇ±íÎ²ÔªËØ */
+  if(*L==q) /* åˆ é™¤çš„æ˜¯è¡¨å°¾å…ƒç´  */
     *L=p;
-  free(q); /* ÊÍ·Å´ıÉ¾³ı½áµã */
+  free(q); /* é‡Šæ”¾å¾…åˆ é™¤ç»“ç‚¹ */
   return OK;
 }
 Status ListTraverse_CL(LinkList L,void(*vi)(ElemType))
-{ /* ³õÊ¼Ìõ¼ş:LÒÑ´æÔÚ¡£²Ù×÷½á¹û:ÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯Êıvi()¡£Ò»µ©vi()Ê§°Ü,Ôò²Ù×÷Ê§°Ü */
+{ /* åˆå§‹æ¡ä»¶:Lå·²å­˜åœ¨ã€‚æ“ä½œç»“æœ:ä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°vi()ã€‚ä¸€æ—¦vi()å¤±è´¥,åˆ™æ“ä½œå¤±è´¥ */
   LinkList p=L->next->next;
   while(p!=L->next)
   {
@@ -116,22 +116,22 @@ void main()
   ElemType e;
   int j;
   Status i;
-  i=InitList_CL(&L); /* ³õÊ¼»¯µ¥Ñ­»·Á´±íL */
-  printf("ÒÀ´ÎÔÚµ¥Ñ­»·Á´±íÖĞ²åÈë3,5\n");
-  ListInsert_CL(&L,1,3); /* ÔÚLÖĞÒÀ´Î²åÈë3,5 */
+  i=InitList_CL(&L); /* åˆå§‹åŒ–å•å¾ªç¯é“¾è¡¨L */
+  printf("ä¾æ¬¡åœ¨å•å¾ªç¯é“¾è¡¨ä¸­æ’å…¥3,5\n");
+  ListInsert_CL(&L,1,3); /* åœ¨Lä¸­ä¾æ¬¡æ’å…¥3,5 */
   ListInsert_CL(&L,2,5);
   j=LocateElem_CL(L,5,compare);
   if(j)
-    printf("LµÄµÚ%d¸öÔªËØÎª5¡£\n",j);
+    printf("Lçš„ç¬¬%dä¸ªå…ƒç´ ä¸º5ã€‚\n",j);
   else
-    printf("²»´æÔÚÖµÎª5µÄÔªËØ\n");
+    printf("ä¸å­˜åœ¨å€¼ä¸º5çš„å…ƒç´ \n");
   i=ListDelete_CL(&L,2,&e);
-  printf("É¾³ıLµÄµÚ2¸öÔªËØ£º\n");
+  printf("åˆ é™¤Lçš„ç¬¬2ä¸ªå…ƒç´ ï¼š\n");
   if(i)
   {
-    printf("É¾³ıµÄÔªËØÖµÎª%d,ÏÖÔÚLÖĞµÄÊı¾İÔªËØÒÀ´ÎÎª£º",e);
+    printf("åˆ é™¤çš„å…ƒç´ å€¼ä¸º%d,ç°åœ¨Lä¸­çš„æ•°æ®å…ƒç´ ä¾æ¬¡ä¸ºï¼š",e);
     ListTraverse_CL(L,visit);
   }
   else
-    printf("É¾³ı²»³É¹¦£¡\n");
+    printf("åˆ é™¤ä¸æˆåŠŸï¼\n");
 }

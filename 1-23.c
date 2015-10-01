@@ -1,53 +1,53 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
-/* º¯Êı½á¹û×´Ì¬´úÂë */
+/* å‡½æ•°ç»“æœçŠ¶æ€ä»£ç  */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 typedef struct
 {
-  char *ch; /* ÈôÊÇ·Ç¿Õ´®,Ôò°´´®³¤·ÖÅä´æ´¢Çø,·ñÔòchÎªNULL */
-  int length; /* ´®³¤¶È */
+  char *ch; /* è‹¥æ˜¯éç©ºä¸²,åˆ™æŒ‰ä¸²é•¿åˆ†é…å­˜å‚¨åŒº,å¦åˆ™chä¸ºNULL */
+  int length; /* ä¸²é•¿åº¦ */
 }HString;
 Status StrAssign(HString *T,char *chars)
-{ /* Éú³ÉÒ»¸öÆäÖµµÈÓÚ´®³£Á¿charsµÄ´®T */
+{ /* ç”Ÿæˆä¸€ä¸ªå…¶å€¼ç­‰äºä¸²å¸¸é‡charsçš„ä¸²T */
   int i,j;
   if((*T).ch)
-    free((*T).ch); /* ÊÍ·ÅTÔ­ÓĞ¿Õ¼ä */
-  i=strlen(chars); /* ÇócharsµÄ³¤¶Èi */
+    free((*T).ch); /* é‡Šæ”¾TåŸæœ‰ç©ºé—´ */
+  i=strlen(chars); /* æ±‚charsçš„é•¿åº¦i */
   if(!i)
-  { /* charsµÄ³¤¶ÈÎª0 */
+  { /* charsçš„é•¿åº¦ä¸º0 */
     (*T).ch=NULL;
     (*T).length=0;
   }
   else
-  { /* charsµÄ³¤¶È²»Îª0 */
-    (*T).ch=(char*)malloc(i*sizeof(char)); /* ·ÖÅä´®¿Õ¼ä */
-    if(!(*T).ch) /* ·ÖÅä´®¿Õ¼äÊ§°Ü */
+  { /* charsçš„é•¿åº¦ä¸ä¸º0 */
+    (*T).ch=(char*)malloc(i*sizeof(char)); /* åˆ†é…ä¸²ç©ºé—´ */
+    if(!(*T).ch) /* åˆ†é…ä¸²ç©ºé—´å¤±è´¥ */
       exit(OVERFLOW);
-    for(j=0;j<i;j++) /* ¿½±´´® */
+    for(j=0;j<i;j++) /* æ‹·è´ä¸² */
       (*T).ch[j]=chars[j];
     (*T).length=i;
   }
   return OK;
 }
 Status StrCopy(HString *T,HString S)
-{ /* ³õÊ¼Ìõ¼ş:´®S´æÔÚ¡£²Ù×÷½á¹û: ÓÉ´®S¸´ÖÆµÃ´®T */
+{ /* åˆå§‹æ¡ä»¶:ä¸²Så­˜åœ¨ã€‚æ“ä½œç»“æœ: ç”±ä¸²Så¤åˆ¶å¾—ä¸²T */
   int i;
   if((*T).ch)
-    free((*T).ch); /* ÊÍ·ÅTÔ­ÓĞ¿Õ¼ä */
-  (*T).ch=(char*)malloc(S.length*sizeof(char)); /* ·ÖÅä´®¿Õ¼ä */
-  if(!(*T).ch) /* ·ÖÅä´®¿Õ¼äÊ§°Ü */
+    free((*T).ch); /* é‡Šæ”¾TåŸæœ‰ç©ºé—´ */
+  (*T).ch=(char*)malloc(S.length*sizeof(char)); /* åˆ†é…ä¸²ç©ºé—´ */
+  if(!(*T).ch) /* åˆ†é…ä¸²ç©ºé—´å¤±è´¥ */
     exit(OVERFLOW);
-  for(i=0;i<S.length;i++) /* ¿½±´´® */
+  for(i=0;i<S.length;i++) /* æ‹·è´ä¸² */
     (*T).ch[i]=S.ch[i];
   (*T).length=S.length;
   return OK;
 }
 Status StrEmpty(HString S)
-{ /* ³õÊ¼Ìõ¼ş: ´®S´æÔÚ¡£²Ù×÷½á¹û: ÈôSÎª¿Õ´®,Ôò·µ»ØTRUE,·ñÔò·µ»ØFALSE */
+{ /* åˆå§‹æ¡ä»¶: ä¸²Så­˜åœ¨ã€‚æ“ä½œç»“æœ: è‹¥Sä¸ºç©ºä¸²,åˆ™è¿”å›TRUE,å¦åˆ™è¿”å›FALSE */
   if(S.length==0&&S.ch==NULL)
     return TRUE;
   else
@@ -55,7 +55,7 @@ Status StrEmpty(HString S)
 }
 
 int StrCompare(HString S,HString T)
-{ /* ÈôS>T,Ôò·µ»ØÖµ>0;ÈôS=T,Ôò·µ»ØÖµ=0;ÈôS<T,Ôò·µ»ØÖµ<0 */
+{ /* è‹¥S>T,åˆ™è¿”å›å€¼>0;è‹¥S=T,åˆ™è¿”å›å€¼=0;è‹¥S<T,åˆ™è¿”å›å€¼<0 */
   int i;
   for(i=0;i<S.length&&i<T.length;++i)
     if(S.ch[i]!=T.ch[i])
@@ -64,12 +64,12 @@ int StrCompare(HString S,HString T)
 }
 
 int StrLength(HString S)
-{ /* ·µ»ØSµÄÔªËØ¸öÊı,³ÆÎª´®µÄ³¤¶È */
+{ /* è¿”å›Sçš„å…ƒç´ ä¸ªæ•°,ç§°ä¸ºä¸²çš„é•¿åº¦ */
   return S.length;
 }
 
 Status ClearString(HString *S)
-{ /* ½«SÇåÎª¿Õ´® */
+{ /* å°†Sæ¸…ä¸ºç©ºä¸² */
   if((*S).ch)
   {
     free((*S).ch);
@@ -80,20 +80,20 @@ Status ClearString(HString *S)
 }
 
 Status SubString(HString *Sub, HString S,int pos,int len)
-{ /* ÓÃSub·µ»Ø´®SµÄµÚpos¸ö×Ö·ûÆğ³¤¶ÈÎªlenµÄ×Ó´®¡£ */
-  /* ÆäÖĞ,1¡Üpos¡ÜStrLength(S)ÇÒ0¡Ülen¡ÜStrLength(S)-pos+1 */
+{ /* ç”¨Subè¿”å›ä¸²Sçš„ç¬¬posä¸ªå­—ç¬¦èµ·é•¿åº¦ä¸ºlençš„å­ä¸²ã€‚ */
+  /* å…¶ä¸­,1â‰¤posâ‰¤StrLength(S)ä¸”0â‰¤lenâ‰¤StrLength(S)-pos+1 */
   int i;
   if(pos<1||pos>S.length||len<0||len>S.length-pos+1)
     return ERROR;
   if((*Sub).ch)
-    free((*Sub).ch); /* ÊÍ·Å¾É¿Õ¼ä */
-  if(!len) /* ¿Õ×Ó´® */
+    free((*Sub).ch); /* é‡Šæ”¾æ—§ç©ºé—´ */
+  if(!len) /* ç©ºå­ä¸² */
   {
     (*Sub).ch=NULL;
     (*Sub).length=0;
   }
   else
-  { /* ÍêÕû×Ó´® */
+  { /* å®Œæ•´å­ä¸² */
     (*Sub).ch=(char*)malloc(len*sizeof(char));
     if(!(*Sub).ch)
       exit(OVERFLOW);
@@ -105,14 +105,14 @@ Status SubString(HString *Sub, HString S,int pos,int len)
 }
 
 void InitString(HString *T)
-{ /* ³õÊ¼»¯(²úÉú¿Õ´®)×Ö·û´®T¡£Áí¼Ó */
+{ /* åˆå§‹åŒ–(äº§ç”Ÿç©ºä¸²)å­—ç¬¦ä¸²Tã€‚å¦åŠ  */
   (*T).length=0;
   (*T).ch=NULL;
 }
 
 int Index(HString S,HString T,int pos) 
-{ /* TÎª·Ç¿Õ´®¡£ÈôÖ÷´®SÖĞµÚpos¸ö×Ö·ûÖ®ºó´æÔÚÓëTÏàµÈµÄ×Ó´®, */
-  /* Ôò·µ»ØµÚÒ»¸öÕâÑùµÄ×Ó´®ÔÚSÖĞµÄÎ»ÖÃ,·ñÔò·µ»Ø0 */
+{ /* Tä¸ºéç©ºä¸²ã€‚è‹¥ä¸»ä¸²Sä¸­ç¬¬posä¸ªå­—ç¬¦ä¹‹åå­˜åœ¨ä¸Tç›¸ç­‰çš„å­ä¸², */
+  /* åˆ™è¿”å›ç¬¬ä¸€ä¸ªè¿™æ ·çš„å­ä¸²åœ¨Sä¸­çš„ä½ç½®,å¦åˆ™è¿”å›0 */
   int n,m,i;
   HString sub;
   InitString(&sub);
@@ -134,26 +134,26 @@ int Index(HString S,HString T,int pos)
  }
 
 Status StrInsert(HString *S,int pos,HString T)
-{ /* 1¡Üpos¡ÜStrLength(S)+1¡£ÔÚ´®SµÄµÚpos¸ö×Ö·ûÖ®Ç°²åÈë´®T */
+{ /* 1â‰¤posâ‰¤StrLength(S)+1ã€‚åœ¨ä¸²Sçš„ç¬¬posä¸ªå­—ç¬¦ä¹‹å‰æ’å…¥ä¸²T */
   int i;
-  if(pos<1||pos>(*S).length+1) /* pos²»ºÏ·¨ */
+  if(pos<1||pos>(*S).length+1) /* posä¸åˆæ³• */
     return ERROR;
-  if(T.length) /* T·Ç¿Õ,ÔòÖØĞÂ·ÖÅä¿Õ¼ä,²åÈëT */
+  if(T.length) /* Téç©º,åˆ™é‡æ–°åˆ†é…ç©ºé—´,æ’å…¥T */
   {
     (*S).ch=(char*)realloc((*S).ch,((*S).length+T.length)*sizeof(char));
     if(!(*S).ch)
       exit(OVERFLOW);
-    for(i=(*S).length-1;i>=pos-1;--i) /* Îª²åÈëT¶øÌÚ³öÎ»ÖÃ */
+    for(i=(*S).length-1;i>=pos-1;--i) /* ä¸ºæ’å…¥Tè€Œè…¾å‡ºä½ç½® */
       (*S).ch[i+T.length]=(*S).ch[i];
     for(i=0;i<T.length;i++)
-      (*S).ch[pos-1+i]=T.ch[i]; /* ²åÈëT */
+      (*S).ch[pos-1+i]=T.ch[i]; /* æ’å…¥T */
     (*S).length+=T.length;
   }
   return OK;
 }
 
 Status StrDelete(HString *S,int pos,int len)
-{ /* ´Ó´®SÖĞÉ¾³ıµÚpos¸ö×Ö·ûÆğ³¤¶ÈÎªlenµÄ×Ó´® */
+{ /* ä»ä¸²Sä¸­åˆ é™¤ç¬¬posä¸ªå­—ç¬¦èµ·é•¿åº¦ä¸ºlençš„å­ä¸² */
   int i;
   if((*S).length<pos+len-1)
     exit(ERROR);
@@ -164,39 +164,39 @@ Status StrDelete(HString *S,int pos,int len)
   return OK;
 }
 void StrPrint(HString T)
-{ /* Êä³öT×Ö·û´®¡£Áí¼Ó */
+{ /* è¾“å‡ºTå­—ç¬¦ä¸²ã€‚å¦åŠ  */
   int i;
   for(i=0;i<T.length;i++)
     printf("%c",T.ch[i]);
   printf("\n");
 }
-#define MAX_LEN 25 /* ÎÄ¼ş×î´óĞĞÊı */
-#define LINE_LEN 75 /* Ã¿ĞĞ×Ö·ûÊı×î´óÖµ+1 */
-#define NAME_LEN 20 /* ÎÄ¼şÃû×î´ó³¤¶È(°üÀ¨ÅÌ·û¡¢Â·¾¶)+1 */
+#define MAX_LEN 25 /* æ–‡ä»¶æœ€å¤§è¡Œæ•° */
+#define LINE_LEN 75 /* æ¯è¡Œå­—ç¬¦æ•°æœ€å¤§å€¼+1 */
+#define NAME_LEN 20 /* æ–‡ä»¶åæœ€å¤§é•¿åº¦(åŒ…æ‹¬ç›˜ç¬¦ã€è·¯å¾„)+1 */
 
-/* È«¾Ö±äÁ¿ */
+/* å…¨å±€å˜é‡ */
 HString T[MAX_LEN];
 char str[LINE_LEN],filename[NAME_LEN]="";
 FILE *fp;
-int n=0; /* ÎÄ¼şĞĞÊı */
+int n=0; /* æ–‡ä»¶è¡Œæ•° */
 
 void Open()
-{ /* ´ò¿ªÎÄ¼ş(ĞÂ»ò¾É) */
+{ /* æ‰“å¼€æ–‡ä»¶(æ–°æˆ–æ—§) */
   int i;
-  if(filename[0]) /* ÎÄ¼şÒÑ´ò¿ª */
-    printf("ÒÑ´æÔÚ´ò¿ªµÄÎÄ¼ş\n");
+  if(filename[0]) /* æ–‡ä»¶å·²æ‰“å¼€ */
+    printf("å·²å­˜åœ¨æ‰“å¼€çš„æ–‡ä»¶\n");
   else
   {
-    printf("ÇëÊäÈëÎÄ¼şÃû(¿É°üÀ¨ÅÌ·û¡¢Â·¾¶£¬²»³¬¹ı%d¸ö×Ö·û): ",NAME_LEN-1);
+    printf("è¯·è¾“å…¥æ–‡ä»¶å(å¯åŒ…æ‹¬ç›˜ç¬¦ã€è·¯å¾„ï¼Œä¸è¶…è¿‡%dä¸ªå­—ç¬¦): ",NAME_LEN-1);
     scanf("%s%*c",filename);
     fp=fopen(filename,"r");
-    if(fp) /* ÒÑ´æÔÚ´ËÎÄ¼ş */
+    if(fp) /* å·²å­˜åœ¨æ­¤æ–‡ä»¶ */
     {
       do
       {
         fgets(str,LINE_LEN,fp);
         i=strlen(str);
-        str[i-1]=0; /* ½«10Ç¿ÖÆ¸ÄÎª0 */
+        str[i-1]=0; /* å°†10å¼ºåˆ¶æ”¹ä¸º0 */
         i--;
         if(i>0)
         {
@@ -204,7 +204,7 @@ void Open()
           n++;
           if(n>MAX_LEN)
           {
-            printf("ÎÄ¼şÌ«´ó\n");
+            printf("æ–‡ä»¶å¤ªå¤§\n");
             return;
           }
         }
@@ -212,12 +212,12 @@ void Open()
       fclose(fp);
     }
     else
-      printf("ĞÂÎÄ¼ş\n");
+      printf("æ–°æ–‡ä»¶\n");
   }
 }
 
 void List()
-{ /* ÏÔÊ¾ÎÄ¼şÄÚÈİ */
+{ /* æ˜¾ç¤ºæ–‡ä»¶å†…å®¹ */
   int i;
   for(i=0;i<n;i++)
   {
@@ -228,13 +228,13 @@ void List()
 }
 
 void Insert()
-{ /* ²åÈëĞĞ */
+{ /* æ’å…¥è¡Œ */
   int i,l,m;
-  printf("ÔÚµÚlĞĞÇ°²åmĞĞ,ÇëÊäÈël m: ");
+  printf("åœ¨ç¬¬lè¡Œå‰æ’mè¡Œ,è¯·è¾“å…¥l m: ");
   scanf("%d%d%*c",&l,&m);
   if(n+m>MAX_LEN)
   {
-    printf("²åÈëĞĞÌ«¶à\n");
+    printf("æ’å…¥è¡Œå¤ªå¤š\n");
     return;
   }
   if(n>=l-1&&l>0)
@@ -242,7 +242,7 @@ void Insert()
     for(i=n-1;i>=l-1;i--)
       T[i+m]=T[i];
     n+=m;
-    printf("ÇëË³ĞòÊäÈë´ı²åÈëÄÚÈİ:\n");
+    printf("è¯·é¡ºåºè¾“å…¥å¾…æ’å…¥å†…å®¹:\n");
     for(i=l-1;i<l-1+m;i++)
     {
       gets(str);
@@ -251,13 +251,13 @@ void Insert()
     }
   }
   else
-    printf("ĞĞ³¬³ö·¶Î§\n");
+    printf("è¡Œè¶…å‡ºèŒƒå›´\n");
 }
 
 void Delete()
-{ /* É¾³ıĞĞ */
+{ /* åˆ é™¤è¡Œ */
   int i,l,m;
-  printf("´ÓµÚlĞĞÆğÉ¾³ımĞĞ,ÇëÊäÈël m: ");
+  printf("ä»ç¬¬lè¡Œèµ·åˆ é™¤mè¡Œ,è¯·è¾“å…¥l m: ");
   scanf("%d%d%*c",&l,&m);
   if(n>=l+m-1&&l>0)
   {
@@ -268,17 +268,17 @@ void Delete()
     n-=m;
   }
   else
-    printf("ĞĞ³¬³ö·¶Î§\n");
+    printf("è¡Œè¶…å‡ºèŒƒå›´\n");
 }
 
 void Copy()
-{ /* ¿½±´ĞĞ */
+{ /* æ‹·è´è¡Œ */
   int i,l,m,k;
-  printf("°ÑµÚlĞĞ¿ªÊ¼µÄmĞĞ²åÔÚÔ­kĞĞÖ®Ç°,ÇëÊäÈël m k: ");
+  printf("æŠŠç¬¬lè¡Œå¼€å§‹çš„mè¡Œæ’åœ¨åŸkè¡Œä¹‹å‰,è¯·è¾“å…¥l m k: ");
   scanf("%d%d%d%*c",&l,&m,&k);
   if(n+m>MAX_LEN)
   {
-    printf("¿½±´ĞĞÌ«¶à\n");
+    printf("æ‹·è´è¡Œå¤ªå¤š\n");
     return;
   }
   if(n>=k-1&&n>=l-1+m&&(k>=l+m||k<=l))
@@ -295,49 +295,49 @@ void Copy()
     }
   }
   else
-    printf("ĞĞ³¬³ö·¶Î§\n");
+    printf("è¡Œè¶…å‡ºèŒƒå›´\n");
 }
 
 void Modify()
-{ /* ĞŞ¸ÄĞĞ */
+{ /* ä¿®æ”¹è¡Œ */
   int i;
-  printf("ÇëÊäÈë´ıĞŞ¸ÄµÄĞĞºÅ: ");
+  printf("è¯·è¾“å…¥å¾…ä¿®æ”¹çš„è¡Œå·: ");
   scanf("%d%*c",&i);
-  if(i>0&&i<=n) /* ĞĞºÅºÏ·¨ */
+  if(i>0&&i<=n) /* è¡Œå·åˆæ³• */
   {
     printf("%d: ",i);
     StrPrint(T[i-1]);
-    printf("ÇëÊäÈëĞÂÄÚÈİ: ");
+    printf("è¯·è¾“å…¥æ–°å†…å®¹: ");
     gets(str);
     StrAssign(&T[i-1],str);
   }
   else
-    printf("ĞĞºÅ³¬³ö·¶Î§\n");
+    printf("è¡Œå·è¶…å‡ºèŒƒå›´\n");
 }
 
 void Search()
-{ /* ²éÕÒ×Ö·û´® */
-  int i,k,f=1; /* fÎª¼ÌĞø²éÕÒ±êÖ¾ */
+{ /* æŸ¥æ‰¾å­—ç¬¦ä¸² */
+  int i,k,f=1; /* fä¸ºç»§ç»­æŸ¥æ‰¾æ ‡å¿— */
   char b;
   HString s;
-  printf("ÇëÊäÈë´ı²éÕÒµÄ×Ö·û´®: ");
+  printf("è¯·è¾“å…¥å¾…æŸ¥æ‰¾çš„å­—ç¬¦ä¸²: ");
   scanf("%s%*c",str);
   InitString(&s);
   StrAssign(&s,str);
-  for(i=0;i<n&&f;i++) /* ÖğĞĞ²éÕÒ */
+  for(i=0;i<n&&f;i++) /* é€è¡ŒæŸ¥æ‰¾ */
   {
-    k=1; /* ÓÉÃ¿ĞĞµÚ1¸ö×Ö·ûÆğ²éÕÒ */
+    k=1; /* ç”±æ¯è¡Œç¬¬1ä¸ªå­—ç¬¦èµ·æŸ¥æ‰¾ */
     while(k)
     {
-      k=Index(T[i],s,k); /* ÓÉ±¾ĞĞµÄµÚk¸ö×Ö·û¿ªÊ¼²éÕÒ */
-      if(k) /* ÕÒµ½ */
+      k=Index(T[i],s,k); /* ç”±æœ¬è¡Œçš„ç¬¬kä¸ªå­—ç¬¦å¼€å§‹æŸ¥æ‰¾ */
+      if(k) /* æ‰¾åˆ° */
       {
-        printf("µÚ%dĞĞ: ",i+1);
+        printf("ç¬¬%dè¡Œ: ",i+1);
         StrPrint(T[i]);
-        printf("µÚ%d¸ö×Ö·û´¦ÕÒµ½¡£¼ÌĞø²éÕÒÂğ(Y/N)? ",k);
+        printf("ç¬¬%dä¸ªå­—ç¬¦å¤„æ‰¾åˆ°ã€‚ç»§ç»­æŸ¥æ‰¾å—(Y/N)? ",k);
         b=getchar();
         getchar();
-        if(b!='Y'&&b!='y') /* ÖĞ¶Ï²éÕÒ */
+        if(b!='Y'&&b!='y') /* ä¸­æ–­æŸ¥æ‰¾ */
         {
           f=0;
           break;
@@ -348,33 +348,33 @@ void Search()
     }
   }
   if(f)
-    printf("Ã»ÕÒµ½\n");
+    printf("æ²¡æ‰¾åˆ°\n");
 }
 
 void Replace1()
-{ /* Ìæ»»×Ö·û´® */
-  int i,k,f=1; /* fÎª¼ÌĞøÌæ»»±êÖ¾ */
+{ /* æ›¿æ¢å­—ç¬¦ä¸² */
+  int i,k,f=1; /* fä¸ºç»§ç»­æ›¿æ¢æ ‡å¿— */
   char b;
   HString s,t;
-  printf("ÇëÊäÈë´ıÌæ»»µÄ×Ö·û´®: ");
+  printf("è¯·è¾“å…¥å¾…æ›¿æ¢çš„å­—ç¬¦ä¸²: ");
   scanf("%s%*c",str);
   InitString(&s);
   StrAssign(&s,str);
-  printf("Ìæ»»Îª: ");
+  printf("æ›¿æ¢ä¸º: ");
   scanf("%s%*c",str);
   InitString(&t);
   StrAssign(&t,str);
-  for(i=0;i<n&&f;i++) /* ÖğĞĞ²éÕÒ¡¢Ìæ»» */
+  for(i=0;i<n&&f;i++) /* é€è¡ŒæŸ¥æ‰¾ã€æ›¿æ¢ */
   {
-    k=1; /* ÓÉÃ¿ĞĞµÚ1¸ö×Ö·ûÆğ²éÕÒ */
+    k=1; /* ç”±æ¯è¡Œç¬¬1ä¸ªå­—ç¬¦èµ·æŸ¥æ‰¾ */
     while(k)
     {
-      k=Index(T[i],s,k); /* ÓÉ±¾ĞĞµÄµÚk¸ö×Ö·û¿ªÊ¼²éÕÒ */
-      if(k) /* ÕÒµ½ */
+      k=Index(T[i],s,k); /* ç”±æœ¬è¡Œçš„ç¬¬kä¸ªå­—ç¬¦å¼€å§‹æŸ¥æ‰¾ */
+      if(k) /* æ‰¾åˆ° */
       {
-        printf("µÚ%dĞĞ: ",i+1);
+        printf("ç¬¬%dè¡Œ: ",i+1);
         StrPrint(T[i]);
-        printf("µÚ%d¸ö×Ö·û´¦ÕÒµ½¡£ÊÇ·ñÌæ»»(Y/N)? ",k);
+        printf("ç¬¬%dä¸ªå­—ç¬¦å¤„æ‰¾åˆ°ã€‚æ˜¯å¦æ›¿æ¢(Y/N)? ",k);
         b=getchar();
         getchar();
         if(b=='Y'||b=='y')
@@ -382,10 +382,10 @@ void Replace1()
           StrDelete(&T[i],k,StrLength(s));
           StrInsert(&T[i],k,t);
         }
-        printf("¼ÌĞøÌæ»»Âğ(Y/N)?");
+        printf("ç»§ç»­æ›¿æ¢å—(Y/N)?");
         b=getchar();
         getchar();
-        if(b!='Y'&&b!='y') /* ÖĞ¶Ï²éÕÒ¡¢Ìæ»» */
+        if(b!='Y'&&b!='y') /* ä¸­æ–­æŸ¥æ‰¾ã€æ›¿æ¢ */
         {
           f=0;
           break;
@@ -396,11 +396,11 @@ void Replace1()
     }
   }
   if(f)
-    printf("Ã»ÕÒµ½\n");
+    printf("æ²¡æ‰¾åˆ°\n");
 }
 
 void Save()
-{ /* ´æÅÌ */
+{ /* å­˜ç›˜ */
   int i;
   getchar();
   fp=fopen(filename,"w");
@@ -416,21 +416,21 @@ void Save()
     fclose(fp);
   }
   else
-    printf("´æÅÌÊ§°Ü\n");
+    printf("å­˜ç›˜å¤±è´¥\n");
 }
 
 void main()
 {
   Status s=TRUE;
   int i,k;
-  for(i=0;i<MAX_LEN;i++) /* ³õÊ¼»¯´® */
+  for(i=0;i<MAX_LEN;i++) /* åˆå§‹åŒ–ä¸² */
     InitString(&T[i]);
   while(s)
   {
-    printf("ÇëÑ¡Ôñ: 1.´ò¿ªÎÄ¼ş(ĞÂ»ò¾É)  2.ÏÔÊ¾ÎÄ¼şÄÚÈİ\n");
-    printf("        3.²åÈëĞĞ  4.É¾³ıĞĞ  5.¿½±´ĞĞ  6.ĞŞ¸ÄĞĞ\n");
-    printf("        7.²éÕÒ×Ö·û´®        8.Ìæ»»×Ö·û´®\n");
-    printf("        9.´æÅÌÍË³ö          0.·ÅÆú±à¼­\n");
+    printf("è¯·é€‰æ‹©: 1.æ‰“å¼€æ–‡ä»¶(æ–°æˆ–æ—§)  2.æ˜¾ç¤ºæ–‡ä»¶å†…å®¹\n");
+    printf("        3.æ’å…¥è¡Œ  4.åˆ é™¤è¡Œ  5.æ‹·è´è¡Œ  6.ä¿®æ”¹è¡Œ\n");
+    printf("        7.æŸ¥æ‰¾å­—ç¬¦ä¸²        8.æ›¿æ¢å­—ç¬¦ä¸²\n");
+    printf("        9.å­˜ç›˜é€€å‡º          0.æ”¾å¼ƒç¼–è¾‘\n");
     scanf("%d",&k);
     switch(k)
     {

@@ -1,30 +1,30 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
-/* º¯Êı½á¹û×´Ì¬´úÂë */
+/* å‡½æ•°ç»“æœçŠ¶æ€ä»£ç  */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 typedef int ElemType;
 struct LNode
 {
   ElemType data;
   struct LNode *next;
 };
-typedef struct LNode *LinkList; /* ÁíÒ»ÖÖ¶¨ÒåLinkListµÄ·½·¨ */
+typedef struct LNode *LinkList; /* å¦ä¸€ç§å®šä¹‰LinkListçš„æ–¹æ³• */
  Status InitList_CL(LinkList *L)
-{ /* ²Ù×÷½á¹û£º¹¹ÔìÒ»¸ö¿ÕµÄÏßĞÔ±íL */
-  *L=(LinkList)malloc(sizeof(struct LNode)); /* ²úÉúÍ·½áµã,²¢Ê¹LÖ¸Ïò´ËÍ·½áµã */
-  if(!*L) /* ´æ´¢·ÖÅäÊ§°Ü */
+{ /* æ“ä½œç»“æœï¼šæ„é€ ä¸€ä¸ªç©ºçš„çº¿æ€§è¡¨L */
+  *L=(LinkList)malloc(sizeof(struct LNode)); /* äº§ç”Ÿå¤´ç»“ç‚¹,å¹¶ä½¿LæŒ‡å‘æ­¤å¤´ç»“ç‚¹ */
+  if(!*L) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     exit(OVERFLOW);
-  (*L)->next=*L; /* Ö¸ÕëÓòÖ¸ÏòÍ·½áµã */
+  (*L)->next=*L; /* æŒ‡é’ˆåŸŸæŒ‡å‘å¤´ç»“ç‚¹ */
   return OK;
 }
 Status DestroyList_CL(LinkList *L)
-{ /* ²Ù×÷½á¹û£ºÏú»ÙÏßĞÔ±íL */
-  LinkList q,p=(*L)->next; /* pÖ¸ÏòÍ·½áµã */
-  while(p!=*L) /* Ã»µ½±íÎ² */
+{ /* æ“ä½œç»“æœï¼šé”€æ¯çº¿æ€§è¡¨L */
+  LinkList q,p=(*L)->next; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
+  while(p!=*L) /* æ²¡åˆ°è¡¨å°¾ */
   {
     q=p->next;
     free(p);
@@ -34,54 +34,54 @@ Status DestroyList_CL(LinkList *L)
   *L=NULL;
   return OK;
 }
-Status ClearList_CL(LinkList *L) /* ¸Ä±äL */
-{ /* ³õÊ¼Ìõ¼ş£ºÏßĞÔ±íLÒÑ´æÔÚ¡£²Ù×÷½á¹û£º½«LÖØÖÃÎª¿Õ±í */
+Status ClearList_CL(LinkList *L) /* æ”¹å˜L */
+{ /* åˆå§‹æ¡ä»¶ï¼šçº¿æ€§è¡¨Lå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šå°†Lé‡ç½®ä¸ºç©ºè¡¨ */
   LinkList p,q;
-  *L=(*L)->next; /* LÖ¸ÏòÍ·½áµã */
-  p=(*L)->next; /* pÖ¸ÏòµÚÒ»¸ö½áµã */
-  while(p!=*L) /* Ã»µ½±íÎ² */
+  *L=(*L)->next; /* LæŒ‡å‘å¤´ç»“ç‚¹ */
+  p=(*L)->next; /* pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹ */
+  while(p!=*L) /* æ²¡åˆ°è¡¨å°¾ */
   {
     q=p->next;
     free(p);
     p=q;
   }
-  (*L)->next=*L; /* Í·½áµãÖ¸ÕëÓòÖ¸Ïò×ÔÉí */
+  (*L)->next=*L; /* å¤´ç»“ç‚¹æŒ‡é’ˆåŸŸæŒ‡å‘è‡ªèº« */
   return OK;
 }
 Status ListEmpty_CL(LinkList L)
-{ /* ³õÊ¼Ìõ¼ş£ºÏßĞÔ±íLÒÑ´æÔÚ¡£²Ù×÷½á¹û£ºÈôLÎª¿Õ±í£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE */
-  if(L->next==L) /* ¿Õ */
+{ /* åˆå§‹æ¡ä»¶ï¼šçº¿æ€§è¡¨Lå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šè‹¥Lä¸ºç©ºè¡¨ï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE */
+  if(L->next==L) /* ç©º */
     return TRUE;
   else
     return FALSE;
 }
 int ListLength_CL(LinkList L)
-{ /* ³õÊ¼Ìõ¼ş£ºLÒÑ´æÔÚ¡£²Ù×÷½á¹û£º·µ»ØLÖĞÊı¾İÔªËØ¸öÊı */
+{ /* åˆå§‹æ¡ä»¶ï¼šLå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šè¿”å›Lä¸­æ•°æ®å…ƒç´ ä¸ªæ•° */
   int i=0;
-  LinkList p=L->next; /* pÖ¸ÏòÍ·½áµã */
-  while(p!=L) /* Ã»µ½±íÎ² */
+  LinkList p=L->next; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
+  while(p!=L) /* æ²¡åˆ°è¡¨å°¾ */
   {
     i++;
     p=p->next;
   }
   return i;
 }
-Status ListInsert_CL(LinkList *L,int i,ElemType e) /* ¸Ä±äL */
-{ /* ÔÚLµÄµÚi¸öÎ»ÖÃÖ®Ç°²åÈëÔªËØe */
-  LinkList p=(*L)->next,s; /* pÖ¸ÏòÍ·½áµã */
+Status ListInsert_CL(LinkList *L,int i,ElemType e) /* æ”¹å˜L */
+{ /* åœ¨Lçš„ç¬¬iä¸ªä½ç½®ä¹‹å‰æ’å…¥å…ƒç´ e */
+  LinkList p=(*L)->next,s; /* pæŒ‡å‘å¤´ç»“ç‚¹ */
   int j=0;
-  if(i<=0||i>ListLength_CL(*L)+1) /* ÎŞ·¨ÔÚµÚi¸öÔªËØÖ®Ç°²åÈë */
+  if(i<=0||i>ListLength_CL(*L)+1) /* æ— æ³•åœ¨ç¬¬iä¸ªå…ƒç´ ä¹‹å‰æ’å…¥ */
     return ERROR;
-  while(j<i-1) /* Ñ°ÕÒµÚi-1¸ö½áµã */
+  while(j<i-1) /* å¯»æ‰¾ç¬¬i-1ä¸ªç»“ç‚¹ */
   {
     p=p->next;
     j++;
   }
-  s=(LinkList)malloc(sizeof(struct LNode)); /* Éú³ÉĞÂ½áµã */
-  s->data=e; /* ²åÈëLÖĞ */
+  s=(LinkList)malloc(sizeof(struct LNode)); /* ç”Ÿæˆæ–°ç»“ç‚¹ */
+  s->data=e; /* æ’å…¥Lä¸­ */
   s->next=p->next;
   p->next=s;
-  if(p==*L) /* ¸Ä±äÎ²½áµã */
+  if(p==*L) /* æ”¹å˜å°¾ç»“ç‚¹ */
     *L=s;
   return OK;
 }
@@ -103,11 +103,11 @@ void main()
   ElemType e;
   int j;
   Status i;
-  i=InitList_CL(&L); /* ³õÊ¼»¯µ¥Ñ­»·Á´±íL */
-  printf("ÒÀ´ÎÔÚµ¥Ñ­»·Á´±íÖĞ²åÈë3,5\n");
-  ListInsert_CL(&L,1,3); /* ÔÚLÖĞÒÀ´Î²åÈë3,5 */
+  i=InitList_CL(&L); /* åˆå§‹åŒ–å•å¾ªç¯é“¾è¡¨L */
+  printf("ä¾æ¬¡åœ¨å•å¾ªç¯é“¾è¡¨ä¸­æ’å…¥3,5\n");
+  ListInsert_CL(&L,1,3); /* åœ¨Lä¸­ä¾æ¬¡æ’å…¥3,5 */
   ListInsert_CL(&L,2,5);
-     printf("Çå¿ÕL£º%d(1: ³É¹¦)\n",ClearList_CL(&L));
-  printf("Çå¿ÕLºó£¬LÊÇ·ñ¿Õ£º%d(1:¿Õ 0:·ñ)\n",ListEmpty_CL(L));
-  printf("Ïú»ÙL£º%d(1: ³É¹¦)\n",DestroyList_CL(&L));
+     printf("æ¸…ç©ºLï¼š%d(1: æˆåŠŸ)\n",ClearList_CL(&L));
+  printf("æ¸…ç©ºLåï¼ŒLæ˜¯å¦ç©ºï¼š%d(1:ç©º 0:å¦)\n",ListEmpty_CL(L));
+  printf("é”€æ¯Lï¼š%d(1: æˆåŠŸ)\n",DestroyList_CL(&L));
 }

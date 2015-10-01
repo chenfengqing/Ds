@@ -1,135 +1,135 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
-typedef int Boolean; /* BooleanÊÇ²¼¶ûÀàĞÍ,ÆäÖµÊÇTRUE»òFALSE */
-#define N 10 /* Êı¾İÔªËØ¸öÊı */
-typedef int KeyType; /* Éè¹Ø¼ü×ÖÓòÎªÕûĞÍ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+typedef int Boolean; /* Booleanæ˜¯å¸ƒå°”ç±»å‹,å…¶å€¼æ˜¯TRUEæˆ–FALSE */
+#define N 10 /* æ•°æ®å…ƒç´ ä¸ªæ•° */
+typedef int KeyType; /* è®¾å…³é”®å­—åŸŸä¸ºæ•´å‹ */
 typedef struct
 {
   KeyType key;
   int others;
-} ElemType; /* Êı¾İÔªËØÀàĞÍ */
+} ElemType; /* æ•°æ®å…ƒç´ ç±»å‹ */
 typedef ElemType TElemType;
 typedef struct BiTNode
 {
   TElemType data;
-  struct BiTNode *lchild,*rchild; /* ×óÓÒº¢×ÓÖ¸Õë */
+  struct BiTNode *lchild,*rchild; /* å·¦å³å­©å­æŒ‡é’ˆ */
 }BiTNode,*BiTree;
 #define EQ(a,b) ((a)==(b))
 #define LT(a,b) ((a)<(b))
-Status InitDSTable(BiTree *DT) /* Í¬bo6-2.c */
-{ /* ²Ù×÷½á¹û: ¹¹ÔìÒ»¸ö¿ÕµÄ¶¯Ì¬²éÕÒ±íDT */
+Status InitDSTable(BiTree *DT) /* åŒbo6-2.c */
+{ /* æ“ä½œç»“æœ: æ„é€ ä¸€ä¸ªç©ºçš„åŠ¨æ€æŸ¥æ‰¾è¡¨DT */
   *DT=NULL;
   return OK;
 }
-void DestroyDSTable(BiTree *DT) /* Í¬bo6-2.c */
-{ /* ³õÊ¼Ìõ¼ş: ¶¯Ì¬²éÕÒ±íDT´æÔÚ¡£²Ù×÷½á¹û: Ïú»Ù¶¯Ì¬²éÕÒ±íDT */
-  if(*DT) /* ·Ç¿ÕÊ÷ */
+void DestroyDSTable(BiTree *DT) /* åŒbo6-2.c */
+{ /* åˆå§‹æ¡ä»¶: åŠ¨æ€æŸ¥æ‰¾è¡¨DTå­˜åœ¨ã€‚æ“ä½œç»“æœ: é”€æ¯åŠ¨æ€æŸ¥æ‰¾è¡¨DT */
+  if(*DT) /* éç©ºæ ‘ */
   {
-    if((*DT)->lchild) /* ÓĞ×óº¢×Ó */
-      DestroyDSTable(&(*DT)->lchild); /* Ïú»Ù×óº¢×Ó×ÓÊ÷ */
-    if((*DT)->rchild) /* ÓĞÓÒº¢×Ó */
-      DestroyDSTable(&(*DT)->rchild); /* Ïú»ÙÓÒº¢×Ó×ÓÊ÷ */
-    free(*DT); /* ÊÍ·Å¸ù½áµã */
-    *DT=NULL; /* ¿ÕÖ¸Õë¸³0 */
+    if((*DT)->lchild) /* æœ‰å·¦å­©å­ */
+      DestroyDSTable(&(*DT)->lchild); /* é”€æ¯å·¦å­©å­å­æ ‘ */
+    if((*DT)->rchild) /* æœ‰å³å­©å­ */
+      DestroyDSTable(&(*DT)->rchild); /* é”€æ¯å³å­©å­å­æ ‘ */
+    free(*DT); /* é‡Šæ”¾æ ¹ç»“ç‚¹ */
+    *DT=NULL; /* ç©ºæŒ‡é’ˆèµ‹0 */
   }
 }
 BiTree SearchBST(BiTree T,KeyType key)
-{ /* ÔÚ¸ùÖ¸ÕëTËùÖ¸¶ş²æÅÅĞòÊ÷ÖĞµİ¹éµØ²éÕÒÄ³¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ£¬ */
-  /* Èô²éÕÒ³É¹¦£¬Ôò·µ»ØÖ¸Ïò¸ÃÊı¾İÔªËØ½áµãµÄÖ¸Õë,·ñÔò·µ»Ø¿ÕÖ¸Õë¡£*/
+{ /* åœ¨æ ¹æŒ‡é’ˆTæ‰€æŒ‡äºŒå‰æ’åºæ ‘ä¸­é€’å½’åœ°æŸ¥æ‰¾æŸå…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ ï¼Œ */
+  /* è‹¥æŸ¥æ‰¾æˆåŠŸï¼Œåˆ™è¿”å›æŒ‡å‘è¯¥æ•°æ®å…ƒç´ ç»“ç‚¹çš„æŒ‡é’ˆ,å¦åˆ™è¿”å›ç©ºæŒ‡é’ˆã€‚*/
   if((!T)||EQ(key,T->data.key))
-    return T; /* ²éÕÒ½áÊø */
-  else if LT(key,T->data.key) /* ÔÚ×ó×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ */
+    return T; /* æŸ¥æ‰¾ç»“æŸ */
+  else if LT(key,T->data.key) /* åœ¨å·¦å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ */
     return SearchBST(T->lchild,key);
   else
-    return SearchBST(T->rchild,key); /* ÔÚÓÒ×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ */
+    return SearchBST(T->rchild,key); /* åœ¨å³å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ */
 }
 void SearchBST1(BiTree *T,KeyType key,BiTree f,BiTree *p,Status *flag) 
-{ /* ÔÚ¸ùÖ¸ÕëTËùÖ¸¶ş²æÅÅĞòÊ÷ÖĞµİ¹éµØ²éÕÒÆä¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ£¬Èô²éÕÒ */
-  /* ³É¹¦£¬ÔòÖ¸ÕëpÖ¸Ïò¸ÃÊı¾İÔªËØ½áµã£¬²¢·µ»ØTRUE£¬·ñÔòÖ¸ÕëpÖ¸Ïò²éÕÒÂ·¾¶ÉÏ */
-  /* ·ÃÎÊµÄ×îºóÒ»¸ö½áµã²¢·µ»ØFALSE,Ö¸ÕëfÖ¸ÏòTµÄË«Ç×£¬Æä³õÊ¼µ÷ÓÃÖµÎªNULL */
-  if(!*T) /* ²éÕÒ²»³É¹¦ */
+{ /* åœ¨æ ¹æŒ‡é’ˆTæ‰€æŒ‡äºŒå‰æ’åºæ ‘ä¸­é€’å½’åœ°æŸ¥æ‰¾å…¶å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ ï¼Œè‹¥æŸ¥æ‰¾ */
+  /* æˆåŠŸï¼Œåˆ™æŒ‡é’ˆpæŒ‡å‘è¯¥æ•°æ®å…ƒç´ ç»“ç‚¹ï¼Œå¹¶è¿”å›TRUEï¼Œå¦åˆ™æŒ‡é’ˆpæŒ‡å‘æŸ¥æ‰¾è·¯å¾„ä¸Š */
+  /* è®¿é—®çš„æœ€åä¸€ä¸ªç»“ç‚¹å¹¶è¿”å›FALSE,æŒ‡é’ˆfæŒ‡å‘Tçš„åŒäº²ï¼Œå…¶åˆå§‹è°ƒç”¨å€¼ä¸ºNULL */
+  if(!*T) /* æŸ¥æ‰¾ä¸æˆåŠŸ */
   {
     *p=f;
     *flag=FALSE;
   }
-  else if EQ(key,(*T)->data.key) /*  ²éÕÒ³É¹¦ */
+  else if EQ(key,(*T)->data.key) /*  æŸ¥æ‰¾æˆåŠŸ */
   {
     *p=*T;
     *flag=TRUE;
   }
   else if LT(key,(*T)->data.key)
-    SearchBST1(&(*T)->lchild,key,*T,p,flag); /* ÔÚ×ó×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ */
+    SearchBST1(&(*T)->lchild,key,*T,p,flag); /* åœ¨å·¦å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ */
   else
-    SearchBST1(&(*T)->rchild,key,*T,p,flag); /*  ÔÚÓÒ×ÓÊ÷ÖĞ¼ÌĞø²éÕÒ */
+    SearchBST1(&(*T)->rchild,key,*T,p,flag); /*  åœ¨å³å­æ ‘ä¸­ç»§ç»­æŸ¥æ‰¾ */
 }
 
 Status InsertBST(BiTree *T, ElemType e)
-{ /* µ±¶ş²æÅÅĞòÊ÷TÖĞ²»´æÔÚ¹Ø¼ü×ÖµÈÓÚe.keyµÄÊı¾İÔªËØÊ±£¬²åÈëe²¢·µ»ØTRUE£¬ */
-  /* ·ñÔò·µ»ØFALSE¡£*/
+{ /* å½“äºŒå‰æ’åºæ ‘Tä¸­ä¸å­˜åœ¨å…³é”®å­—ç­‰äºe.keyçš„æ•°æ®å…ƒç´ æ—¶ï¼Œæ’å…¥eå¹¶è¿”å›TRUEï¼Œ */
+  /* å¦åˆ™è¿”å›FALSEã€‚*/
   BiTree p,s;
   Status flag;
   SearchBST1(T,e.key,NULL,&p,&flag);
-  if(!flag) /* ²éÕÒ²»³É¹¦ */
+  if(!flag) /* æŸ¥æ‰¾ä¸æˆåŠŸ */
   {
     s=(BiTree)malloc(sizeof(BiTNode));
     s->data=e;
     s->lchild=s->rchild=NULL;
     if(!p)
-      *T=s; /* ±»²å½áµã*sÎªĞÂµÄ¸ù½áµã */
+      *T=s; /* è¢«æ’ç»“ç‚¹*sä¸ºæ–°çš„æ ¹ç»“ç‚¹ */
     else if LT(e.key,p->data.key)
-      p->lchild=s; /* ±»²å½áµã*sÎª×óº¢×Ó */
+      p->lchild=s; /* è¢«æ’ç»“ç‚¹*sä¸ºå·¦å­©å­ */
     else
-      p->rchild=s; /* ±»²å½áµã*sÎªÓÒº¢×Ó */
+      p->rchild=s; /* è¢«æ’ç»“ç‚¹*sä¸ºå³å­©å­ */
     return TRUE;
   }
   else
-    return FALSE; /* Ê÷ÖĞÒÑÓĞ¹Ø¼ü×ÖÏàÍ¬µÄ½áµã£¬²»ÔÙ²åÈë */
+    return FALSE; /* æ ‘ä¸­å·²æœ‰å…³é”®å­—ç›¸åŒçš„ç»“ç‚¹ï¼Œä¸å†æ’å…¥ */
 }
 
 void Delete(BiTree *p)
-{ /* ´Ó¶ş²æÅÅĞòÊ÷ÖĞÉ¾³ı½áµãp£¬²¢ÖØ½ÓËüµÄ×ó»òÓÒ×ÓÊ÷¡£*/
+{ /* ä»äºŒå‰æ’åºæ ‘ä¸­åˆ é™¤ç»“ç‚¹pï¼Œå¹¶é‡æ¥å®ƒçš„å·¦æˆ–å³å­æ ‘ã€‚*/
   BiTree q,s;
-  if(!(*p)->rchild) /* ÓÒ×ÓÊ÷¿ÕÔòÖ»ĞèÖØ½ÓËüµÄ×ó×ÓÊ÷£¨´ıÉ¾½áµãÊÇÒ¶×ÓÒ²×ß´Ë·ÖÖ§£© */
+  if(!(*p)->rchild) /* å³å­æ ‘ç©ºåˆ™åªéœ€é‡æ¥å®ƒçš„å·¦å­æ ‘ï¼ˆå¾…åˆ ç»“ç‚¹æ˜¯å¶å­ä¹Ÿèµ°æ­¤åˆ†æ”¯ï¼‰ */
   {
     q=*p;
     *p=(*p)->lchild;
     free(q);
   }
-  else if(!(*p)->lchild) /* Ö»ĞèÖØ½ÓËüµÄÓÒ×ÓÊ÷ */
+  else if(!(*p)->lchild) /* åªéœ€é‡æ¥å®ƒçš„å³å­æ ‘ */
   {
     q=*p;
     *p=(*p)->rchild;
     free(q);
   }
-  else /* ×óÓÒ×ÓÊ÷¾ù²»¿Õ */
+  else /* å·¦å³å­æ ‘å‡ä¸ç©º */
   {
     q=*p;
     s=(*p)->lchild;
-    while(s->rchild) /* ×ª×ó£¬È»ºóÏòÓÒµ½¾¡Í·£¨ÕÒ´ıÉ¾½áµãµÄÇ°Çı£© */
+    while(s->rchild) /* è½¬å·¦ï¼Œç„¶åå‘å³åˆ°å°½å¤´ï¼ˆæ‰¾å¾…åˆ ç»“ç‚¹çš„å‰é©±ï¼‰ */
     {
       q=s;
       s=s->rchild;
     }
-    (*p)->data=s->data; /* sÖ¸Ïò±»É¾½áµãµÄ£¢Ç°Çı£¢£¨½«±»É¾½áµãÇ°ÇıµÄÖµÈ¡´ú±»É¾½áµãµÄÖµ£© */
+    (*p)->data=s->data; /* sæŒ‡å‘è¢«åˆ ç»“ç‚¹çš„ï¼‚å‰é©±ï¼‚ï¼ˆå°†è¢«åˆ ç»“ç‚¹å‰é©±çš„å€¼å–ä»£è¢«åˆ ç»“ç‚¹çš„å€¼ï¼‰ */
     if(q!=*p)
-      q->rchild=s->lchild; /* ÖØ½Ó*qµÄÓÒ×ÓÊ÷ */
+      q->rchild=s->lchild; /* é‡æ¥*qçš„å³å­æ ‘ */
     else
-      q->lchild=s->lchild; /* ÖØ½Ó*qµÄ×ó×ÓÊ÷ */
+      q->lchild=s->lchild; /* é‡æ¥*qçš„å·¦å­æ ‘ */
     free(s);
   }
 }
 
 Status DeleteBST(BiTree *T,KeyType key)
-{ /* Èô¶ş²æÅÅĞòÊ÷TÖĞ´æÔÚ¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØÊ±£¬ÔòÉ¾³ı¸ÃÊı¾İÔªËØ½áµã£¬ */
-  /* ²¢·µ»ØTRUE£»·ñÔò·µ»ØFALSE¡£*/
-  if(!*T) /* ²»´æÔÚ¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ */
+{ /* è‹¥äºŒå‰æ’åºæ ‘Tä¸­å­˜åœ¨å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´ æ—¶ï¼Œåˆ™åˆ é™¤è¯¥æ•°æ®å…ƒç´ ç»“ç‚¹ï¼Œ */
+  /* å¹¶è¿”å›TRUEï¼›å¦åˆ™è¿”å›FALSEã€‚*/
+  if(!*T) /* ä¸å­˜åœ¨å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´  */
     return FALSE;
   else
   {
-    if EQ(key,(*T)->data.key) /* ÕÒµ½¹Ø¼ü×ÖµÈÓÚkeyµÄÊı¾İÔªËØ */
+    if EQ(key,(*T)->data.key) /* æ‰¾åˆ°å…³é”®å­—ç­‰äºkeyçš„æ•°æ®å…ƒç´  */
       Delete(T);
     else if LT(key,(*T)->data.key)
       DeleteBST(&(*T)->lchild,key);
@@ -139,13 +139,13 @@ Status DeleteBST(BiTree *T,KeyType key)
   }
 }
 void TraverseDSTable(BiTree DT,void(*Visit)(ElemType))
-{ /* ³õÊ¼Ìõ¼ş: ¶¯Ì¬²éÕÒ±íDT´æÔÚ£¬VisitÊÇ¶Ô½áµã²Ù×÷µÄÓ¦ÓÃº¯Êı */
-  /* ²Ù×÷½á¹û: °´¹Ø¼ü×ÖµÄË³Ğò¶ÔDTµÄÃ¿¸ö½áµãµ÷ÓÃº¯ÊıVisit()Ò»´ÎÇÒÖÁ¶àÒ»´Î */
+{ /* åˆå§‹æ¡ä»¶: åŠ¨æ€æŸ¥æ‰¾è¡¨DTå­˜åœ¨ï¼ŒVisitæ˜¯å¯¹ç»“ç‚¹æ“ä½œçš„åº”ç”¨å‡½æ•° */
+  /* æ“ä½œç»“æœ: æŒ‰å…³é”®å­—çš„é¡ºåºå¯¹DTçš„æ¯ä¸ªç»“ç‚¹è°ƒç”¨å‡½æ•°Visit()ä¸€æ¬¡ä¸”è‡³å¤šä¸€æ¬¡ */
   if(DT)
   {
-    TraverseDSTable(DT->lchild,Visit); /* ÏÈÖĞĞò±éÀú×ó×ÓÊ÷ */
-    Visit(DT->data); /* ÔÙ·ÃÎÊ¸ù½áµã */
-    TraverseDSTable(DT->rchild,Visit); /* ×îºóÖĞĞò±éÀúÓÒ×ÓÊ÷ */
+    TraverseDSTable(DT->lchild,Visit); /* å…ˆä¸­åºéå†å·¦å­æ ‘ */
+    Visit(DT->data); /* å†è®¿é—®æ ¹ç»“ç‚¹ */
+    TraverseDSTable(DT->rchild,Visit); /* æœ€åä¸­åºéå†å³å­æ ‘ */
   }
 }
 void print(ElemType c)
@@ -158,22 +158,22 @@ void main()
   int i;
   KeyType j;
   ElemType r[N]={{45,1},{12,2},{53,3},{3,4},{37,5},{24,6},{100,7},{61,8},{90,9},{78,10}}; 
-  InitDSTable(&dt); /* ¹¹Ôì¿Õ±í */
+  InitDSTable(&dt); /* æ„é€ ç©ºè¡¨ */
   for(i=0;i<N;i++)
-    InsertBST(&dt,r[i]); /* ÒÀ´Î²åÈëÊı¾İÔªËØ */
+    InsertBST(&dt,r[i]); /* ä¾æ¬¡æ’å…¥æ•°æ®å…ƒç´  */
   TraverseDSTable(dt,print);
-  printf("\nÇëÊäÈë´ı²éÕÒµÄÖµ: ");
+  printf("\nè¯·è¾“å…¥å¾…æŸ¥æ‰¾çš„å€¼: ");
   scanf("%d",&j);
   p=SearchBST(dt,j);
   if(p)
   {
-    printf("±íÖĞ´æÔÚ´ËÖµ¡£");
+    printf("è¡¨ä¸­å­˜åœ¨æ­¤å€¼ã€‚");
     DeleteBST(&dt,j);
-    printf("É¾³ı´ËÖµºó:\n");
+    printf("åˆ é™¤æ­¤å€¼å:\n");
     TraverseDSTable(dt,print);
     printf("\n");
   }
   else
-    printf("±íÖĞ²»´æÔÚ´ËÖµ\n");
+    printf("è¡¨ä¸­ä¸å­˜åœ¨æ­¤å€¼\n");
   DestroyDSTable(&dt);
 }

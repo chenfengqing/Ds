@@ -1,25 +1,25 @@
-#define CHAR /* ×Ö·ûĞÍ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#define CHAR /* å­—ç¬¦å‹ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 #ifdef CHAR
   typedef char TElemType;
-  TElemType Nil=' '; /* ×Ö·ûĞÍÒÔ¿Õ¸ñ·ûÎª¿Õ */
+  TElemType Nil=' '; /* å­—ç¬¦å‹ä»¥ç©ºæ ¼ç¬¦ä¸ºç©º */
 #endif
 #ifdef INT
   typedef int TElemType;
-  TElemType Nil=0; /* ÕûĞÍÒÔ0Îª¿Õ */
+  TElemType Nil=0; /* æ•´å‹ä»¥0ä¸ºç©º */
 #endif
 typedef struct BiTNode
 {
   TElemType data;
-  struct BiTNode *lchild,*rchild; /* ×óÓÒº¢×ÓÖ¸Õë */
+  struct BiTNode *lchild,*rchild; /* å·¦å³å­©å­æŒ‡é’ˆ */
 }BiTNode,*BiTree;
 Status InitBiTree(BiTree *T)
-{ /* ²Ù×÷½á¹û: ¹¹Ôì¿Õ¶ş²æÊ÷T */
+{ /* æ“ä½œç»“æœ: æ„é€ ç©ºäºŒå‰æ ‘T */
   *T=NULL;
   return OK;
 }
@@ -32,26 +32,26 @@ void CreateBiTree(BiTree *T)
 #ifdef INT
   scanf("%d",&ch);
 #endif
-  if(ch==Nil) /* ¿Õ */
+  if(ch==Nil) /* ç©º */
     *T=NULL;
   else
   {
     *T=(BiTree)malloc(sizeof(BiTNode));
     if(!*T)
       exit(OVERFLOW);
-    (*T)->data=ch; /* Éú³É¸ù½áµã */
-    CreateBiTree(&(*T)->lchild); /* ¹¹Ôì×ó×ÓÊ÷ */
-    CreateBiTree(&(*T)->rchild); /* ¹¹ÔìÓÒ×ÓÊ÷ */
+    (*T)->data=ch; /* ç”Ÿæˆæ ¹ç»“ç‚¹ */
+    CreateBiTree(&(*T)->lchild); /* æ„é€ å·¦å­æ ‘ */
+    CreateBiTree(&(*T)->rchild); /* æ„é€ å³å­æ ‘ */
   }
 }
 void InOrderTraverse(BiTree T,Status(*Visit)(TElemType))
-{ /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ,VisitÊÇ¶Ô½áµã²Ù×÷µÄÓ¦ÓÃº¯Êı */
-  /* ²Ù×÷½á¹û: ÖĞĞòµİ¹é±éÀúT,¶ÔÃ¿¸ö½áµãµ÷ÓÃº¯ÊıVisitÒ»´ÎÇÒ½öÒ»´Î */
+{ /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨,Visitæ˜¯å¯¹ç»“ç‚¹æ“ä½œçš„åº”ç”¨å‡½æ•° */
+  /* æ“ä½œç»“æœ: ä¸­åºé€’å½’éå†T,å¯¹æ¯ä¸ªç»“ç‚¹è°ƒç”¨å‡½æ•°Visitä¸€æ¬¡ä¸”ä»…ä¸€æ¬¡ */
   if(T)
   {
-    InOrderTraverse(T->lchild,Visit); /* ÏÈÖĞĞò±éÀú×ó×ÓÊ÷ */
-    Visit(T->data); /* ÔÙ·ÃÎÊ¸ù½áµã */
-    InOrderTraverse(T->rchild,Visit); /* ×îºóÖĞĞò±éÀúÓÒ×ÓÊ÷ */
+    InOrderTraverse(T->lchild,Visit); /* å…ˆä¸­åºéå†å·¦å­æ ‘ */
+    Visit(T->data); /* å†è®¿é—®æ ¹ç»“ç‚¹ */
+    InOrderTraverse(T->rchild,Visit); /* æœ€åä¸­åºéå†å³å­æ ‘ */
   }
 }
  Status visitT(TElemType e)
@@ -69,12 +69,12 @@ void main()
   BiTree T;
   InitBiTree(&T);
    #ifdef CHAR
-  printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:abÈı¸ö¿Õ¸ñ±íÊ¾aÎª¸ù½áµã,bÎª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+  printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:abä¸‰ä¸ªç©ºæ ¼è¡¨ç¤ºaä¸ºæ ¹ç»“ç‚¹,bä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
 #endif
 #ifdef INT
-  printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:1 2 0 0 0±íÊ¾1Îª¸ù½áµã,2Îª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+  printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:1 2 0 0 0è¡¨ç¤º1ä¸ºæ ¹ç»“ç‚¹,2ä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
 #endif
   CreateBiTree(&T);
-  printf("ÖĞĞòµİ¹é±éÀú¶ş²æÊ÷:\n");
+  printf("ä¸­åºé€’å½’éå†äºŒå‰æ ‘:\n");
   InOrderTraverse(T,visitT);
 }

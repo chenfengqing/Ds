@@ -1,106 +1,106 @@
 #include "stdio.h"
-#define MAX_DANCERS 100//×î¶àÌøÎèÈËÊı
-#define QueueSize 100 //¼Ù¶¨Ô¤·ÖÅäµÄ¶ÓÁĞ¿Õ¼ä×î¶àÎª100¸öÔªËØ  	
+#define MAX_DANCERS 100//æœ€å¤šè·³èˆäººæ•°
+#define QueueSize 100 //å‡å®šé¢„åˆ†é…çš„é˜Ÿåˆ—ç©ºé—´æœ€å¤šä¸º100ä¸ªå…ƒç´   	
 typedef struct{
 	char name[20];
-	char sex;  //ĞÔ±ğ£¬'F'±íÊ¾Å®ĞÔ£¬'M'±íÊ¾ÄĞĞÔ
+	char sex;  //æ€§åˆ«ï¼Œ'F'è¡¨ç¤ºå¥³æ€§ï¼Œ'M'è¡¨ç¤ºç”·æ€§
 }Person;
-typedef Person DataType;  //½«¶ÓÁĞÖĞÔªËØµÄÊı¾İÀàĞÍ¸ÄÎªPerson
+typedef Person DataType;  //å°†é˜Ÿåˆ—ä¸­å…ƒç´ çš„æ•°æ®ç±»å‹æ”¹ä¸ºPerson
 typedef struct{
 	DataType data[QueueSize];
-	int front;//Í·Ö¸Õë
-	int rear;//Î²Ö¸Õë
-	int count; //¼ÆÊıÆ÷£¬¼ÇÂ¼¶ÓÖĞÔªËØ×ÜÊı
+	int front;//å¤´æŒ‡é’ˆ
+	int rear;//å°¾æŒ‡é’ˆ
+	int count; //è®¡æ•°å™¨ï¼Œè®°å½•é˜Ÿä¸­å…ƒç´ æ€»æ•°
 }CirQueue;
-// ÖÃ¶ÓÁĞ¿Õ
+// ç½®é˜Ÿåˆ—ç©º
 void Initial(CirQueue *Q)
-{//½«Ë³Ğò¶ÓÁĞÖÃ¿Õ
+{//å°†é¡ºåºé˜Ÿåˆ—ç½®ç©º
 	Q->front=Q->rear=0;
-	Q->count=0;     //¼ÆÊıÆ÷ÖÃ0
+	Q->count=0;     //è®¡æ•°å™¨ç½®0
 }
-//ÅĞ¶ÓÁĞ¿Õ
+//åˆ¤é˜Ÿåˆ—ç©º
 int IsEmpty(CirQueue *Q)
 {
 	return Q->front==Q->rear;
 }
-//ÅĞ¶ÓÁĞÂú
+//åˆ¤é˜Ÿåˆ—æ»¡
 int IsFull(CirQueue *Q)
 {
 	return Q->rear==QueueSize-1+Q->front;
 }
-//½ø¶ÓÁĞ
+//è¿›é˜Ÿåˆ—
 void EnQueue(CirQueue *Q,DataType x)
 {
 	if (IsFull(Q))
 	{
-		printf("¶ÓÁĞÉÏÒç"); //ÉÏÒç,ÍË³öÔËĞĞ
+		printf("é˜Ÿåˆ—ä¸Šæº¢"); //ä¸Šæº¢,é€€å‡ºè¿è¡Œ
 		exit(1);
 	}
-	Q->count ++;                        //¶ÓÁĞÔªËØ¸öÊı¼Ó1
-	Q->data[Q->rear]=x;                 //ĞÂÔªËØ²åÈë¶ÓÎ²
-	Q->rear=(Q->rear+1)%QueueSize;      //Ñ­»·ÒâÒåÏÂ½«Î²Ö¸Õë¼Ó1
+	Q->count ++;                        //é˜Ÿåˆ—å…ƒç´ ä¸ªæ•°åŠ 1
+	Q->data[Q->rear]=x;                 //æ–°å…ƒç´ æ’å…¥é˜Ÿå°¾
+	Q->rear=(Q->rear+1)%QueueSize;      //å¾ªç¯æ„ä¹‰ä¸‹å°†å°¾æŒ‡é’ˆåŠ 1
 }
-//³ö¶ÓÁĞ
+//å‡ºé˜Ÿåˆ—
 DataType DeQueue(CirQueue *Q)
 {
 	DataType temp;
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁĞÎª¿Õ"); //ÏÂÒç,ÍË³öÔËĞĞ
+		printf("é˜Ÿåˆ—ä¸ºç©º"); //ä¸‹æº¢,é€€å‡ºè¿è¡Œ
 		exit(1);
 	}
 	temp=Q->data[Q->front];
-	Q->count--;                        //¶ÓÁĞÔªËØ¸öÊı¼õ1
-	Q->front=(Q->front+1)&QueueSize;   //Ñ­»·ÒâÒåÏÂµÄÍ·Ö¸Õë¼Ó1
+	Q->count--;                        //é˜Ÿåˆ—å…ƒç´ ä¸ªæ•°å‡1
+	Q->front=(Q->front+1)&QueueSize;   //å¾ªç¯æ„ä¹‰ä¸‹çš„å¤´æŒ‡é’ˆåŠ 1
 	return temp;
 	
 }
-// È¡¶ÓÁĞ¶¥ÔªËØ
+// å–é˜Ÿåˆ—é¡¶å…ƒç´ 
 DataType Front(CirQueue *Q)
 {
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁĞÎª¿Õ"); //ÏÂÒç,ÍË³öÔËĞĞ
+		printf("é˜Ÿåˆ—ä¸ºç©º"); //ä¸‹æº¢,é€€å‡ºè¿è¡Œ
 		exit(1);
 	}
 	return Q->data[Q->front];
 }
 void DancePartner(Person dancer[],int num)
-{//½á¹¹Êı×édancerÖĞ´æ·ÅÌøÎèµÄÄĞÅ®£¬numÊÇÌøÎèµÄÈËÊı¡£
+{//ç»“æ„æ•°ç»„dancerä¸­å­˜æ”¾è·³èˆçš„ç”·å¥³ï¼Œnumæ˜¯è·³èˆçš„äººæ•°ã€‚
 	int i;
 	Person p;
 	CirQueue Mdancers,Fdancers;
-	Initial(&Mdancers);//ÄĞÊ¿¶ÓÁĞ³õÊ¼»¯
-	Initial(&Fdancers);//Å®Ê¿¶ÓÁĞ³õÊ¼»¯
-	for(i=0;i<num;i++){//ÒÀ´Î½«ÌøÎèÕßÒÀÆäĞÔ±ğÈë¶Ó
+	Initial(&Mdancers);//ç”·å£«é˜Ÿåˆ—åˆå§‹åŒ–
+	Initial(&Fdancers);//å¥³å£«é˜Ÿåˆ—åˆå§‹åŒ–
+	for(i=0;i<num;i++){//ä¾æ¬¡å°†è·³èˆè€…ä¾å…¶æ€§åˆ«å…¥é˜Ÿ
 		p=dancer[i];
 		if(p.sex=='F')
-			EnQueue(&Fdancers,p);   //ÅÅÈëÅ®¶Ó
+			EnQueue(&Fdancers,p);   //æ’å…¥å¥³é˜Ÿ
 		else
-			EnQueue(&Mdancers,p);   //ÅÅÈëÄĞ¶Ó
+			EnQueue(&Mdancers,p);   //æ’å…¥ç”·é˜Ÿ
 	}
-	printf("Îè¶ÓÊÇ:\n");
+	printf("èˆé˜Ÿæ˜¯:\n");
 	while(!IsEmpty(&Fdancers)&&!IsEmpty(&Mdancers)){
-		//ÒÀ´ÎÊäÈëÄĞÅ®Îè°éÃû
-		p=DeQueue(&Fdancers);     //Å®Ê¿³ö¶Ó
-		printf("%s        ",p.name);//´òÓ¡³ö¶ÓÅ®Ê¿Ãû
-		p=DeQueue(&Mdancers);     //ÄĞÊ¿³ö¶Ó
-		printf("%s\n",p.name);    //´òÓ¡³ö¶ÓÄĞÊ¿Ãû
+		//ä¾æ¬¡è¾“å…¥ç”·å¥³èˆä¼´å
+		p=DeQueue(&Fdancers);     //å¥³å£«å‡ºé˜Ÿ
+		printf("%s        ",p.name);//æ‰“å°å‡ºé˜Ÿå¥³å£«å
+		p=DeQueue(&Mdancers);     //ç”·å£«å‡ºé˜Ÿ
+		printf("%s\n",p.name);    //æ‰“å°å‡ºé˜Ÿç”·å£«å
 	}
-	if(!IsEmpty(&Fdancers)){ //Êä³öÅ®Ê¿Ê£ÓàÈËÊı¼°¶ÓÍ·Å®Ê¿µÄÃû×Ö
-		printf("»¹ÓĞ %d ¸öÅ®Ê¿µÈÏÂÒ»ÂÖ.\n",Fdancers.count);
-		p=Front(&Fdancers);  //È¡¶ÓÍ·
+	if(!IsEmpty(&Fdancers)){ //è¾“å‡ºå¥³å£«å‰©ä½™äººæ•°åŠé˜Ÿå¤´å¥³å£«çš„åå­—
+		printf("è¿˜æœ‰ %d ä¸ªå¥³å£«ç­‰ä¸‹ä¸€è½®.\n",Fdancers.count);
+		p=Front(&Fdancers);  //å–é˜Ÿå¤´
 		printf("%s will be the first to get a partner. \n",p.name);
 	}
-	else if(!IsEmpty(&Mdancers)){//Êä³öÄĞ¶ÓÊ£ÓàÈËÊı¼°¶ÓÍ·ÕßÃû×Ö
-		printf("»¹ÓĞ%d ¸öÄĞÊ¿µÈÏÂÒ»ÂÖ.\n",Mdancers.count);
+	else if(!IsEmpty(&Mdancers)){//è¾“å‡ºç”·é˜Ÿå‰©ä½™äººæ•°åŠé˜Ÿå¤´è€…åå­—
+		printf("è¿˜æœ‰%d ä¸ªç”·å£«ç­‰ä¸‹ä¸€è½®.\n",Mdancers.count);
 		p=Front(&Mdancers);
 		printf("%s will be the first to get a partner.\n",p.name);
 	}
 }
 void InitialDancer(Person dancer[])
 {
-	//ÌøÎè±¨Ãû
+	//è·³èˆæŠ¥å
 }
 void main()
 {

@@ -1,92 +1,92 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
  #include<math.h> /* floor(),ceil(),abs() */
  #define TRUE 1
  #define FALSE 0
  #define OK 1
  #define ERROR 0
- typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
- typedef int Boolean; /* BooleanÊÇ²¼¶ûÀàĞÍ,ÆäÖµÊÇTRUE»òFALSE */
+ typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
+ typedef int Boolean; /* Booleanæ˜¯å¸ƒå°”ç±»å‹,å…¶å€¼æ˜¯TRUEæˆ–FALSE */
  typedef char InfoType;
- #define MAX_Info 80 /* ĞÅÏ¢×Ö·û´®×î´ó³¤¶È+1 */
- #define MAX_VERTEX_NAME 3  /* ¶¥µã×Ö·û´®×î´ó³¤¶È+1 */
+ #define MAX_Info 80 /* ä¿¡æ¯å­—ç¬¦ä¸²æœ€å¤§é•¿åº¦+1 */
+ #define MAX_VERTEX_NAME 3  /* é¡¶ç‚¹å­—ç¬¦ä¸²æœ€å¤§é•¿åº¦+1 */
  typedef char  VertexType[MAX_VERTEX_NAME];
- /* c7-3.h ÓĞÏòÍ¼µÄÊ®×ÖÁ´±í´æ´¢±íÊ¾ */
+ /* c7-3.h æœ‰å‘å›¾çš„åå­—é“¾è¡¨å­˜å‚¨è¡¨ç¤º */
  #define MAX_VERTEX_NUM 20
  typedef struct ArcBox
  {
-   int tailvex,headvex; /* ¸Ã»¡µÄÎ²ºÍÍ·¶¥µãµÄÎ»ÖÃ */
-   struct ArcBox *hlink,*tlink; /* ·Ö±ğÎª»¡Í·ÏàÍ¬ºÍ»¡Î²ÏàÍ¬µÄ»¡µÄÁ´Óò */
-   InfoType *info; /* ¸Ã»¡Ïà¹ØĞÅÏ¢µÄÖ¸Õë(¿ÉÎŞ) */
- }ArcBox; /* »¡½áµã */
+   int tailvex,headvex; /* è¯¥å¼§çš„å°¾å’Œå¤´é¡¶ç‚¹çš„ä½ç½® */
+   struct ArcBox *hlink,*tlink; /* åˆ†åˆ«ä¸ºå¼§å¤´ç›¸åŒå’Œå¼§å°¾ç›¸åŒçš„å¼§çš„é“¾åŸŸ */
+   InfoType *info; /* è¯¥å¼§ç›¸å…³ä¿¡æ¯çš„æŒ‡é’ˆ(å¯æ— ) */
+ }ArcBox; /* å¼§ç»“ç‚¹ */
  typedef struct
  {
    VertexType data;
-   ArcBox *firstin,*firstout; /* ·Ö±ğÖ¸Ïò¸Ã¶¥µãµÚÒ»ÌõÈë»¡ºÍ³ö»¡ */
- }VexNode; /* ¶¥µã½áµã */
+   ArcBox *firstin,*firstout; /* åˆ†åˆ«æŒ‡å‘è¯¥é¡¶ç‚¹ç¬¬ä¸€æ¡å…¥å¼§å’Œå‡ºå¼§ */
+ }VexNode; /* é¡¶ç‚¹ç»“ç‚¹ */
  typedef struct
  {
-   VexNode xlist[MAX_VERTEX_NUM]; /* ±íÍ·ÏòÁ¿(Êı×é) */
-   int vexnum,arcnum; /* ÓĞÏòÍ¼µÄµ±Ç°¶¥µãÊıºÍ»¡Êı */
+   VexNode xlist[MAX_VERTEX_NUM]; /* è¡¨å¤´å‘é‡(æ•°ç»„) */
+   int vexnum,arcnum; /* æœ‰å‘å›¾çš„å½“å‰é¡¶ç‚¹æ•°å’Œå¼§æ•° */
  }OLGraph;
- /* bo7-3.c ÓĞÏòÍ¼µÄÊ®×ÖÁ´±í´æ´¢(´æ´¢½á¹¹ÓÉc7-3.h¶¨Òå)µÄ»ù±¾º¯Êı(15¸ö) */
+ /* bo7-3.c æœ‰å‘å›¾çš„åå­—é“¾è¡¨å­˜å‚¨(å­˜å‚¨ç»“æ„ç”±c7-3.hå®šä¹‰)çš„åŸºæœ¬å‡½æ•°(15ä¸ª) */
  int LocateVex(OLGraph G,VertexType u)
- { /* ·µ»Ø¶¥µãuÔÚÓĞÏòÍ¼GÖĞµÄÎ»ÖÃ(ĞòºÅ),Èç²»´æÔÚÔò·µ»Ø-1 */
+ { /* è¿”å›é¡¶ç‚¹uåœ¨æœ‰å‘å›¾Gä¸­çš„ä½ç½®(åºå·),å¦‚ä¸å­˜åœ¨åˆ™è¿”å›-1 */
    int i;
-   for(i=0;i<G.vexnum;++i) /* ÓÃÑ­»·²éÕÒ¸Ã½áµã */
+   for(i=0;i<G.vexnum;++i) /* ç”¨å¾ªç¯æŸ¥æ‰¾è¯¥ç»“ç‚¹ */
      if(!strcmp(G.xlist[i].data,u))
        return i;
    return -1;
  }
 
  Status CreateDG(OLGraph *G)
- { /* ²ÉÓÃÊ®×ÖÁ´±í´æ´¢±íÊ¾,¹¹ÔìÓĞÏòÍ¼G¡£Ëã·¨7.3 */
+ { /* é‡‡ç”¨åå­—é“¾è¡¨å­˜å‚¨è¡¨ç¤º,æ„é€ æœ‰å‘å›¾Gã€‚ç®—æ³•7.3 */
    int i,j,k;
    int IncInfo;
    char str[MAX_Info];
    ArcBox *p;
    VertexType v1,v2;
-   printf("ÇëÊäÈëÓĞÏòÍ¼µÄ¶¥µãÊı,»¡Êı,»¡ÊÇ·ñº¬ÆäËüĞÅÏ¢(ÊÇ:1£¬·ñ:0): ");
+   printf("è¯·è¾“å…¥æœ‰å‘å›¾çš„é¡¶ç‚¹æ•°,å¼§æ•°,å¼§æ˜¯å¦å«å…¶å®ƒä¿¡æ¯(æ˜¯:1ï¼Œå¦:0): ");
    scanf("%d,%d,%d",&(*G).vexnum,&(*G).arcnum,&IncInfo);
-   printf("ÇëÊäÈë%d¸ö¶¥µãµÄÖµ(<%d¸ö×Ö·û):\n",(*G).vexnum,MAX_VERTEX_NAME);
+   printf("è¯·è¾“å…¥%dä¸ªé¡¶ç‚¹çš„å€¼(<%dä¸ªå­—ç¬¦):\n",(*G).vexnum,MAX_VERTEX_NAME);
    for(i=0;i<(*G).vexnum;++i)
-   { /* ¹¹Ôì±íÍ·ÏòÁ¿ */
-     scanf("%s",&(*G).xlist[i].data); /* ÊäÈë¶¥µãÖµ */
-     (*G).xlist[i].firstin=NULL; /* ³õÊ¼»¯Ö¸Õë */
+   { /* æ„é€ è¡¨å¤´å‘é‡ */
+     scanf("%s",&(*G).xlist[i].data); /* è¾“å…¥é¡¶ç‚¹å€¼ */
+     (*G).xlist[i].firstin=NULL; /* åˆå§‹åŒ–æŒ‡é’ˆ */
      (*G).xlist[i].firstout=NULL;
    }
-   printf("ÇëÊäÈë%dÌõ»¡µÄ»¡Î²ºÍ»¡Í·(¿Õ¸ñÎª¼ä¸ô):\n",(*G).arcnum);
+   printf("è¯·è¾“å…¥%dæ¡å¼§çš„å¼§å°¾å’Œå¼§å¤´(ç©ºæ ¼ä¸ºé—´éš”):\n",(*G).arcnum);
    for(k=0;k<(*G).arcnum;++k)
-   { /* ÊäÈë¸÷»¡²¢¹¹ÔìÊ®×ÖÁ´±í */
+   { /* è¾“å…¥å„å¼§å¹¶æ„é€ åå­—é“¾è¡¨ */
      scanf("%s%s",&v1,&v2);
-     i=LocateVex(*G,v1); /* È·¶¨v1ºÍv2ÔÚGÖĞµÄÎ»ÖÃ */
+     i=LocateVex(*G,v1); /* ç¡®å®šv1å’Œv2åœ¨Gä¸­çš„ä½ç½® */
      j=LocateVex(*G,v2);
-     p=(ArcBox *)malloc(sizeof(ArcBox)); /* ²úÉú»¡½áµã(¼Ù¶¨ÓĞ×ã¹»¿Õ¼ä) */
-     p->tailvex=i; /* ¶Ô»¡½áµã¸³Öµ */
+     p=(ArcBox *)malloc(sizeof(ArcBox)); /* äº§ç”Ÿå¼§ç»“ç‚¹(å‡å®šæœ‰è¶³å¤Ÿç©ºé—´) */
+     p->tailvex=i; /* å¯¹å¼§ç»“ç‚¹èµ‹å€¼ */
      p->headvex=j;
-     p->hlink=(*G).xlist[j].firstin; /* Íê³ÉÔÚÈë»¡ºÍ³ö»¡Á´±í±íÍ·µÄ²åÈë */
+     p->hlink=(*G).xlist[j].firstin; /* å®Œæˆåœ¨å…¥å¼§å’Œå‡ºå¼§é“¾è¡¨è¡¨å¤´çš„æ’å…¥ */
      p->tlink=(*G).xlist[i].firstout;
      (*G).xlist[j].firstin=(*G).xlist[i].firstout=p;
      if(IncInfo)
-     { /* Èô»¡º¬ÓĞÏà¹ØĞÅÏ¢£¬ÔòÊäÈë */
-       printf("ÇëÊäÈë¸Ã»¡µÄÏà¹ØĞÅÏ¢(<%d¸ö×Ö·û): ",MAX_Info);
+     { /* è‹¥å¼§å«æœ‰ç›¸å…³ä¿¡æ¯ï¼Œåˆ™è¾“å…¥ */
+       printf("è¯·è¾“å…¥è¯¥å¼§çš„ç›¸å…³ä¿¡æ¯(<%dä¸ªå­—ç¬¦): ",MAX_Info);
        scanf("%s",str);
        p->info=(InfoType *)malloc((strlen(str)+1)*sizeof(InfoType));
        strcpy(p->info,str);
      }
-     else /* »¡²»º¬ÓĞÏà¹ØĞÅÏ¢ */
+     else /* å¼§ä¸å«æœ‰ç›¸å…³ä¿¡æ¯ */
        p->info=NULL;
    }
    return OK;
  }
 
  void DestroyGraph(OLGraph *G)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ */
-   /* ²Ù×÷½á¹û: Ïú»ÙÓĞÏòÍ¼G */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨ */
+   /* æ“ä½œç»“æœ: é”€æ¯æœ‰å‘å›¾G */
    int j;
    ArcBox *p,*q;
-   for(j=0;j<(*G).vexnum;j++) /* ¶ÔËùÓĞ¶¥µã */
+   for(j=0;j<(*G).vexnum;j++) /* å¯¹æ‰€æœ‰é¡¶ç‚¹ */
    {
-     p=(*G).xlist[j].firstout; /* ½ö´¦Àí³ö»¡ */
+     p=(*G).xlist[j].firstout; /* ä»…å¤„ç†å‡ºå¼§ */
      while(p)
      {
        q=p;
@@ -101,30 +101,30 @@
  }
 
  VertexType* GetVex(OLGraph G,int v)
- { /* ³õÊ¼Ìõ¼ş:ÓĞÏòÍ¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µãµÄĞòºÅ¡£²Ù×÷½á¹û:·µ»ØvµÄÖµ */
+ { /* åˆå§‹æ¡ä»¶:æœ‰å‘å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹çš„åºå·ã€‚æ“ä½œç»“æœ:è¿”å›vçš„å€¼ */
    if(v>=G.vexnum||v<0)
      exit(ERROR);
    return &G.xlist[v].data;
  }
 
  Status PutVex(OLGraph *G,VertexType v,VertexType value)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã */
-   /* ²Ù×÷½á¹û: ¶Ôv¸³ĞÂÖµvalue */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹ */
+   /* æ“ä½œç»“æœ: å¯¹vèµ‹æ–°å€¼value */
    int i;
    i=LocateVex(*G,v);
-   if(i<0) /* v²»ÊÇGµÄ¶¥µã */
+   if(i<0) /* vä¸æ˜¯Gçš„é¡¶ç‚¹ */
      return ERROR;
    strcpy((*G).xlist[i].data,value);
    return OK;
  }
 
  int FirstAdjVex(OLGraph G,VertexType v)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã */
-   /* ²Ù×÷½á¹û: ·µ»ØvµÄµÚÒ»¸öÁÚ½Ó¶¥µãµÄĞòºÅ¡£Èô¶¥µãÔÚGÖĞÃ»ÓĞÁÚ½Ó¶¥µã,Ôò·µ»Ø-1 */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹ */
+   /* æ“ä½œç»“æœ: è¿”å›vçš„ç¬¬ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹çš„åºå·ã€‚è‹¥é¡¶ç‚¹åœ¨Gä¸­æ²¡æœ‰é‚»æ¥é¡¶ç‚¹,åˆ™è¿”å›-1 */
    int i;
    ArcBox *p;
    i=LocateVex(G,v);
-   p=G.xlist[i].firstout; /* pÖ¸Ïò¶¥µãvµÄµÚ1¸ö³ö»¡ */
+   p=G.xlist[i].firstout; /* pæŒ‡å‘é¡¶ç‚¹vçš„ç¬¬1ä¸ªå‡ºå¼§ */
    if(p)
      return p->headvex;
    else
@@ -132,118 +132,118 @@
  }
 
  int NextAdjVex(OLGraph G,VertexType v,VertexType w)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã,wÊÇvµÄÁÚ½Ó¶¥µã */
-   /* ²Ù×÷½á¹û: ·µ»ØvµÄ(Ïà¶ÔÓÚwµÄ)ÏÂÒ»¸öÁÚ½Ó¶¥µãµÄĞòºÅ, */
-   /*           ÈôwÊÇvµÄ×îºóÒ»¸öÁÚ½Ó¶¥µã,Ôò·µ»Ø-1 */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹,wæ˜¯vçš„é‚»æ¥é¡¶ç‚¹ */
+   /* æ“ä½œç»“æœ: è¿”å›vçš„(ç›¸å¯¹äºwçš„)ä¸‹ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹çš„åºå·, */
+   /*           è‹¥wæ˜¯vçš„æœ€åä¸€ä¸ªé‚»æ¥é¡¶ç‚¹,åˆ™è¿”å›-1 */
    int i,j;
    ArcBox *p;
-   i=LocateVex(G,v); /* iÊÇ¶¥µãvµÄĞòºÅ */
-   j=LocateVex(G,w); /* jÊÇ¶¥µãwµÄĞòºÅ */
-   p=G.xlist[i].firstout; /* pÖ¸Ïò¶¥µãvµÄµÚ1¸ö³ö»¡ */
+   i=LocateVex(G,v); /* iæ˜¯é¡¶ç‚¹vçš„åºå· */
+   j=LocateVex(G,w); /* jæ˜¯é¡¶ç‚¹wçš„åºå· */
+   p=G.xlist[i].firstout; /* pæŒ‡å‘é¡¶ç‚¹vçš„ç¬¬1ä¸ªå‡ºå¼§ */
    while(p&&p->headvex!=j)
      p=p->tlink;
-   if(p) /* w²»ÊÇvµÄ×îºóÒ»¸öÁÚ½Ó¶¥µã */
-     p=p->tlink; /* pÖ¸ÏòÏà¶ÔÓÚwµÄÏÂÒ»¸öÁÚ½Ó¶¥µã */
-   if(p) /* ÓĞÏÂÒ»¸öÁÚ½Ó¶¥µã */
+   if(p) /* wä¸æ˜¯vçš„æœ€åä¸€ä¸ªé‚»æ¥é¡¶ç‚¹ */
+     p=p->tlink; /* pæŒ‡å‘ç›¸å¯¹äºwçš„ä¸‹ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹ */
+   if(p) /* æœ‰ä¸‹ä¸€ä¸ªé‚»æ¥é¡¶ç‚¹ */
      return p->headvex;
    else
      return -1;
  }
 
  void InsertVex(OLGraph *G,VertexType v)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vºÍÓĞÏòÍ¼GÖĞ¶¥µãÓĞÏàÍ¬ÌØÕ÷ */
-   /* ²Ù×÷½á¹û: ÔÚÓĞÏòÍ¼GÖĞÔöÌíĞÂ¶¥µãv(²»ÔöÌíÓë¶¥µãÏà¹ØµÄ»¡,Áô´ıInsertArc()È¥×ö) */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,vå’Œæœ‰å‘å›¾Gä¸­é¡¶ç‚¹æœ‰ç›¸åŒç‰¹å¾ */
+   /* æ“ä½œç»“æœ: åœ¨æœ‰å‘å›¾Gä¸­å¢æ·»æ–°é¡¶ç‚¹v(ä¸å¢æ·»ä¸é¡¶ç‚¹ç›¸å…³çš„å¼§,ç•™å¾…InsertArc()å»åš) */
    strcpy((*G). xlist[(*G). vexnum].data,v);
    (*G). xlist[(*G). vexnum].firstin=(*G). xlist[(*G). vexnum].firstout=NULL;
    (*G). vexnum++;
  }
 
  Status DeleteVex(OLGraph *G,VertexType v)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã */
-   /* ²Ù×÷½á¹û: É¾³ıGÖĞ¶¥µãv¼°ÆäÏà¹ØµÄ»¡ */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹ */
+   /* æ“ä½œç»“æœ: åˆ é™¤Gä¸­é¡¶ç‚¹våŠå…¶ç›¸å…³çš„å¼§ */
    int j,k;
    ArcBox *p,*q;
-   k=LocateVex(*G,v); /* kÊÇ¶¥µãvµÄĞòºÅ */
-   if(k<0) /* v²»ÊÇÍ¼GµÄ¶¥µã */
+   k=LocateVex(*G,v); /* kæ˜¯é¡¶ç‚¹vçš„åºå· */
+   if(k<0) /* vä¸æ˜¯å›¾Gçš„é¡¶ç‚¹ */
      return ERROR;
-   /* ÒÔÏÂÉ¾³ı¶¥µãvµÄ³ö»¡ */
-   for(j=0;j<(*G). vexnum;j++) /* ¶¥µãvµÄ³ö»¡ÊÇÆäËü¶¥µãµÄÈë»¡ */
+   /* ä»¥ä¸‹åˆ é™¤é¡¶ç‚¹vçš„å‡ºå¼§ */
+   for(j=0;j<(*G). vexnum;j++) /* é¡¶ç‚¹vçš„å‡ºå¼§æ˜¯å…¶å®ƒé¡¶ç‚¹çš„å…¥å¼§ */
    {
      if(j==k)
        continue;
-     p=(*G). xlist[j].firstin; /* ÔÚÆäËü¶¥µãµÄÈë»¡Á´±íÖĞÉ¾³ı¶¥µãvµÄ³ö»¡ */
+     p=(*G). xlist[j].firstin; /* åœ¨å…¶å®ƒé¡¶ç‚¹çš„å…¥å¼§é“¾è¡¨ä¸­åˆ é™¤é¡¶ç‚¹vçš„å‡ºå¼§ */
      while(p)
-       if(p->tailvex==k&&p==(*G). xlist[j].firstin) /* ´ıÉ¾½áµãÎªÊ×½áµã */
+       if(p->tailvex==k&&p==(*G). xlist[j].firstin) /* å¾…åˆ ç»“ç‚¹ä¸ºé¦–ç»“ç‚¹ */
        {
          (*G). xlist[j].firstin=p->hlink;
          break;
        }
-       else if(p->tailvex!=k) /* Ã»ÕÒµ½´ıÉ¾½áµã */
+       else if(p->tailvex!=k) /* æ²¡æ‰¾åˆ°å¾…åˆ ç»“ç‚¹ */
        {
          q=p;
          p=p->hlink;
        }
-       else /* ÕÒµ½´ıÉ¾½áµãÇÒ²»ÊÇÊ×½áµã */
+       else /* æ‰¾åˆ°å¾…åˆ ç»“ç‚¹ä¸”ä¸æ˜¯é¦–ç»“ç‚¹ */
        {
          q->hlink=p->hlink;
          break;
        }
    }
-   p=(*G). xlist[k].firstout; /* É¾³ıÓë¶¥µãvÓĞ¹ØµÄ³ö»¡ */
+   p=(*G). xlist[k].firstout; /* åˆ é™¤ä¸é¡¶ç‚¹væœ‰å…³çš„å‡ºå¼§ */
    while(p)
    {
-     q=p->tlink; /* qÖ¸ÏòpµÄÏÂÒ»¸ö³ö»¡ */
-     if(p->info) /* ÊÍ·Åp */
+     q=p->tlink; /* qæŒ‡å‘pçš„ä¸‹ä¸€ä¸ªå‡ºå¼§ */
+     if(p->info) /* é‡Šæ”¾p */
        free(p->info);
      free(p);
      (*G). arcnum--;
      p=q;
    }
-   /* ÒÔÏÂÉ¾³ı¶¥µãvµÄÈë»¡ */
-   for(j=0;j<(*G). vexnum;j++) /* ¶¥µãvµÄÈë»¡ÊÇÆäËü¶¥µãµÄ³ö»¡ */
+   /* ä»¥ä¸‹åˆ é™¤é¡¶ç‚¹vçš„å…¥å¼§ */
+   for(j=0;j<(*G). vexnum;j++) /* é¡¶ç‚¹vçš„å…¥å¼§æ˜¯å…¶å®ƒé¡¶ç‚¹çš„å‡ºå¼§ */
    {
      if(j==k)
        continue;
-     p=(*G). xlist[j].firstout; /* ÔÚÆäËü¶¥µãµÄ³ö»¡Á´±íÖĞÉ¾³ı¶¥µãvµÄÈë»¡ */
+     p=(*G). xlist[j].firstout; /* åœ¨å…¶å®ƒé¡¶ç‚¹çš„å‡ºå¼§é“¾è¡¨ä¸­åˆ é™¤é¡¶ç‚¹vçš„å…¥å¼§ */
      while(p)
-       if(p->headvex==k&&p==(*G). xlist[j].firstout) /* ´ıÉ¾½áµãÎªÊ×½áµã */
+       if(p->headvex==k&&p==(*G). xlist[j].firstout) /* å¾…åˆ ç»“ç‚¹ä¸ºé¦–ç»“ç‚¹ */
        {
          (*G). xlist[j].firstout=p->tlink;
          break;
        }
-       else if(p->headvex!=k) /* Ã»ÕÒµ½´ıÉ¾½áµã */
+       else if(p->headvex!=k) /* æ²¡æ‰¾åˆ°å¾…åˆ ç»“ç‚¹ */
        {
          q=p;
          p=p->tlink;
        }
-       else /* ÕÒµ½´ıÉ¾½áµãÇÒ²»ÊÇÊ×½áµã */
+       else /* æ‰¾åˆ°å¾…åˆ ç»“ç‚¹ä¸”ä¸æ˜¯é¦–ç»“ç‚¹ */
        {
          q->tlink=p->tlink;
          break;
        }
    }
-   p=(*G). xlist[k].firstin; /* É¾³ıÓë¶¥µãvÓĞ¹ØµÄÈë»¡ */
+   p=(*G). xlist[k].firstin; /* åˆ é™¤ä¸é¡¶ç‚¹væœ‰å…³çš„å…¥å¼§ */
    while(p)
    {
-     q=p->hlink; /* qÖ¸ÏòpµÄÏÂÒ»¸öÈë»¡ */
-     if(p->info) /* ÊÍ·Åp */
+     q=p->hlink; /* qæŒ‡å‘pçš„ä¸‹ä¸€ä¸ªå…¥å¼§ */
+     if(p->info) /* é‡Šæ”¾p */
        free(p->info);
      free(p);
      (*G). arcnum--;
      p=q;
    }
-   for(j=k+1;j<(*G). vexnum;j++) /* ĞòºÅ>kµÄ¶¥µãÒÀ´ÎÏòÇ°ÒÆ */
+   for(j=k+1;j<(*G). vexnum;j++) /* åºå·>kçš„é¡¶ç‚¹ä¾æ¬¡å‘å‰ç§» */
      (*G). xlist[j-1]=(*G). xlist[j];
-   (*G). vexnum--; /* ¶¥µãÊı¼õ1 */
-   for(j=0;j<(*G). vexnum;j++) /* ½áµãĞòºÅ>kµÄÒª¼õ1 */
+   (*G). vexnum--; /* é¡¶ç‚¹æ•°å‡1 */
+   for(j=0;j<(*G). vexnum;j++) /* ç»“ç‚¹åºå·>kçš„è¦å‡1 */
    {
-     p=(*G). xlist[j].firstout; /* ´¦Àí³ö»¡ */
+     p=(*G). xlist[j].firstout; /* å¤„ç†å‡ºå¼§ */
      while(p)
      {
        if(p->tailvex>k)
-         p->tailvex--; /* ĞòºÅ-1 */
+         p->tailvex--; /* åºå·-1 */
        if(p->headvex>k)
-         p->headvex--; /* ĞòºÅ-1 */
+         p->headvex--; /* åºå·-1 */
        p=p->tlink;
      }
    }
@@ -251,28 +251,28 @@
  }
 
  Status InsertArc(OLGraph *G,VertexType v,VertexType w)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vºÍwÊÇGÖĞÁ½¸ö¶¥µã */
-   /* ²Ù×÷½á¹û: ÔÚGÖĞÔöÌí»¡<v,w> */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,vå’Œwæ˜¯Gä¸­ä¸¤ä¸ªé¡¶ç‚¹ */
+   /* æ“ä½œç»“æœ: åœ¨Gä¸­å¢æ·»å¼§<v,w> */
    int i,j;
    int IncInfo;
    char str[MAX_Info];
    ArcBox *p;
-   i=LocateVex(*G,v); /* »¡Î²µÄĞòºÅ */
-   j=LocateVex(*G,w); /* »¡Í·µÄĞòºÅ */
+   i=LocateVex(*G,v); /* å¼§å°¾çš„åºå· */
+   j=LocateVex(*G,w); /* å¼§å¤´çš„åºå· */
    if(i<0||j<0)
      return ERROR;
-   p=(ArcBox *)malloc(sizeof(ArcBox)); /* Éú³ÉĞÂ½áµã */
-   p->tailvex=i; /* ¸øĞÂ½áµã¸³Öµ */
+   p=(ArcBox *)malloc(sizeof(ArcBox)); /* ç”Ÿæˆæ–°ç»“ç‚¹ */
+   p->tailvex=i; /* ç»™æ–°ç»“ç‚¹èµ‹å€¼ */
    p->headvex=j;
-   p->hlink=(*G). xlist[j].firstin; /* ²åÔÚÈë»¡ºÍ³ö»¡µÄÁ´Í· */
+   p->hlink=(*G). xlist[j].firstin; /* æ’åœ¨å…¥å¼§å’Œå‡ºå¼§çš„é“¾å¤´ */
    p->tlink=(*G). xlist[i].firstout;
    (*G). xlist[j].firstin=(*G). xlist[i].firstout=p;
-   (*G). arcnum++; /* »¡Êı¼Ó1 */
-   printf("Òª²åÈëµÄ»¡ÊÇ·ñº¬ÓĞÆäËüĞÅÏ¢(ÊÇ: 1,·ñ: 0): ");
+   (*G). arcnum++; /* å¼§æ•°åŠ 1 */
+   printf("è¦æ’å…¥çš„å¼§æ˜¯å¦å«æœ‰å…¶å®ƒä¿¡æ¯(æ˜¯: 1,å¦: 0): ");
    scanf("%d",&IncInfo);
    if(IncInfo)
    {
-     printf("ÇëÊäÈë¸Ã»¡µÄÏà¹ØĞÅÏ¢(<%d¸ö×Ö·û): ",MAX_Info);
+     printf("è¯·è¾“å…¥è¯¥å¼§çš„ç›¸å…³ä¿¡æ¯(<%dä¸ªå­—ç¬¦): ",MAX_Info);
      scanf("%s",str);
      p->info=(InfoType *)malloc((strlen(str)+1)*sizeof(InfoType));
      strcpy(p->info,str);
@@ -283,28 +283,28 @@
  }
 
  Status DeleteArc(OLGraph *G,VertexType v,VertexType w)
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vºÍwÊÇGÖĞÁ½¸ö¶¥µã */
-   /* ²Ù×÷½á¹û: ÔÚGÖĞÉ¾³ı»¡<v,w> */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,vå’Œwæ˜¯Gä¸­ä¸¤ä¸ªé¡¶ç‚¹ */
+   /* æ“ä½œç»“æœ: åœ¨Gä¸­åˆ é™¤å¼§<v,w> */
    int i,j;
    ArcBox *p1,*p2;
-   i=LocateVex(*G,v); /* »¡Î²µÄĞòºÅ */
-   j=LocateVex(*G,w); /* »¡Í·µÄĞòºÅ */
+   i=LocateVex(*G,v); /* å¼§å°¾çš„åºå· */
+   j=LocateVex(*G,w); /* å¼§å¤´çš„åºå· */
    if(i<0||j<0||i==j)
      return ERROR;
-   p2=(*G). xlist[i].firstout; /* ½«»¡½áµã´Ó³ö»¡Á´±íÖĞÉ¾È¥ */
-   if(p2&&p2->headvex==j) /* µÚ1¸ö½áµãÎª´ıÉ¾³ı½áµã */
+   p2=(*G). xlist[i].firstout; /* å°†å¼§ç»“ç‚¹ä»å‡ºå¼§é“¾è¡¨ä¸­åˆ å» */
+   if(p2&&p2->headvex==j) /* ç¬¬1ä¸ªç»“ç‚¹ä¸ºå¾…åˆ é™¤ç»“ç‚¹ */
      (*G). xlist[i].firstout=p2->tlink;
    else
    {
-     while(p2&&p2->headvex!=j) /* ÏòºóÕÒ */
+     while(p2&&p2->headvex!=j) /* å‘åæ‰¾ */
      {
        p1=p2;
        p2=p2->tlink;
      }
-     if(p2) /* Ã»µ½±íÎ² */
+     if(p2) /* æ²¡åˆ°è¡¨å°¾ */
        p1->tlink=p2->tlink;
    }
-   p2=(*G). xlist[j].firstin; /* ½«»¡½áµã´ÓÈë»¡Á´±íÖĞÉ¾È¥ */
+   p2=(*G). xlist[j].firstin; /* å°†å¼§ç»“ç‚¹ä»å…¥å¼§é“¾è¡¨ä¸­åˆ å» */
    if(p2&&p2->tailvex==i)
      (*G). xlist[j].firstin=p2->hlink;
    else
@@ -314,72 +314,72 @@
        p1=p2;
        p2=p2->hlink;
      }
-     if(p2) /* Ã»µ½±íÎ² */
+     if(p2) /* æ²¡åˆ°è¡¨å°¾ */
        p1->hlink=p2->hlink;
    }
-   if(p2->info) /* ÊÍ·Å»¡½áµã */
+   if(p2->info) /* é‡Šæ”¾å¼§ç»“ç‚¹ */
      free(p2->info);
    free(p2);
-   (*G). arcnum--; /* »¡Êı¼õ1 */
+   (*G). arcnum--; /* å¼§æ•°å‡1 */
    return OK;
  }
 
- Boolean visited[MAX_VERTEX_NUM]; /* ·ÃÎÊ±êÖ¾Êı×é */
- Status(*VisitFunc)(VertexType); /* º¯Êı±äÁ¿ */
- void DFS(OLGraph G,int i) /* DFSTraverse()µ÷ÓÃ */
+ Boolean visited[MAX_VERTEX_NUM]; /* è®¿é—®æ ‡å¿—æ•°ç»„ */
+ Status(*VisitFunc)(VertexType); /* å‡½æ•°å˜é‡ */
+ void DFS(OLGraph G,int i) /* DFSTraverse()è°ƒç”¨ */
  {
    ArcBox *p;
-   visited[i]=TRUE; /* ·ÃÎÊ±êÖ¾Êı×éÖÃ1(ÒÑ±»·ÃÎÊ) */
-   VisitFunc(G.xlist[i].data); /* ±éÀúµÚi¸ö¶¥µã */
-   p=G.xlist[i].firstout; /* pÖ¸ÏòµÚi¸ö¶¥µãµÄ³ö¶È */
-   while(p&&visited[p->headvex]) /* pÃ»µ½±íÎ²ÇÒ¸Ã»¡µÄÍ·¶¥µãÒÑ±»·ÃÎÊ */
-     p=p->tlink; /* ²éÕÒÏÂÒ»¸ö½áµã */
-   if(p&&!visited[p->headvex]) /* ¸Ã»¡µÄÍ·¶¥µãÎ´±»·ÃÎÊ */
-     DFS(G,p->headvex); /* µİ¹éµ÷ÓÃDFS() */
+   visited[i]=TRUE; /* è®¿é—®æ ‡å¿—æ•°ç»„ç½®1(å·²è¢«è®¿é—®) */
+   VisitFunc(G.xlist[i].data); /* éå†ç¬¬iä¸ªé¡¶ç‚¹ */
+   p=G.xlist[i].firstout; /* pæŒ‡å‘ç¬¬iä¸ªé¡¶ç‚¹çš„å‡ºåº¦ */
+   while(p&&visited[p->headvex]) /* pæ²¡åˆ°è¡¨å°¾ä¸”è¯¥å¼§çš„å¤´é¡¶ç‚¹å·²è¢«è®¿é—® */
+     p=p->tlink; /* æŸ¥æ‰¾ä¸‹ä¸€ä¸ªç»“ç‚¹ */
+   if(p&&!visited[p->headvex]) /* è¯¥å¼§çš„å¤´é¡¶ç‚¹æœªè¢«è®¿é—® */
+     DFS(G,p->headvex); /* é€’å½’è°ƒç”¨DFS() */
  }
 
  void DFSTraverse(OLGraph G,Status(*Visit)(VertexType))
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,vÊÇGÖĞÄ³¸ö¶¥µã,VisitÊÇ¶¥µãµÄÓ¦ÓÃº¯Êı */
-   /* ²Ù×÷½á¹û: ´ÓµÚ1¸ö¶¥µãÆğ,°´Éî¶ÈÓÅÏÈµİ¹é±éÀúÓĞÏòÍ¼G,²¢¶ÔÃ¿¸ö¶¥µãµ÷ÓÃ */
-   /*           º¯ÊıVisitÒ»´ÎÇÒ½öÒ»´Î¡£Ò»µ©Visit()Ê§°Ü,Ôò²Ù×÷Ê§°Ü */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,væ˜¯Gä¸­æŸä¸ªé¡¶ç‚¹,Visitæ˜¯é¡¶ç‚¹çš„åº”ç”¨å‡½æ•° */
+   /* æ“ä½œç»“æœ: ä»ç¬¬1ä¸ªé¡¶ç‚¹èµ·,æŒ‰æ·±åº¦ä¼˜å…ˆé€’å½’éå†æœ‰å‘å›¾G,å¹¶å¯¹æ¯ä¸ªé¡¶ç‚¹è°ƒç”¨ */
+   /*           å‡½æ•°Visitä¸€æ¬¡ä¸”ä»…ä¸€æ¬¡ã€‚ä¸€æ—¦Visit()å¤±è´¥,åˆ™æ“ä½œå¤±è´¥ */
    int i;
    for(i=0;i<G.vexnum;i++)
-     visited[i]=FALSE; /* ·ÃÎÊ±êÖ¾Êı×éÖÃ³õÖµ(Î´±»·ÃÎÊ) */
+     visited[i]=FALSE; /* è®¿é—®æ ‡å¿—æ•°ç»„ç½®åˆå€¼(æœªè¢«è®¿é—®) */
    VisitFunc=Visit;
-   for(i=0;i<G.vexnum;i++) /* ÓÉĞòºÅ0¿ªÊ¼,¼ÌĞø²éÕÒÎ´±»·ÃÎÊ¹ıµÄ¶¥µã */
+   for(i=0;i<G.vexnum;i++) /* ç”±åºå·0å¼€å§‹,ç»§ç»­æŸ¥æ‰¾æœªè¢«è®¿é—®è¿‡çš„é¡¶ç‚¹ */
      if(!visited[i])
        DFS(G,i);
    printf("\n");
  }
 
  typedef int QElemType;
- /* c3-3.h ¶ÓÁĞµÄË³Ğò´æ´¢½á¹¹(¿ÉÓÃÓÚÑ­»·¶ÓÁĞºÍ·ÇÑ­»·¶ÓÁĞ) */
- #define MAXQSIZE 5 /* ×î´ó¶ÓÁĞ³¤¶È(¶ÔÓÚÑ­»·¶ÓÁĞ£¬×î´ó¶ÓÁĞ³¤¶ÈÒª¼õ1) */
+ /* c3-3.h é˜Ÿåˆ—çš„é¡ºåºå­˜å‚¨ç»“æ„(å¯ç”¨äºå¾ªç¯é˜Ÿåˆ—å’Œéå¾ªç¯é˜Ÿåˆ—) */
+ #define MAXQSIZE 5 /* æœ€å¤§é˜Ÿåˆ—é•¿åº¦(å¯¹äºå¾ªç¯é˜Ÿåˆ—ï¼Œæœ€å¤§é˜Ÿåˆ—é•¿åº¦è¦å‡1) */
  typedef struct
  {
-   QElemType *base; /* ³õÊ¼»¯µÄ¶¯Ì¬·ÖÅä´æ´¢¿Õ¼ä */
-   int front; /* Í·Ö¸Õë,Èô¶ÓÁĞ²»¿Õ,Ö¸Ïò¶ÓÁĞÍ·ÔªËØ */
-   int rear; /* Î²Ö¸Õë,Èô¶ÓÁĞ²»¿Õ,Ö¸Ïò¶ÓÁĞÎ²ÔªËØµÄÏÂÒ»¸öÎ»ÖÃ */
+   QElemType *base; /* åˆå§‹åŒ–çš„åŠ¨æ€åˆ†é…å­˜å‚¨ç©ºé—´ */
+   int front; /* å¤´æŒ‡é’ˆ,è‹¥é˜Ÿåˆ—ä¸ç©º,æŒ‡å‘é˜Ÿåˆ—å¤´å…ƒç´  */
+   int rear; /* å°¾æŒ‡é’ˆ,è‹¥é˜Ÿåˆ—ä¸ç©º,æŒ‡å‘é˜Ÿåˆ—å°¾å…ƒç´ çš„ä¸‹ä¸€ä¸ªä½ç½® */
  }SqQueue;
- /* bo3-3.c Ñ­»·¶ÓÁĞ(´æ´¢½á¹¹ÓÉc3-3.h¶¨Òå)µÄ»ù±¾²Ù×÷(9¸ö) */
+ /* bo3-3.c å¾ªç¯é˜Ÿåˆ—(å­˜å‚¨ç»“æ„ç”±c3-3.hå®šä¹‰)çš„åŸºæœ¬æ“ä½œ(9ä¸ª) */
  Status InitQueue(SqQueue *Q)
- { /* ¹¹ÔìÒ»¸ö¿Õ¶ÓÁĞQ */
+ { /* æ„é€ ä¸€ä¸ªç©ºé˜Ÿåˆ—Q */
    (*Q).base=(QElemType *)malloc(MAXQSIZE*sizeof(QElemType));
-   if(!(*Q).base) /* ´æ´¢·ÖÅäÊ§°Ü */
+   if(!(*Q).base) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
      exit(OVERFLOW);
    (*Q).front=(*Q).rear=0;
    return OK;
  }
  Status QueueEmpty(SqQueue Q)
- { /* Èô¶ÓÁĞQÎª¿Õ¶ÓÁĞ,Ôò·µ»ØTRUE,·ñÔò·µ»ØFALSE */
-   if(Q.front==Q.rear) /* ¶ÓÁĞ¿ÕµÄ±êÖ¾ */
+ { /* è‹¥é˜Ÿåˆ—Qä¸ºç©ºé˜Ÿåˆ—,åˆ™è¿”å›TRUE,å¦åˆ™è¿”å›FALSE */
+   if(Q.front==Q.rear) /* é˜Ÿåˆ—ç©ºçš„æ ‡å¿— */
      return TRUE;
    else
      return FALSE;
  }
  Status EnQueue(SqQueue *Q,QElemType e)
- { /* ²åÈëÔªËØeÎªQµÄĞÂµÄ¶ÓÎ²ÔªËØ */
-   if(((*Q).rear+1)%MAXQSIZE==(*Q).front) /* ¶ÓÁĞÂú */
+ { /* æ’å…¥å…ƒç´ eä¸ºQçš„æ–°çš„é˜Ÿå°¾å…ƒç´  */
+   if(((*Q).rear+1)%MAXQSIZE==(*Q).front) /* é˜Ÿåˆ—æ»¡ */
      return ERROR;
    (*Q).base[(*Q).rear]=e;
    (*Q).rear=((*Q).rear+1)%MAXQSIZE;
@@ -387,18 +387,18 @@
  }
 
  Status DeQueue(SqQueue *Q,QElemType *e)
- { /* Èô¶ÓÁĞ²»¿Õ,ÔòÉ¾³ıQµÄ¶ÓÍ·ÔªËØ,ÓÃe·µ»ØÆäÖµ,²¢·µ»ØOK;·ñÔò·µ»ØERROR */
-   if((*Q).front==(*Q).rear) /* ¶ÓÁĞ¿Õ */
+ { /* è‹¥é˜Ÿåˆ—ä¸ç©º,åˆ™åˆ é™¤Qçš„é˜Ÿå¤´å…ƒç´ ,ç”¨eè¿”å›å…¶å€¼,å¹¶è¿”å›OK;å¦åˆ™è¿”å›ERROR */
+   if((*Q).front==(*Q).rear) /* é˜Ÿåˆ—ç©º */
      return ERROR;
    *e=(*Q).base[(*Q).front];
    (*Q).front=((*Q).front+1)%MAXQSIZE;
    return OK;
  }
  void BFSTraverse(OLGraph G,Status(*Visit)(VertexType))
- { /* ³õÊ¼Ìõ¼ş: ÓĞÏòÍ¼G´æÔÚ,VisitÊÇ¶¥µãµÄÓ¦ÓÃº¯Êı¡£Ëã·¨7.6 */
-   /* ²Ù×÷½á¹û: ´ÓµÚ1¸ö¶¥µãÆğ,°´¹ã¶ÈÓÅÏÈ·Çµİ¹é±éÀúÓĞÏòÍ¼G,²¢¶ÔÃ¿¸ö¶¥µãµ÷ÓÃ */
-   /*           º¯ÊıVisitÒ»´ÎÇÒ½öÒ»´Î¡£Ò»µ©Visit()Ê§°Ü,Ôò²Ù×÷Ê§°Ü¡£ */
-   /*           Ê¹ÓÃ¸¨Öú¶ÓÁĞQºÍ·ÃÎÊ±êÖ¾Êı×évisited */
+ { /* åˆå§‹æ¡ä»¶: æœ‰å‘å›¾Gå­˜åœ¨,Visitæ˜¯é¡¶ç‚¹çš„åº”ç”¨å‡½æ•°ã€‚ç®—æ³•7.6 */
+   /* æ“ä½œç»“æœ: ä»ç¬¬1ä¸ªé¡¶ç‚¹èµ·,æŒ‰å¹¿åº¦ä¼˜å…ˆéé€’å½’éå†æœ‰å‘å›¾G,å¹¶å¯¹æ¯ä¸ªé¡¶ç‚¹è°ƒç”¨ */
+   /*           å‡½æ•°Visitä¸€æ¬¡ä¸”ä»…ä¸€æ¬¡ã€‚ä¸€æ—¦Visit()å¤±è´¥,åˆ™æ“ä½œå¤±è´¥ã€‚ */
+   /*           ä½¿ç”¨è¾…åŠ©é˜Ÿåˆ—Qå’Œè®¿é—®æ ‡å¿—æ•°ç»„visited */
    int v,u,w;
    VertexType u1,w1;
    SqQueue Q;
@@ -416,7 +416,7 @@
          DeQueue(&Q,&u);
          strcpy(u1,*GetVex(G,u));
          for(w=FirstAdjVex(G,u1);w>=0;w=NextAdjVex(G,u1,strcpy(w1,*GetVex(G,w))))
-           if(!visited[w]) /* wÎªuµÄÉĞÎ´·ÃÎÊµÄÁÚ½Ó¶¥µãµÄĞòºÅ */
+           if(!visited[w]) /* wä¸ºuçš„å°šæœªè®¿é—®çš„é‚»æ¥é¡¶ç‚¹çš„åºå· */
            {
              visited[w]=TRUE;
              Visit(G.xlist[w].data);
@@ -428,26 +428,26 @@
  }
 
  void Display(OLGraph G)
- { /* Êä³öÓĞÏòÍ¼G */
+ { /* è¾“å‡ºæœ‰å‘å›¾G */
    int i;
    ArcBox *p;
-   printf("¹²%d¸ö¶¥µã,%dÌõ»¡:\n",G.vexnum,G.arcnum);
+   printf("å…±%dä¸ªé¡¶ç‚¹,%dæ¡å¼§:\n",G.vexnum,G.arcnum);
    for(i=0;i<G.vexnum;i++)
    {
-     printf("¶¥µã%s: Èë¶È: ",G.xlist[i].data);
+     printf("é¡¶ç‚¹%s: å…¥åº¦: ",G.xlist[i].data);
      p=G.xlist[i].firstin;
      while(p)
      {
        printf("%s ",G.xlist[p->tailvex].data);
        p=p->hlink;
      }
-     printf("³ö¶È: ");
+     printf("å‡ºåº¦: ");
      p=G.xlist[i].firstout;
      while(p)
      {
        printf("%s ",G.xlist[p->headvex].data);
-       if(p->info) /* ¸Ã»¡ÓĞÏà¹ØĞÅÏ¢ */
-         printf("»¡ĞÅÏ¢: %s ",p->info);
+       if(p->info) /* è¯¥å¼§æœ‰ç›¸å…³ä¿¡æ¯ */
+         printf("å¼§ä¿¡æ¯: %s ",p->info);
        p=p->tlink;
      }
      printf("\n");
@@ -466,17 +466,17 @@
    VertexType v1,v2;
    CreateDG(&g);
    Display(g);
-   printf("ĞŞ¸Ä¶¥µãµÄÖµ£¬ÇëÊäÈëÔ­Öµ ĞÂÖµ: ");
+   printf("ä¿®æ”¹é¡¶ç‚¹çš„å€¼ï¼Œè¯·è¾“å…¥åŸå€¼ æ–°å€¼: ");
    scanf("%s%s",v1,v2);
    PutVex(&g,v1,v2);
-   printf("²åÈëĞÂ¶¥µã£¬ÇëÊäÈë¶¥µãµÄÖµ: ");
+   printf("æ’å…¥æ–°é¡¶ç‚¹ï¼Œè¯·è¾“å…¥é¡¶ç‚¹çš„å€¼: ");
    scanf("%s",v1);
    InsertVex(&g,v1);
-   printf("²åÈëÓëĞÂ¶¥µãÓĞ¹ØµÄ»¡£¬ÇëÊäÈë»¡Êı: ");
+   printf("æ’å…¥ä¸æ–°é¡¶ç‚¹æœ‰å…³çš„å¼§ï¼Œè¯·è¾“å…¥å¼§æ•°: ");
    scanf("%d",&n);
    for(k=0;k<n;k++)
    {
-     printf("ÇëÊäÈëÁíÒ»¶¥µãµÄÖµ ÁíÒ»¶¥µãµÄ·½Ïò(0:»¡Í· 1:»¡Î²): ");
+     printf("è¯·è¾“å…¥å¦ä¸€é¡¶ç‚¹çš„å€¼ å¦ä¸€é¡¶ç‚¹çš„æ–¹å‘(0:å¼§å¤´ 1:å¼§å°¾): ");
      scanf("%s%d",v2,&j);
      if(j)
        InsertArc(&g,v2,v1);
@@ -484,17 +484,17 @@
        InsertArc(&g,v1,v2);
    }
    Display(g);
-   printf("É¾³ıÒ»Ìõ»¡£¬ÇëÊäÈë´ıÉ¾³ı»¡µÄ»¡Î² »¡Í·£º");
+   printf("åˆ é™¤ä¸€æ¡å¼§ï¼Œè¯·è¾“å…¥å¾…åˆ é™¤å¼§çš„å¼§å°¾ å¼§å¤´ï¼š");
    scanf("%s%s",v1,v2);
    DeleteArc(&g,v1,v2);
    Display(g);
-   printf("É¾³ı¶¥µã¼°Ïà¹ØµÄ»¡£¬ÇëÊäÈë¶¥µãµÄÖµ: ");
+   printf("åˆ é™¤é¡¶ç‚¹åŠç›¸å…³çš„å¼§ï¼Œè¯·è¾“å…¥é¡¶ç‚¹çš„å€¼: ");
    scanf("%s",v1);
    DeleteVex(&g,v1);
    Display(g);
-   printf("Éî¶ÈÓÅÏÈËÑË÷µÄ½á¹û:\n");
+   printf("æ·±åº¦ä¼˜å…ˆæœç´¢çš„ç»“æœ:\n");
    DFSTraverse(g,visit);
-   printf("¹ã¶ÈÓÅÏÈËÑË÷µÄ½á¹û:\n");
+   printf("å¹¿åº¦ä¼˜å…ˆæœç´¢çš„ç»“æœ:\n");
    BFSTraverse(g,visit);
    DestroyGraph(&g);
  }

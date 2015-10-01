@@ -1,10 +1,10 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #define TRUE 1
 #define FALSE 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 #define N 8
 void bubble_sort(int a[],int n)
-{ /* ½«aÖĞÕûÊıĞòÁĞÖØĞÂÅÅÁĞ³É×ÔĞ¡ÖÁ´óÓĞĞòµÄÕûÊıĞòÁĞ(ÆğÅİÅÅĞò) */
+{ /* å°†aä¸­æ•´æ•°åºåˆ—é‡æ–°æ’åˆ—æˆè‡ªå°è‡³å¤§æœ‰åºçš„æ•´æ•°åºåˆ—(èµ·æ³¡æ’åº) */
   int i,j,t;
   Status change;
   for(i=n-1,change=TRUE;i>1&&change;--i)
@@ -30,9 +30,9 @@ void print(int r[],int n)
 void main()
 {
   int d[N]={49,38,65,97,76,13,27,49};
-  printf("ÅÅĞòÇ°:\n");
+  printf("æ’åºå‰:\n");
   print(d,N);
   bubble_sort(d,N);
-  printf("ÅÅĞòºó:\n");
+  printf("æ’åºå:\n");
   print(d,N);
 }

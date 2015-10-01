@@ -1,36 +1,36 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 typedef char TElemType;
-TElemType Nil=' '; /* ÒÔ¿Õ¸ñ·ûÎª¿Õ */
+TElemType Nil=' '; /* ä»¥ç©ºæ ¼ç¬¦ä¸ºç©º */
 #define MAX_TREE_SIZE 100
 typedef struct
 {
   TElemType data;
-  int parent; /* Ë«Ç×Î»ÖÃÓò */
+  int parent; /* åŒäº²ä½ç½®åŸŸ */
 } PTNode;
 typedef struct
 {
   PTNode nodes[MAX_TREE_SIZE];
-  int n; /* ½áµãÊı */
+  int n; /* ç»“ç‚¹æ•° */
 } PTree;
 Status InitTree(PTree *T)
-{ /* ²Ù×÷½á¹û: ¹¹Ôì¿ÕÊ÷T */
+{ /* æ“ä½œç»“æœ: æ„é€ ç©ºæ ‘T */
   (*T).n=0;
   return OK;
 }
 void DestroyTree()
-{ /* ÓÉÓÚPTreeÊÇ¶¨³¤ÀàĞÍ,ÎŞ·¨Ïú»Ù */
+{ /* ç”±äºPTreeæ˜¯å®šé•¿ç±»å‹,æ— æ³•é”€æ¯ */
 }
 typedef struct
 {
   int num;
   TElemType name;
-}QElemType; /* ¶¨Òå¶ÓÁĞÔªËØÀàĞÍ */
+}QElemType; /* å®šä¹‰é˜Ÿåˆ—å…ƒç´ ç±»å‹ */
 typedef struct QNode
 {
   QElemType data;
@@ -38,10 +38,10 @@ typedef struct QNode
 }QNode,*QueuePtr;
 typedef struct
 {
-  QueuePtr front,rear; /* ¶ÓÍ·¡¢¶ÓÎ²Ö¸Õë */
+  QueuePtr front,rear; /* é˜Ÿå¤´ã€é˜Ÿå°¾æŒ‡é’ˆ */
 }LinkQueue;
 Status InitQueue(LinkQueue *Q)
-{ /* ¹¹ÔìÒ»¸ö¿Õ¶ÓÁĞQ */
+{ /* æ„é€ ä¸€ä¸ªç©ºé˜Ÿåˆ—Q */
   (*Q).front=(*Q).rear=(QueuePtr)malloc(sizeof(QNode));
   if(!(*Q).front)
     exit(OVERFLOW);
@@ -49,16 +49,16 @@ Status InitQueue(LinkQueue *Q)
   return OK;
 }
 Status QueueEmpty(LinkQueue Q)
-{ /* ÈôQÎª¿Õ¶ÓÁĞ,Ôò·µ»ØTRUE,·ñÔò·µ»ØFALSE */
+{ /* è‹¥Qä¸ºç©ºé˜Ÿåˆ—,åˆ™è¿”å›TRUE,å¦åˆ™è¿”å›FALSE */
   if(Q.front==Q.rear)
     return TRUE;
   else
     return FALSE;
 }
 Status EnQueue(LinkQueue *Q,QElemType e)
-{ /* ²åÈëÔªËØeÎªQµÄĞÂµÄ¶ÓÎ²ÔªËØ */
+{ /* æ’å…¥å…ƒç´ eä¸ºQçš„æ–°çš„é˜Ÿå°¾å…ƒç´  */
   QueuePtr p=(QueuePtr)malloc(sizeof(QNode));
-  if(!p) /* ´æ´¢·ÖÅäÊ§°Ü */
+  if(!p) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     exit(OVERFLOW);
   p->data=e;
   p->next=NULL;
@@ -67,7 +67,7 @@ Status EnQueue(LinkQueue *Q,QElemType e)
   return OK;
 }
 Status DeQueue(LinkQueue *Q,QElemType *e)
-{ /* Èô¶ÓÁĞ²»¿Õ,É¾³ıQµÄ¶ÓÍ·ÔªËØ,ÓÃe·µ»ØÆäÖµ,²¢·µ»ØOK,·ñÔò·µ»ØERROR */
+{ /* è‹¥é˜Ÿåˆ—ä¸ç©º,åˆ é™¤Qçš„é˜Ÿå¤´å…ƒç´ ,ç”¨eè¿”å›å…¶å€¼,å¹¶è¿”å›OK,å¦åˆ™è¿”å›ERROR */
   QueuePtr p;
   if((*Q).front==(*Q).rear)
     return ERROR;
@@ -80,24 +80,24 @@ Status DeQueue(LinkQueue *Q,QElemType *e)
   return OK;
 }
 Status CreateTree(PTree *T)
-{ /* ²Ù×÷½á¹û: ¹¹ÔìÊ÷T */
+{ /* æ“ä½œç»“æœ: æ„é€ æ ‘T */
   LinkQueue q;
   QElemType p,qq;
   int i=1,j,l;
-  char c[MAX_TREE_SIZE]; /* ÁÙÊ±´æ·Åº¢×Ó½áµãÊı×é */
-  InitQueue(&q); /* ³õÊ¼»¯¶ÓÁĞ */
-  printf("ÇëÊäÈë¸ù½áµã(×Ö·ûĞÍ,¿Õ¸ñÎª¿Õ): ");
-  scanf("%c%*c",&(*T).nodes[0].data); /* ¸ù½áµãĞòºÅÎª0,%*c³Ôµô»Ø³µ·û */
-  if((*T).nodes[0].data!=Nil) /* ·Ç¿ÕÊ÷ */
+  char c[MAX_TREE_SIZE]; /* ä¸´æ—¶å­˜æ”¾å­©å­ç»“ç‚¹æ•°ç»„ */
+  InitQueue(&q); /* åˆå§‹åŒ–é˜Ÿåˆ— */
+  printf("è¯·è¾“å…¥æ ¹ç»“ç‚¹(å­—ç¬¦å‹,ç©ºæ ¼ä¸ºç©º): ");
+  scanf("%c%*c",&(*T).nodes[0].data); /* æ ¹ç»“ç‚¹åºå·ä¸º0,%*cåƒæ‰å›è½¦ç¬¦ */
+  if((*T).nodes[0].data!=Nil) /* éç©ºæ ‘ */
   {
-    (*T).nodes[0].parent=-1; /* ¸ù½áµãÎŞË«Ç× */
+    (*T).nodes[0].parent=-1; /* æ ¹ç»“ç‚¹æ— åŒäº² */
     qq.name=(*T).nodes[0].data;
     qq.num=0;
-    EnQueue(&q,qq); /* Èë¶Ó´Ë½áµã */
-    while(i<MAX_TREE_SIZE&&!QueueEmpty(q)) /* Êı×éÎ´ÂúÇÒ¶Ó²»¿Õ */
+    EnQueue(&q,qq); /* å…¥é˜Ÿæ­¤ç»“ç‚¹ */
+    while(i<MAX_TREE_SIZE&&!QueueEmpty(q)) /* æ•°ç»„æœªæ»¡ä¸”é˜Ÿä¸ç©º */
     {
-      DeQueue(&q,&qq); /* ³ö¶ÓÒ»¸ö½áµã */
-      printf("Çë°´³¤Ó×Ë³ĞòÊäÈë½áµã%cµÄËùÓĞº¢×Ó: ",qq.name);
+      DeQueue(&q,&qq); /* å‡ºé˜Ÿä¸€ä¸ªç»“ç‚¹ */
+      printf("è¯·æŒ‰é•¿å¹¼é¡ºåºè¾“å…¥ç»“ç‚¹%cçš„æ‰€æœ‰å­©å­: ",qq.name);
       gets(c);
       l=strlen(c);
       for(j=0;j<l;j++)
@@ -106,13 +106,13 @@ Status CreateTree(PTree *T)
         (*T).nodes[i].parent=qq.num;
         p.name=c[j];
         p.num=i;
-        EnQueue(&q,p); /* Èë¶Ó´Ë½áµã */
+        EnQueue(&q,p); /* å…¥é˜Ÿæ­¤ç»“ç‚¹ */
         i++;
       }
     }
     if(i>MAX_TREE_SIZE)
     {
-      printf("½áµãÊı³¬¹ıÊı×éÈİÁ¿\n");
+      printf("ç»“ç‚¹æ•°è¶…è¿‡æ•°ç»„å®¹é‡\n");
       exit(OVERFLOW);
     }
     (*T).n=i;
@@ -121,20 +121,20 @@ Status CreateTree(PTree *T)
     (*T).n=0;
   return OK;
 }
-#define ClearTree InitTree /* ¶şÕß²Ù×÷ÏàÍ¬ */
+#define ClearTree InitTree /* äºŒè€…æ“ä½œç›¸åŒ */
 Status TreeEmpty(PTree T)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ¡£²Ù×÷½á¹û: ÈôTÎª¿ÕÊ÷,Ôò·µ»ØTRUE,·ñÔò·µ»ØFALSE */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: è‹¥Tä¸ºç©ºæ ‘,åˆ™è¿”å›TRUE,å¦åˆ™è¿”å›FALSE */
   if(T.n)
     return FALSE;
   else
     return TRUE;
 }
 int TreeDepth(PTree T)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ¡£²Ù×÷½á¹û: ·µ»ØTµÄÉî¶È */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: è¿”å›Tçš„æ·±åº¦ */
   int k,m,def,max=0;
   for(k=0;k<T.n;++k)
   {
-    def=1; /* ³õÊ¼»¯±¾¼ÊµãµÄÉî¶È */
+    def=1; /* åˆå§‹åŒ–æœ¬é™…ç‚¹çš„æ·±åº¦ */
     m=T.nodes[k].parent;
     while(m!=-1)
     {
@@ -144,10 +144,10 @@ int TreeDepth(PTree T)
     if(max<def)
       max=def;
   }
-  return max; /* ×î´óÉî¶È */
+  return max; /* æœ€å¤§æ·±åº¦ */
 }
 TElemType Root(PTree T)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ¡£²Ù×÷½á¹û: ·µ»ØTµÄ¸ù */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: è¿”å›Tçš„æ ¹ */
   int i;
   for(i=0;i<T.n;i++)
     if(T.nodes[i].parent<0)
@@ -155,14 +155,14 @@ TElemType Root(PTree T)
   return Nil;
 }
 TElemType Value(PTree T,int i)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,iÊÇÊ÷TÖĞ½áµãµÄĞòºÅ¡£²Ù×÷½á¹û: ·µ»ØµÚi¸ö½áµãµÄÖµ */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,iæ˜¯æ ‘Tä¸­ç»“ç‚¹çš„åºå·ã€‚æ“ä½œç»“æœ: è¿”å›ç¬¬iä¸ªç»“ç‚¹çš„å€¼ */
   if(i<T.n)
     return T.nodes[i].data;
   else
     return Nil;
 }
 Status Assign(PTree *T,TElemType cur_e,TElemType value)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,cur_eÊÇÊ÷TÖĞ½áµãµÄÖµ¡£²Ù×÷½á¹û: ¸Äcur_eÎªvalue */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,cur_eæ˜¯æ ‘Tä¸­ç»“ç‚¹çš„å€¼ã€‚æ“ä½œç»“æœ: æ”¹cur_eä¸ºvalue */
   int j;
   for(j=0;j<(*T).n;j++)
   {
@@ -175,76 +175,76 @@ Status Assign(PTree *T,TElemType cur_e,TElemType value)
   return ERROR;
 }
 TElemType Parent(PTree T,TElemType cur_e)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,cur_eÊÇTÖĞÄ³¸ö½áµã */
-  /* ²Ù×÷½á¹û: Èôcur_eÊÇTµÄ·Ç¸ù½áµã,Ôò·µ»ØËüµÄË«Ç×,·ñÔòº¯ÊıÖµÎª£¢¿Õ£¢ */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,cur_eæ˜¯Tä¸­æŸä¸ªç»“ç‚¹ */
+  /* æ“ä½œç»“æœ: è‹¥cur_eæ˜¯Tçš„éæ ¹ç»“ç‚¹,åˆ™è¿”å›å®ƒçš„åŒäº²,å¦åˆ™å‡½æ•°å€¼ä¸ºï¼‚ç©ºï¼‚ */
   int j;
-  for(j=1;j<T.n;j++) /* ¸ù½áµãĞòºÅÎª0 */
+  for(j=1;j<T.n;j++) /* æ ¹ç»“ç‚¹åºå·ä¸º0 */
     if(T.nodes[j].data==cur_e)
       return T.nodes[T.nodes[j].parent].data;
   return Nil;
 }
 TElemType LeftChild(PTree T,TElemType cur_e)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,cur_eÊÇTÖĞÄ³¸ö½áµã */
-  /* ²Ù×÷½á¹û: Èôcur_eÊÇTµÄ·ÇÒ¶×Ó½áµã,Ôò·µ»ØËüµÄ×î×óº¢×Ó,·ñÔò·µ»Ø£¢¿Õ£¢ */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,cur_eæ˜¯Tä¸­æŸä¸ªç»“ç‚¹ */
+  /* æ“ä½œç»“æœ: è‹¥cur_eæ˜¯Tçš„éå¶å­ç»“ç‚¹,åˆ™è¿”å›å®ƒçš„æœ€å·¦å­©å­,å¦åˆ™è¿”å›ï¼‚ç©ºï¼‚ */
   int i,j;
   for(i=0;i<T.n;i++)
-    if(T.nodes[i].data==cur_e) /* ÕÒµ½cur_e,ÆäĞòºÅÎªi */
+    if(T.nodes[i].data==cur_e) /* æ‰¾åˆ°cur_e,å…¶åºå·ä¸ºi */
       break;
-  for(j=i+1;j<T.n;j++) /* ¸ù¾İÊ÷µÄ¹¹Ôìº¯Êı,º¢×ÓµÄĞòºÅ£¾ÆäË«Ç×µÄĞòºÅ */
-    if(T.nodes[j].parent==i) /* ¸ù¾İÊ÷µÄ¹¹Ôìº¯Êı,×î×óº¢×Ó(³¤×Ó)µÄĞòºÅ£¼ÆäËüº¢×ÓµÄĞòºÅ */
+  for(j=i+1;j<T.n;j++) /* æ ¹æ®æ ‘çš„æ„é€ å‡½æ•°,å­©å­çš„åºå·ï¼å…¶åŒäº²çš„åºå· */
+    if(T.nodes[j].parent==i) /* æ ¹æ®æ ‘çš„æ„é€ å‡½æ•°,æœ€å·¦å­©å­(é•¿å­)çš„åºå·ï¼œå…¶å®ƒå­©å­çš„åºå· */
       return T.nodes[j].data;
   return Nil;
 }
 TElemType RightSibling(PTree T,TElemType cur_e)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,cur_eÊÇTÖĞÄ³¸ö½áµã */
-  /* ²Ù×÷½á¹û: Èôcur_eÓĞÓÒ(ÏÂÒ»¸ö)ĞÖµÜ,Ôò·µ»ØËüµÄÓÒĞÖµÜ,·ñÔò·µ»Ø£¢¿Õ£¢ */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,cur_eæ˜¯Tä¸­æŸä¸ªç»“ç‚¹ */
+  /* æ“ä½œç»“æœ: è‹¥cur_eæœ‰å³(ä¸‹ä¸€ä¸ª)å…„å¼Ÿ,åˆ™è¿”å›å®ƒçš„å³å…„å¼Ÿ,å¦åˆ™è¿”å›ï¼‚ç©ºï¼‚ */
   int i;
   for(i=0;i<T.n;i++)
-    if(T.nodes[i].data==cur_e) /* ÕÒµ½cur_e,ÆäĞòºÅÎªi */
+    if(T.nodes[i].data==cur_e) /* æ‰¾åˆ°cur_e,å…¶åºå·ä¸ºi */
       break;
   if(T.nodes[i+1].parent==T.nodes[i].parent)
-  /* ¸ù¾İÊ÷µÄ¹¹Ôìº¯Êı,Èôcur_eÓĞÓÒĞÖµÜµÄ»°ÔòÓÒĞÖµÜ½ô½ÓÆäºó */
+  /* æ ¹æ®æ ‘çš„æ„é€ å‡½æ•°,è‹¥cur_eæœ‰å³å…„å¼Ÿçš„è¯åˆ™å³å…„å¼Ÿç´§æ¥å…¶å */
     return T.nodes[i+1].data;
   return Nil;
 }
 Status Print(PTree T)
-{ /* Êä³öÊ÷T¡£¼Ó */
+{ /* è¾“å‡ºæ ‘Tã€‚åŠ  */
   int i;
-  printf("½áµã¸öÊı=%d\n",T.n);
-  printf(" ½áµã Ë«Ç×\n");
+  printf("ç»“ç‚¹ä¸ªæ•°=%d\n",T.n);
+  printf(" ç»“ç‚¹ åŒäº²\n");
   for(i=0;i<T.n;i++)
   {
-    printf("    %c",Value(T,i)); /* ½áµã */
-    if(T.nodes[i].parent>=0) /* ÓĞË«Ç× */
-      printf("    %c",Value(T,T.nodes[i].parent)); /* Ë«Ç× */
+    printf("    %c",Value(T,i)); /* ç»“ç‚¹ */
+    if(T.nodes[i].parent>=0) /* æœ‰åŒäº² */
+      printf("    %c",Value(T,T.nodes[i].parent)); /* åŒäº² */
     printf("\n");
   }
   return OK;
 }
 Status InsertChild(PTree *T,TElemType p,int i,PTree c)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,pÊÇTÖĞÄ³¸ö½áµã,1¡Üi¡ÜpËùÖ¸½áµãµÄ¶È+1,·Ç¿ÕÊ÷cÓëT²»Ïà½» */
-  /* ²Ù×÷½á¹û: ²åÈëcÎªTÖĞp½áµãµÄµÚi¿Ã×ÓÊ÷ */
-  int j,k,l,f=1,n=0; /* Éè½»»»±êÖ¾fµÄ³õÖµÎª1,pµÄº¢×ÓÊınµÄ³õÖµÎª0 */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,pæ˜¯Tä¸­æŸä¸ªç»“ç‚¹,1â‰¤iâ‰¤pæ‰€æŒ‡ç»“ç‚¹çš„åº¦+1,éç©ºæ ‘cä¸Tä¸ç›¸äº¤ */
+  /* æ“ä½œç»“æœ: æ’å…¥cä¸ºTä¸­pç»“ç‚¹çš„ç¬¬iæ£µå­æ ‘ */
+  int j,k,l,f=1,n=0; /* è®¾äº¤æ¢æ ‡å¿—fçš„åˆå€¼ä¸º1,pçš„å­©å­æ•°nçš„åˆå€¼ä¸º0 */
   PTNode t;
-  if(!TreeEmpty(*T)) /* T²»¿Õ */
+  if(!TreeEmpty(*T)) /* Tä¸ç©º */
   {
-    for(j=0;j<(*T).n;j++) /* ÔÚTÖĞÕÒpµÄĞòºÅ */
-      if((*T).nodes[j].data==p) /* pµÄĞòºÅÎªj */
+    for(j=0;j<(*T).n;j++) /* åœ¨Tä¸­æ‰¾pçš„åºå· */
+      if((*T).nodes[j].data==p) /* pçš„åºå·ä¸ºj */
         break;
-    l=j+1; /* Èç¹ûcÊÇpµÄµÚ1¿Ã×ÓÊ÷,Ôò²åÔÚj+1´¦ */
-    if(i>1) /* c²»ÊÇpµÄµÚ1¿Ã×ÓÊ÷ */
+    l=j+1; /* å¦‚æœcæ˜¯pçš„ç¬¬1æ£µå­æ ‘,åˆ™æ’åœ¨j+1å¤„ */
+    if(i>1) /* cä¸æ˜¯pçš„ç¬¬1æ£µå­æ ‘ */
     {
-      for(k=j+1;k<(*T).n;k++) /* ´Ój+1¿ªÊ¼ÕÒpµÄÇ°i-1¸öº¢×Ó */
-        if((*T).nodes[k].parent==j) /* µ±Ç°½áµãÊÇpµÄº¢×Ó */
+      for(k=j+1;k<(*T).n;k++) /* ä»j+1å¼€å§‹æ‰¾pçš„å‰i-1ä¸ªå­©å­ */
+        if((*T).nodes[k].parent==j) /* å½“å‰ç»“ç‚¹æ˜¯pçš„å­©å­ */
         {
-          n++; /* º¢×ÓÊı¼Ó1 */
-          if(n==i-1) /* ÕÒµ½pµÄµÚi-1¸öº¢×Ó,ÆäĞòºÅÎªk1 */
+          n++; /* å­©å­æ•°åŠ 1 */
+          if(n==i-1) /* æ‰¾åˆ°pçš„ç¬¬i-1ä¸ªå­©å­,å…¶åºå·ä¸ºk1 */
             break;
         }
-      l=k+1; /* c²åÔÚk+1´¦ */
-    } /* pµÄĞòºÅÎªj,c²åÔÚl´¦ */
-    if(l<(*T).n) /* ²åÈëµãl²»ÔÚ×îºó */
-      for(k=(*T).n-1;k>=l;k--) /* ÒÀ´Î½«ĞòºÅlÒÔºóµÄ½áµãÏòºóÒÆc.n¸öÎ»ÖÃ */
+      l=k+1; /* cæ’åœ¨k+1å¤„ */
+    } /* pçš„åºå·ä¸ºj,cæ’åœ¨lå¤„ */
+    if(l<(*T).n) /* æ’å…¥ç‚¹lä¸åœ¨æœ€å */
+      for(k=(*T).n-1;k>=l;k--) /* ä¾æ¬¡å°†åºå·lä»¥åçš„ç»“ç‚¹å‘åç§»c.nä¸ªä½ç½® */
       {
         (*T).nodes[k+c.n]=(*T).nodes[k];
         if((*T).nodes[k].parent>=l)
@@ -252,59 +252,59 @@ Status InsertChild(PTree *T,TElemType p,int i,PTree c)
       }
     for(k=0;k<c.n;k++)
     {
-      (*T).nodes[l+k].data=c.nodes[k].data; /* ÒÀ´Î½«Ê÷cµÄËùÓĞ½áµã²åÓÚ´Ë´¦ */
+      (*T).nodes[l+k].data=c.nodes[k].data; /* ä¾æ¬¡å°†æ ‘cçš„æ‰€æœ‰ç»“ç‚¹æ’äºæ­¤å¤„ */
       (*T).nodes[l+k].parent=c.nodes[k].parent+l;
     }
-    (*T).nodes[l].parent=j; /* Ê÷cµÄ¸ù½áµãµÄË«Ç×Îªp */
-    (*T).n+=c.n; /* Ê÷TµÄ½áµãÊı¼Óc.n¸ö */
+    (*T).nodes[l].parent=j; /* æ ‘cçš„æ ¹ç»“ç‚¹çš„åŒäº²ä¸ºp */
+    (*T).n+=c.n; /* æ ‘Tçš„ç»“ç‚¹æ•°åŠ c.nä¸ª */
     while(f)
-    { /* ´Ó²åÈëµãÖ®ºó,½«½áµãÈÔ°´²ãĞòÅÅÁĞ */
-      f=0; /* ½»»»±êÖ¾ÖÃ0 */
+    { /* ä»æ’å…¥ç‚¹ä¹‹å,å°†ç»“ç‚¹ä»æŒ‰å±‚åºæ’åˆ— */
+      f=0; /* äº¤æ¢æ ‡å¿—ç½®0 */
       for(j=l;j<(*T).n-1;j++)
         if((*T).nodes[j].parent>(*T).nodes[j+1].parent)
-        {/* Èç¹û½áµãjµÄË«Ç×ÅÅÔÚ½áµãj+1µÄË«Ç×Ö®ºó(Ê÷Ã»ÓĞ°´²ãĞòÅÅÁĞ),½»»»Á½½áµã*/
+        {/* å¦‚æœç»“ç‚¹jçš„åŒäº²æ’åœ¨ç»“ç‚¹j+1çš„åŒäº²ä¹‹å(æ ‘æ²¡æœ‰æŒ‰å±‚åºæ’åˆ—),äº¤æ¢ä¸¤ç»“ç‚¹*/
           t=(*T).nodes[j];
           (*T).nodes[j]=(*T).nodes[j+1];
           (*T).nodes[j+1]=t;
-          f=1; /* ½»»»±êÖ¾ÖÃ1 */
-          for(k=j;k<(*T).n;k++) /* ¸Ä±äË«Ç×ĞòºÅ */
+          f=1; /* äº¤æ¢æ ‡å¿—ç½®1 */
+          for(k=j;k<(*T).n;k++) /* æ”¹å˜åŒäº²åºå· */
             if((*T).nodes[k].parent==j)
-              (*T).nodes[k].parent++; /* Ë«Ç×ĞòºÅ¸ÄÎªj+1 */
+              (*T).nodes[k].parent++; /* åŒäº²åºå·æ”¹ä¸ºj+1 */
             else if((*T).nodes[k].parent==j+1)
-              (*T).nodes[k].parent--; /* Ë«Ç×ĞòºÅ¸ÄÎªj */
+              (*T).nodes[k].parent--; /* åŒäº²åºå·æ”¹ä¸ºj */
         }
     }
     return OK;
   }
-  else /* Ê÷T²»´æÔÚ */
+  else /* æ ‘Tä¸å­˜åœ¨ */
     return ERROR;
 }
-Status deleted[MAX_TREE_SIZE+1]; /* É¾³ı±êÖ¾Êı×é(È«¾ÖÁ¿) */
+Status deleted[MAX_TREE_SIZE+1]; /* åˆ é™¤æ ‡å¿—æ•°ç»„(å…¨å±€é‡) */
 void DeleteChild(PTree *T,TElemType p,int i)
-{ /* ³õÊ¼Ìõ¼ş: Ê÷T´æÔÚ,pÊÇTÖĞÄ³¸ö½áµã,1¡Üi¡ÜpËùÖ¸½áµãµÄ¶È */
-  /* ²Ù×÷½á¹û: É¾³ıTÖĞ½áµãpµÄµÚi¿Ã×ÓÊ÷ */
+{ /* åˆå§‹æ¡ä»¶: æ ‘Tå­˜åœ¨,pæ˜¯Tä¸­æŸä¸ªç»“ç‚¹,1â‰¤iâ‰¤pæ‰€æŒ‡ç»“ç‚¹çš„åº¦ */
+  /* æ“ä½œç»“æœ: åˆ é™¤Tä¸­ç»“ç‚¹pçš„ç¬¬iæ£µå­æ ‘ */
   int j,k,n=0;
   LinkQueue q;
   QElemType pq,qq;
   for(j=0;j<=(*T).n;j++)
-    deleted[j]=0; /* ÖÃ³õÖµÎª0(²»É¾³ı±ê¼Ç) */
-  pq.name='a'; /* ´Ë³ÉÔ±²»ÓÃ */
-  InitQueue(&q); /* ³õÊ¼»¯¶ÓÁĞ */
+    deleted[j]=0; /* ç½®åˆå€¼ä¸º0(ä¸åˆ é™¤æ ‡è®°) */
+  pq.name='a'; /* æ­¤æˆå‘˜ä¸ç”¨ */
+  InitQueue(&q); /* åˆå§‹åŒ–é˜Ÿåˆ— */
   for(j=0;j<(*T).n;j++)
     if((*T).nodes[j].data==p)
-      break; /* jÎª½áµãpµÄĞòºÅ */
+      break; /* jä¸ºç»“ç‚¹pçš„åºå· */
   for(k=j+1;k<(*T).n;k++)
   {
     if((*T).nodes[k].parent==j)
       n++;
     if(n==i)
-      break; /* kÎªpµÄµÚi¿Ã×ÓÊ÷½áµãµÄĞòºÅ */
+      break; /* kä¸ºpçš„ç¬¬iæ£µå­æ ‘ç»“ç‚¹çš„åºå· */
   }
-  if(k<(*T).n) /* pµÄµÚi¿Ã×ÓÊ÷½áµã´æÔÚ */
+  if(k<(*T).n) /* pçš„ç¬¬iæ£µå­æ ‘ç»“ç‚¹å­˜åœ¨ */
   {
     n=0;
     pq.num=k;
-    deleted[k]=1; /* ÖÃÉ¾³ı±ê¼Ç */
+    deleted[k]=1; /* ç½®åˆ é™¤æ ‡è®° */
     n++;
     EnQueue(&q,pq);
     while(!QueueEmpty(q))
@@ -314,7 +314,7 @@ void DeleteChild(PTree *T,TElemType p,int i)
         if((*T).nodes[j].parent==qq.num)
         {
           pq.num=j;
-          deleted[j]=1; /* ÖÃÉ¾³ı±ê¼Ç */
+          deleted[j]=1; /* ç½®åˆ é™¤æ ‡è®° */
           n++;
           EnQueue(&q,pq);
         }
@@ -331,12 +331,12 @@ void DeleteChild(PTree *T,TElemType p,int i)
         }
         j--;
       }
-    (*T).n-=n; /* nÎª´ıÉ¾³ı½áµãÊı */
+    (*T).n-=n; /* nä¸ºå¾…åˆ é™¤ç»“ç‚¹æ•° */
   }
 }
 void TraverseTree(PTree T,void(*Visit)(TElemType))
-{ /* ³õÊ¼Ìõ¼ş:¶ş²æÊ÷T´æÔÚ,VisitÊÇ¶Ô½áµã²Ù×÷µÄÓ¦ÓÃº¯Êı */
-  /* ²Ù×÷½á¹û:²ãĞò±éÀúÊ÷T,¶ÔÃ¿¸ö½áµãµ÷ÓÃº¯ÊıVisitÒ»´ÎÇÒ½öÒ»´Î */
+{ /* åˆå§‹æ¡ä»¶:äºŒå‰æ ‘Tå­˜åœ¨,Visitæ˜¯å¯¹ç»“ç‚¹æ“ä½œçš„åº”ç”¨å‡½æ•° */
+  /* æ“ä½œç»“æœ:å±‚åºéå†æ ‘T,å¯¹æ¯ä¸ªç»“ç‚¹è°ƒç”¨å‡½æ•°Visitä¸€æ¬¡ä¸”ä»…ä¸€æ¬¡ */
   int i;
   for(i=0;i<T.n;i++)
     Visit(T.nodes[i].data);
@@ -352,27 +352,27 @@ void main()
   PTree T,p;
   TElemType e,e1;
   InitTree(&T);
-  printf("¹¹Ôì¿ÕÊ÷ºó,Ê÷¿Õ·ñ? %d(1:ÊÇ 0:·ñ) Ê÷¸ùÎª%c Ê÷µÄÉî¶ÈÎª%d\n",TreeEmpty(T),Root(T),TreeDepth(T));
+  printf("æ„é€ ç©ºæ ‘å,æ ‘ç©ºå¦? %d(1:æ˜¯ 0:å¦) æ ‘æ ¹ä¸º%c æ ‘çš„æ·±åº¦ä¸º%d\n",TreeEmpty(T),Root(T),TreeDepth(T));
   CreateTree(&T);
-  printf("¹¹ÔìÊ÷Tºó,Ê÷¿Õ·ñ? %d(1:ÊÇ 0:·ñ) Ê÷¸ùÎª%c Ê÷µÄÉî¶ÈÎª%d\n",TreeEmpty(T),Root(T),TreeDepth(T));
-  printf("²ãĞò±éÀúÊ÷T:\n");
+  printf("æ„é€ æ ‘Tå,æ ‘ç©ºå¦? %d(1:æ˜¯ 0:å¦) æ ‘æ ¹ä¸º%c æ ‘çš„æ·±åº¦ä¸º%d\n",TreeEmpty(T),Root(T),TreeDepth(T));
+  printf("å±‚åºéå†æ ‘T:\n");
   TraverseTree(T,vi);
-  printf("ÇëÊäÈë´ıĞŞ¸ÄµÄ½áµãµÄÖµ ĞÂÖµ: ");
+  printf("è¯·è¾“å…¥å¾…ä¿®æ”¹çš„ç»“ç‚¹çš„å€¼ æ–°å€¼: ");
   scanf("%c%*c%c%*c",&e,&e1);
   Assign(&T,e,e1);
-  printf("²ãĞò±éÀúĞŞ¸ÄºóµÄÊ÷T:\n");
+  printf("å±‚åºéå†ä¿®æ”¹åçš„æ ‘T:\n");
   TraverseTree(T,vi);
-  printf("%cµÄË«Ç×ÊÇ%c,³¤×ÓÊÇ%c,ÏÂÒ»¸öĞÖµÜÊÇ%c\n",e1,Parent(T,e1),LeftChild(T,e1),RightSibling(T,e1));
-  printf("½¨Á¢Ê÷p:\n");
+  printf("%cçš„åŒäº²æ˜¯%c,é•¿å­æ˜¯%c,ä¸‹ä¸€ä¸ªå…„å¼Ÿæ˜¯%c\n",e1,Parent(T,e1),LeftChild(T,e1),RightSibling(T,e1));
+  printf("å»ºç«‹æ ‘p:\n");
   InitTree(&p);
   CreateTree(&p);
-  printf("²ãĞò±éÀúÊ÷p:\n");
+  printf("å±‚åºéå†æ ‘p:\n");
   TraverseTree(p,vi);
-  printf("½«Ê÷p²åµ½Ê÷TÖĞ£¬ÇëÊäÈëTÖĞpµÄË«Ç×½áµã ×ÓÊ÷ĞòºÅ: ");
+  printf("å°†æ ‘pæ’åˆ°æ ‘Tä¸­ï¼Œè¯·è¾“å…¥Tä¸­pçš„åŒäº²ç»“ç‚¹ å­æ ‘åºå·: ");
   scanf("%c%d%*c",&e,&i);
   InsertChild(&T,e,i,p);
   Print(T);
-  printf("É¾³ıÊ÷TÖĞ½áµãeµÄµÚi¿Ã×ÓÊ÷£¬ÇëÊäÈëe i: ");
+  printf("åˆ é™¤æ ‘Tä¸­ç»“ç‚¹eçš„ç¬¬iæ£µå­æ ‘ï¼Œè¯·è¾“å…¥e i: ");
   scanf("%c%d",&e,&i);
   DeleteChild(&T,e,i);
   Print(T);

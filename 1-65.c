@@ -1,35 +1,35 @@
-#define CHAR /* ×Ö·ûĞÍ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#define CHAR /* å­—ç¬¦å‹ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-#define STACK_INIT_SIZE 10 /* ´æ´¢¿Õ¼ä³õÊ¼·ÖÅäÁ¿ */
-#define STACKINCREMENT 2 /* ´æ´¢¿Õ¼ä·ÖÅäÔöÁ¿ */
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+#define STACK_INIT_SIZE 10 /* å­˜å‚¨ç©ºé—´åˆå§‹åˆ†é…é‡ */
+#define STACKINCREMENT 2 /* å­˜å‚¨ç©ºé—´åˆ†é…å¢é‡ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 #ifdef CHAR
   typedef char TElemType;
-  TElemType Nil=' '; /* ×Ö·ûĞÍÒÔ¿Õ¸ñ·ûÎª¿Õ */
+  TElemType Nil=' '; /* å­—ç¬¦å‹ä»¥ç©ºæ ¼ç¬¦ä¸ºç©º */
 #endif
 #ifdef INT
   typedef int TElemType;
-  TElemType Nil=0; /* ÕûĞÍÒÔ0Îª¿Õ */
+  TElemType Nil=0; /* æ•´å‹ä»¥0ä¸ºç©º */
 #endif
 typedef struct BiTNode
 {
   TElemType data;
-  struct BiTNode *lchild,*rchild; /* ×óÓÒº¢×ÓÖ¸Õë */
+  struct BiTNode *lchild,*rchild; /* å·¦å³å­©å­æŒ‡é’ˆ */
 }BiTNode,*BiTree;
-typedef BiTree SElemType; /* ÉèÕ»ÔªËØÎª¶ş²æÊ÷µÄÖ¸ÕëÀàĞÍ */
+typedef BiTree SElemType; /* è®¾æ ˆå…ƒç´ ä¸ºäºŒå‰æ ‘çš„æŒ‡é’ˆç±»å‹ */
 typedef struct SqStack
 {
-  SElemType *base; /* ÔÚÕ»¹¹ÔìÖ®Ç°ºÍÏú»ÙÖ®ºó£¬baseµÄÖµÎªNULL */
-  SElemType *top; /* Õ»¶¥Ö¸Õë */
-  int stacksize; /* µ±Ç°ÒÑ·ÖÅäµÄ´æ´¢¿Õ¼ä£¬ÒÔÔªËØÎªµ¥Î» */
-}SqStack; /* Ë³ĞòÕ» */
+  SElemType *base; /* åœ¨æ ˆæ„é€ ä¹‹å‰å’Œé”€æ¯ä¹‹åï¼Œbaseçš„å€¼ä¸ºNULL */
+  SElemType *top; /* æ ˆé¡¶æŒ‡é’ˆ */
+  int stacksize; /* å½“å‰å·²åˆ†é…çš„å­˜å‚¨ç©ºé—´ï¼Œä»¥å…ƒç´ ä¸ºå•ä½ */
+}SqStack; /* é¡ºåºæ ˆ */
 Status InitBiTree(BiTree *T)
-{ /* ²Ù×÷½á¹û: ¹¹Ôì¿Õ¶ş²æÊ÷T */
+{ /* æ“ä½œç»“æœ: æ„é€ ç©ºäºŒå‰æ ‘T */
   *T=NULL;
   return OK;
 }
@@ -42,41 +42,41 @@ void CreateBiTree(BiTree *T)
 #ifdef INT
   scanf("%d",&ch);
 #endif
-  if(ch==Nil) /* ¿Õ */
+  if(ch==Nil) /* ç©º */
     *T=NULL;
   else
   {
     *T=(BiTree)malloc(sizeof(BiTNode));
     if(!*T)
       exit(OVERFLOW);
-    (*T)->data=ch; /* Éú³É¸ù½áµã */
-    CreateBiTree(&(*T)->lchild); /* ¹¹Ôì×ó×ÓÊ÷ */
-    CreateBiTree(&(*T)->rchild); /* ¹¹ÔìÓÒ×ÓÊ÷ */
+    (*T)->data=ch; /* ç”Ÿæˆæ ¹ç»“ç‚¹ */
+    CreateBiTree(&(*T)->lchild); /* æ„é€ å·¦å­æ ‘ */
+    CreateBiTree(&(*T)->rchild); /* æ„é€ å³å­æ ‘ */
   }
 }
 Status InitStack(SqStack *S)
-{ /* ¹¹ÔìÒ»¸ö¿ÕÕ»S */
+{ /* æ„é€ ä¸€ä¸ªç©ºæ ˆS */
   (*S).base=(SElemType *)malloc(STACK_INIT_SIZE*sizeof(SElemType));
   if(!(*S).base)
-    exit(OVERFLOW); /* ´æ´¢·ÖÅäÊ§°Ü */
+    exit(OVERFLOW); /* å­˜å‚¨åˆ†é…å¤±è´¥ */
   (*S).top=(*S).base;
   (*S).stacksize=STACK_INIT_SIZE;
   return OK;
 }
 Status StackEmpty(SqStack S)
-{ /* ÈôÕ»SÎª¿ÕÕ»£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE */
+{ /* è‹¥æ ˆSä¸ºç©ºæ ˆï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE */
   if(S.top==S.base)
     return TRUE;
   else
     return FALSE;
 }
 Status Push(SqStack *S,SElemType e)
-{ /* ²åÈëÔªËØeÎªĞÂµÄÕ»¶¥ÔªËØ */
-  if((*S).top-(*S).base>=(*S).stacksize) /* Õ»Âú£¬×·¼Ó´æ´¢¿Õ¼ä */
+{ /* æ’å…¥å…ƒç´ eä¸ºæ–°çš„æ ˆé¡¶å…ƒç´  */
+  if((*S).top-(*S).base>=(*S).stacksize) /* æ ˆæ»¡ï¼Œè¿½åŠ å­˜å‚¨ç©ºé—´ */
   {
     (*S).base=(SElemType *)realloc((*S).base,((*S).stacksize+STACKINCREMENT)*sizeof(SElemType));
     if(!(*S).base)
-      exit(OVERFLOW); /* ´æ´¢·ÖÅäÊ§°Ü */
+      exit(OVERFLOW); /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     (*S).top=(*S).base+(*S).stacksize;
     (*S).stacksize+=STACKINCREMENT;
   }
@@ -84,14 +84,14 @@ Status Push(SqStack *S,SElemType e)
   return OK;
 }
 Status Pop(SqStack *S,SElemType *e)
-{ /* ÈôÕ»²»¿Õ£¬ÔòÉ¾³ıSµÄÕ»¶¥ÔªËØ£¬ÓÃe·µ»ØÆäÖµ£¬²¢·µ»ØOK£»·ñÔò·µ»ØERROR */
+{ /* è‹¥æ ˆä¸ç©ºï¼Œåˆ™åˆ é™¤Sçš„æ ˆé¡¶å…ƒç´ ï¼Œç”¨eè¿”å›å…¶å€¼ï¼Œå¹¶è¿”å›OKï¼›å¦åˆ™è¿”å›ERROR */
   if((*S).top==(*S).base)
     return ERROR;
   *e=*--(*S).top;
   return OK;
 }
  Status GetTop(SqStack S,SElemType *e)
-{ /* ÈôÕ»²»¿Õ£¬ÔòÓÃe·µ»ØSµÄÕ»¶¥ÔªËØ£¬²¢·µ»ØOK£»·ñÔò·µ»ØERROR */
+{ /* è‹¥æ ˆä¸ç©ºï¼Œåˆ™ç”¨eè¿”å›Sçš„æ ˆé¡¶å…ƒç´ ï¼Œå¹¶è¿”å›OKï¼›å¦åˆ™è¿”å›ERROR */
   if(S.top>S.base)
   {
     *e=*(S.top-1);
@@ -101,19 +101,19 @@ Status Pop(SqStack *S,SElemType *e)
     return ERROR;
 }
 Status InOrderTraverse2(BiTree T,Status(*Visit)(TElemType))
-{ /* ²ÉÓÃ¶ş²æÁ´±í´æ´¢½á¹¹£¬VisitÊÇ¶ÔÊı¾İÔªËØ²Ù×÷µÄÓ¦ÓÃº¯Êı¡£*/
-  /* ÖĞĞò±éÀú¶ş²æÊ÷TµÄ·Çµİ¹éËã·¨(ÀûÓÃÕ»)£¬¶ÔÃ¿¸öÊı¾İÔªËØµ÷ÓÃº¯ÊıVisit */
+{ /* é‡‡ç”¨äºŒå‰é“¾è¡¨å­˜å‚¨ç»“æ„ï¼ŒVisitæ˜¯å¯¹æ•°æ®å…ƒç´ æ“ä½œçš„åº”ç”¨å‡½æ•°ã€‚*/
+  /* ä¸­åºéå†äºŒå‰æ ‘Tçš„éé€’å½’ç®—æ³•(åˆ©ç”¨æ ˆ)ï¼Œå¯¹æ¯ä¸ªæ•°æ®å…ƒç´ è°ƒç”¨å‡½æ•°Visit */
   SqStack S;
   BiTree p;
   InitStack(&S);
-  Push(&S,T); /* ¸ùÖ¸Õë½øÕ» */
+  Push(&S,T); /* æ ¹æŒ‡é’ˆè¿›æ ˆ */
   while(!StackEmpty(S))
   {
     while(GetTop(S,&p)&&p)
-      Push(&S,p->lchild); /* Ïò×ó×ßµ½¾¡Í· */
-    Pop(&S,&p); /* ¿ÕÖ¸ÕëÍËÕ» */
+      Push(&S,p->lchild); /* å‘å·¦èµ°åˆ°å°½å¤´ */
+    Pop(&S,&p); /* ç©ºæŒ‡é’ˆé€€æ ˆ */
     if(!StackEmpty(S))
-    { /* ·ÃÎÊ½áµã,ÏòÓÒÒ»²½ */
+    { /* è®¿é—®ç»“ç‚¹,å‘å³ä¸€æ­¥ */
       Pop(&S,&p);
       if(!Visit(p->data))
         return ERROR;
@@ -138,12 +138,12 @@ void main()
   BiTree T;
   InitBiTree(&T);
    #ifdef CHAR
-  printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:abÈı¸ö¿Õ¸ñ±íÊ¾aÎª¸ù½áµã,bÎª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+  printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:abä¸‰ä¸ªç©ºæ ¼è¡¨ç¤ºaä¸ºæ ¹ç»“ç‚¹,bä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
 #endif
 #ifdef INT
-  printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:1 2 0 0 0±íÊ¾1Îª¸ù½áµã,2Îª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+  printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:1 2 0 0 0è¡¨ç¤º1ä¸ºæ ¹ç»“ç‚¹,2ä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
 #endif
   CreateBiTree(&T);
-  printf("ÖĞĞò·Çµİ¹é±éÀú¶ş²æÊ÷(ÁíÒ»ÖÖ·½·¨):\n");
+  printf("ä¸­åºéé€’å½’éå†äºŒå‰æ ‘(å¦ä¸€ç§æ–¹æ³•):\n");
   InOrderTraverse2(T,visitT);
 }

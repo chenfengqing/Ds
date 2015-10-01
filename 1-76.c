@@ -1,15 +1,15 @@
-#include<limits.h> /* INT_MAXµÈ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<limits.h> /* INT_MAXç­‰ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 typedef struct
 {
   unsigned int weight;
   unsigned int parent,lchild,rchild;
-}HTNode,*HuffmanTree; /* ¶¯Ì¬·ÖÅäÊı×é´æ´¢ºÕ·òÂüÊ÷ */
-typedef char **HuffmanCode; /* ¶¯Ì¬·ÖÅäÊı×é´æ´¢ºÕ·òÂü±àÂë±í */
+}HTNode,*HuffmanTree; /* åŠ¨æ€åˆ†é…æ•°ç»„å­˜å‚¨èµ«å¤«æ›¼æ ‘ */
+typedef char **HuffmanCode; /* åŠ¨æ€åˆ†é…æ•°ç»„å­˜å‚¨èµ«å¤«æ›¼ç¼–ç è¡¨ */
 int min1(HuffmanTree t,int i)
-{ /* º¯Êıvoid select()µ÷ÓÃ */
+{ /* å‡½æ•°void select()è°ƒç”¨ */
   int j,flag;
-  unsigned int k=UINT_MAX; /* È¡kÎª²»Ğ¡ÓÚ¿ÉÄÜµÄÖµ */
+  unsigned int k=UINT_MAX; /* å–kä¸ºä¸å°äºå¯èƒ½çš„å€¼ */
   for(j=1;j<=i;j++)
     if(t[j].weight<k&&t[j].parent==0)
       k=t[j].weight,flag=j;
@@ -17,7 +17,7 @@ int min1(HuffmanTree t,int i)
   return flag;
 }
 void select(HuffmanTree t,int i,int *s1,int *s2)
-{ /* s1Îª×îĞ¡µÄÁ½¸öÖµÖĞĞòºÅĞ¡µÄÄÇ¸ö */
+{ /* s1ä¸ºæœ€å°çš„ä¸¤ä¸ªå€¼ä¸­åºå·å°çš„é‚£ä¸ª */
   int j;
   *s1=min1(t,i);
   *s2=min1(t,i);
@@ -29,7 +29,7 @@ void select(HuffmanTree t,int i,int *s1,int *s2)
   }
 }
 void HuffmanCoding(HuffmanTree *HT,HuffmanCode *HC,int *w,int n)
-{ /* w´æ·Ån¸ö×Ö·ûµÄÈ¨Öµ(¾ù>0),¹¹ÔìºÕ·òÂüÊ÷HT,²¢Çó³ön¸ö×Ö·ûµÄºÕ·òÂü±àÂëHC */
+{ /* wå­˜æ”¾nä¸ªå­—ç¬¦çš„æƒå€¼(å‡>0),æ„é€ èµ«å¤«æ›¼æ ‘HT,å¹¶æ±‚å‡ºnä¸ªå­—ç¬¦çš„èµ«å¤«æ›¼ç¼–ç HC */
   int m,i,s1,s2;
   unsigned c,cdlen;
   HuffmanTree p;
@@ -37,7 +37,7 @@ void HuffmanCoding(HuffmanTree *HT,HuffmanCode *HC,int *w,int n)
   if(n<=1)
     return;
   m=2*n-1;
-  *HT=(HuffmanTree)malloc((m+1)*sizeof(HTNode)); /* 0ºÅµ¥ÔªÎ´ÓÃ */
+  *HT=(HuffmanTree)malloc((m+1)*sizeof(HTNode)); /* 0å·å•å…ƒæœªç”¨ */
   for(p=*HT+1,i=1;i<=n;++i,++p,++w)
   {
     (*p).weight=*w;
@@ -47,26 +47,26 @@ void HuffmanCoding(HuffmanTree *HT,HuffmanCode *HC,int *w,int n)
   }
   for(;i<=m;++i,++p)
     (*p).parent=0;
-  for(i=n+1;i<=m;++i) /* ½¨ºÕ·òÂüÊ÷ */
-  { /* ÔÚHT[1~i-1]ÖĞÑ¡ÔñparentÎª0ÇÒweight×îĞ¡µÄÁ½¸ö½áµã,ÆäĞòºÅ·Ö±ğÎªs1ºÍs2 */
+  for(i=n+1;i<=m;++i) /* å»ºèµ«å¤«æ›¼æ ‘ */
+  { /* åœ¨HT[1~i-1]ä¸­é€‰æ‹©parentä¸º0ä¸”weightæœ€å°çš„ä¸¤ä¸ªç»“ç‚¹,å…¶åºå·åˆ†åˆ«ä¸ºs1å’Œs2 */
     select(*HT,i-1,&s1,&s2);
     (*HT)[s1].parent=(*HT)[s2].parent=i;
     (*HT)[i].lchild=s1;
     (*HT)[i].rchild=s2;
     (*HT)[i].weight=(*HT)[s1].weight+(*HT)[s2].weight;
   }
-  /* ÒÔÏÂÎªÎŞÕ»·Çµİ¹é±éÀúºÕ·òÂüÊ÷,ÇóºÕ·òÂü±àÂë*/
+  /* ä»¥ä¸‹ä¸ºæ— æ ˆéé€’å½’éå†èµ«å¤«æ›¼æ ‘,æ±‚èµ«å¤«æ›¼ç¼–ç */
   *HC=(HuffmanCode)malloc((n+1)*sizeof(char*));
-  /* ·ÖÅän¸ö×Ö·û±àÂëµÄÍ·Ö¸ÕëÏòÁ¿([0]²»ÓÃ) */
-  cd=(char*)malloc(n*sizeof(char)); /* ·ÖÅäÇó±àÂëµÄ¹¤×÷¿Õ¼ä */
+  /* åˆ†é…nä¸ªå­—ç¬¦ç¼–ç çš„å¤´æŒ‡é’ˆå‘é‡([0]ä¸ç”¨) */
+  cd=(char*)malloc(n*sizeof(char)); /* åˆ†é…æ±‚ç¼–ç çš„å·¥ä½œç©ºé—´ */
   c=m;
   cdlen=0;
   for(i=1;i<=m;++i)
-    (*HT)[i].weight=0; /* ±éÀúºÕ·òÂüÊ÷Ê±ÓÃ×÷½áµã×´Ì¬±êÖ¾ */
+    (*HT)[i].weight=0; /* éå†èµ«å¤«æ›¼æ ‘æ—¶ç”¨ä½œç»“ç‚¹çŠ¶æ€æ ‡å¿— */
   while(c)
   {
     if((*HT)[c].weight==0)
-    { /* Ïò×ó */
+    { /* å‘å·¦ */
       (*HT)[c].weight=1;
       if((*HT)[c].lchild!=0)
       {
@@ -74,14 +74,14 @@ void HuffmanCoding(HuffmanTree *HT,HuffmanCode *HC,int *w,int n)
         cd[cdlen++]='0';
       }
       else if((*HT)[c].rchild==0)
-      { /* µÇ¼ÇÒ¶×Ó½áµãµÄ×Ö·ûµÄ±àÂë */
+      { /* ç™»è®°å¶å­ç»“ç‚¹çš„å­—ç¬¦çš„ç¼–ç  */
         (*HC)[c]=(char *)malloc((cdlen+1)*sizeof(char));
         cd[cdlen]='\0';
-        strcpy((*HC)[c],cd); /* ¸´ÖÆ±àÂë(´®) */
+        strcpy((*HC)[c],cd); /* å¤åˆ¶ç¼–ç (ä¸²) */
       }
     }
     else if((*HT)[c].weight==1)
-    { /* ÏòÓÒ */
+    { /* å‘å³ */
       (*HT)[c].weight=2;
       if((*HT)[c].rchild!=0)
       {
@@ -90,10 +90,10 @@ void HuffmanCoding(HuffmanTree *HT,HuffmanCode *HC,int *w,int n)
       }
     }
     else
-    { /* HT[c].weight==2,ÍË»Ø */
+    { /* HT[c].weight==2,é€€å› */
       (*HT)[c].weight=0;
       c=(*HT)[c].parent;
-      --cdlen; /* ÍËµ½¸¸½áµã,±àÂë³¤¶È¼õ1 */
+      --cdlen; /* é€€åˆ°çˆ¶ç»“ç‚¹,ç¼–ç é•¿åº¦å‡1 */
     }
   }
   free(cd);
@@ -103,10 +103,10 @@ void main()
   HuffmanTree HT;
   HuffmanCode HC;
   int *w,n,i;
-  printf("ÇëÊäÈëÈ¨ÖµµÄ¸öÊı(>1)£º");
+  printf("è¯·è¾“å…¥æƒå€¼çš„ä¸ªæ•°(>1)ï¼š");
   scanf("%d",&n);
   w=(int *)malloc(n*sizeof(int));
-  printf("ÇëÒÀ´ÎÊäÈë%d¸öÈ¨Öµ(ÕûĞÍ)£º\n",n);
+  printf("è¯·ä¾æ¬¡è¾“å…¥%dä¸ªæƒå€¼(æ•´å‹)ï¼š\n",n);
   for(i=0;i<=n-1;i++)
     scanf("%d",w+i);
   HuffmanCoding(&HT,&HC,w,n);

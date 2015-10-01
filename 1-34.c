@@ -13,18 +13,18 @@ listnode  *p;
     linklist  head;
     listnode  *p,*r;
     head=NULL;
-	r=NULL;/*rÎªÎ²Ö¸Õë*/
+	r=NULL;/*rä¸ºå°¾æŒ‡é’ˆ*/
     while((ch=getchar())!='\n'){
         p=(listnode *)malloc(sizeof(listnode));
         p->data=ch;
         if(head==NULL)
-            head=p;/*head Ö¸ÏòµÚÒ»¸ö²åÈë½áµã*/
+            head=p;/*head æŒ‡å‘ç¬¬ä¸€ä¸ªæ’å…¥ç»“ç‚¹*/
         else
-			r->next=p;/*²åÈëµ½Á´±íÎ²²¿*/
-        r=p;/*rÖ¸Ïò×îĞÂ½áµã£¬¼´×îºó½áµã*/
+			r->next=p;/*æ’å…¥åˆ°é“¾è¡¨å°¾éƒ¨*/
+        r=p;/*ræŒ‡å‘æœ€æ–°ç»“ç‚¹ï¼Œå³æœ€åç»“ç‚¹*/
      }
      if (r!=NULL)
-          r->next=NULL;/*Á´±íÎ²²¿½áµãµÄºó¼ÌÖ¸ÕëÖ¸¶¨Îª¿Õ*/
+          r->next=NULL;/*é“¾è¡¨å°¾éƒ¨ç»“ç‚¹çš„åç»§æŒ‡é’ˆæŒ‡å®šä¸ºç©º*/
      return(head);
  }
 main()

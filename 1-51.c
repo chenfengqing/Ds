@@ -1,10 +1,10 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
  #include<math.h> /* floor(),ceil(),abs() */
  #define TRUE 1
  #define FALSE 0
  #define OK 1
  #define ERROR 0
- typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+ typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
  typedef int ElemType;
  typedef struct DuLNode
  {
@@ -12,7 +12,7 @@
    struct DuLNode *prior,*next;
  }DuLNode,*DuLinkList;
  Status InitList(DuLinkList *L)
- { /* ²úÉú¿ÕµÄË«ÏòÑ­»·Á´±íL */
+ { /* äº§ç”Ÿç©ºçš„åŒå‘å¾ªç¯é“¾è¡¨L */
    *L=(DuLinkList)malloc(sizeof(DuLNode));
    if(*L)
    {
@@ -22,31 +22,31 @@
    else
      return OVERFLOW;
  }
-  Status ClearList(DuLinkList L) /* ²»¸Ä±äL */
- { /* ³õÊ¼Ìõ¼ş£ºLÒÑ´æÔÚ¡£²Ù×÷½á¹û£º½«LÖØÖÃÎª¿Õ±í */
-   DuLinkList q,p=L->next; /* pÖ¸ÏòµÚÒ»¸ö½áµã */
-   while(p!=L) /* pÃ»µ½±íÍ· */
+  Status ClearList(DuLinkList L) /* ä¸æ”¹å˜L */
+ { /* åˆå§‹æ¡ä»¶ï¼šLå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šå°†Lé‡ç½®ä¸ºç©ºè¡¨ */
+   DuLinkList q,p=L->next; /* pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹ */
+   while(p!=L) /* pæ²¡åˆ°è¡¨å¤´ */
    {
      q=p->next;
      free(p);
      p=q;
    }
-   L->next=L->prior=L; /* Í·½áµãµÄÁ½¸öÖ¸ÕëÓò¾ùÖ¸Ïò×ÔÉí */
+   L->next=L->prior=L; /* å¤´ç»“ç‚¹çš„ä¸¤ä¸ªæŒ‡é’ˆåŸŸå‡æŒ‡å‘è‡ªèº« */
    return OK;
  }
  int ListLength(DuLinkList L)
- { /* ³õÊ¼Ìõ¼ş£ºLÒÑ´æÔÚ¡£²Ù×÷½á¹û£º·µ»ØLÖĞÊı¾İÔªËØ¸öÊı */
+ { /* åˆå§‹æ¡ä»¶ï¼šLå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šè¿”å›Lä¸­æ•°æ®å…ƒç´ ä¸ªæ•° */
    int i=0;
-   DuLinkList p=L->next; /* pÖ¸ÏòµÚÒ»¸ö½áµã */
-   while(p!=L) /* pÃ»µ½±íÍ· */
+   DuLinkList p=L->next; /* pæŒ‡å‘ç¬¬ä¸€ä¸ªç»“ç‚¹ */
+   while(p!=L) /* pæ²¡åˆ°è¡¨å¤´ */
    {
      i++;
      p=p->next;
    }
    return i;
  }
- DuLinkList GetElemP(DuLinkList L,int i) /* Áí¼Ó */
- { /* ÔÚË«ÏòÁ´±íLÖĞ·µ»ØµÚi¸öÔªËØµÄÎ»ÖÃÖ¸Õë(Ëã·¨2.18¡¢2.19Òªµ÷ÓÃµÄº¯Êı) */
+ DuLinkList GetElemP(DuLinkList L,int i) /* å¦åŠ  */
+ { /* åœ¨åŒå‘é“¾è¡¨Lä¸­è¿”å›ç¬¬iä¸ªå…ƒç´ çš„ä½ç½®æŒ‡é’ˆ(ç®—æ³•2.18ã€2.19è¦è°ƒç”¨çš„å‡½æ•°) */
    int j;
    DuLinkList p=L;
    for(j=1;j<=i;j++)
@@ -54,18 +54,18 @@
    return p;
  }
 
- Status ListInsert(DuLinkList L,int i,ElemType e) /* ¸Ä½øËã·¨2.18 */
- { /* ÔÚ´øÍ·½áµãµÄË«Á´Ñ­»·ÏßĞÔ±íLÖĞµÚi¸öÎ»ÖÃÖ®Ç°²åÈëÔªËØe£¬iµÄºÏ·¨ÖµÎª1¡Üi¡Ü±í³¤+1 */
+ Status ListInsert(DuLinkList L,int i,ElemType e) /* æ”¹è¿›ç®—æ³•2.18 */
+ { /* åœ¨å¸¦å¤´ç»“ç‚¹çš„åŒé“¾å¾ªç¯çº¿æ€§è¡¨Lä¸­ç¬¬iä¸ªä½ç½®ä¹‹å‰æ’å…¥å…ƒç´ eï¼Œiçš„åˆæ³•å€¼ä¸º1â‰¤iâ‰¤è¡¨é•¿+1 */
    DuLinkList p,s;
-   if(i<1||i>ListLength(L)+1) /* iÖµ²»ºÏ·¨ */
+   if(i<1||i>ListLength(L)+1) /* iå€¼ä¸åˆæ³• */
      return ERROR;
-   p=GetElemP(L,i-1); /* ÔÚLÖĞÈ·¶¨µÚi-1¸öÔªËØµÄÎ»ÖÃÖ¸Õëp */
-   if(!p) /* p=NULL,¼´µÚi-1¸öÔªËØ²»´æÔÚ */
+   p=GetElemP(L,i-1); /* åœ¨Lä¸­ç¡®å®šç¬¬i-1ä¸ªå…ƒç´ çš„ä½ç½®æŒ‡é’ˆp */
+   if(!p) /* p=NULL,å³ç¬¬i-1ä¸ªå…ƒç´ ä¸å­˜åœ¨ */
      return ERROR;
    s=(DuLinkList)malloc(sizeof(DuLNode));
    if(!s)
      return OVERFLOW;
-   s->data=e; /* ÔÚµÚi-1¸öÔªËØÖ®ºó²åÈë */
+   s->data=e; /* åœ¨ç¬¬i-1ä¸ªå…ƒç´ ä¹‹åæ’å…¥ */
    s->prior=p;
    s->next=p->next;
    p->next->prior=s;
@@ -73,13 +73,13 @@
    return OK;
  }
   Status ListEmpty(DuLinkList L)
- { /* ³õÊ¼Ìõ¼ş£ºÏßĞÔ±íLÒÑ´æÔÚ¡£²Ù×÷½á¹û£ºÈôLÎª¿Õ±í£¬Ôò·µ»ØTRUE£¬·ñÔò·µ»ØFALSE */
+ { /* åˆå§‹æ¡ä»¶ï¼šçº¿æ€§è¡¨Lå·²å­˜åœ¨ã€‚æ“ä½œç»“æœï¼šè‹¥Lä¸ºç©ºè¡¨ï¼Œåˆ™è¿”å›TRUEï¼Œå¦åˆ™è¿”å›FALSE */
    if(L->next==L&&L->prior==L)
      return TRUE;
    else
      return FALSE;
  }
- void vd(ElemType c) /* ListTraverse()µ÷ÓÃµÄº¯Êı(ÀàĞÍÒ»ÖÂ) */
+ void vd(ElemType c) /* ListTraverse()è°ƒç”¨çš„å‡½æ•°(ç±»å‹ä¸€è‡´) */
  {
    printf("%d ",c);
  }
@@ -90,11 +90,11 @@
    int i,n=2;
    ElemType e;
    InitList(&L);
-   printf("³õÊ¼»¯Á´±íÒÀ´ÎÊäÈë1£¬2£¬3£¬4£¬5\n");
+   printf("åˆå§‹åŒ–é“¾è¡¨ä¾æ¬¡è¾“å…¥1ï¼Œ2ï¼Œ3ï¼Œ4ï¼Œ5\n");
    for(i=1;i<=5;i++)
-     ListInsert(L,i,i); /* ÔÚµÚi¸ö½áµãÖ®Ç°²åÈëi */
-   printf("Á´±íÊÇ·ñ¿Õ£º%d(1:ÊÇ 0:·ñ)\n",ListEmpty(L));
-   ClearList(L); /* Çå¿ÕÁ´±í */
-   printf("Çå¿Õºó£¬Á´±íÊÇ·ñ¿Õ£º%d(1:ÊÇ 0:·ñ)\n",ListEmpty(L));
+     ListInsert(L,i,i); /* åœ¨ç¬¬iä¸ªç»“ç‚¹ä¹‹å‰æ’å…¥i */
+   printf("é“¾è¡¨æ˜¯å¦ç©ºï¼š%d(1:æ˜¯ 0:å¦)\n",ListEmpty(L));
+   ClearList(L); /* æ¸…ç©ºé“¾è¡¨ */
+   printf("æ¸…ç©ºåï¼Œé“¾è¡¨æ˜¯å¦ç©ºï¼š%d(1:æ˜¯ 0:å¦)\n",ListEmpty(L));
  }
 

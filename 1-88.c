@@ -1,36 +1,36 @@
-#include<limits.h> /* INT_MAXµÈ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<limits.h> /* INT_MAXç­‰ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define N 8
-#define MAXSIZE 20 /* Ò»¸öÓÃ×÷Ê¾ÀıµÄĞ¡Ë³Ğò±íµÄ×î´ó³¤¶È */
-typedef int InfoType; /* ¶¨ÒåÆäËüÊı¾İÏîµÄÀàĞÍ */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàĞÍÎªÕûĞÍ */
+#define MAXSIZE 20 /* ä¸€ä¸ªç”¨ä½œç¤ºä¾‹çš„å°é¡ºåºè¡¨çš„æœ€å¤§é•¿åº¦ */
+typedef int InfoType; /* å®šä¹‰å…¶å®ƒæ•°æ®é¡¹çš„ç±»å‹ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»å‹ä¸ºæ•´å‹ */
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊı¾İÏî£¬¾ßÌåÀàĞÍÔÚÖ÷³ÌÖĞ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàĞÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»å‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»å‹ */
 typedef struct
 {
-  RedType r[MAXSIZE+1]; /* r[0]ÏĞÖÃ»òÓÃ×÷ÉÚ±øµ¥Ôª */
-  int length; /* Ë³Ğò±í³¤¶È */
-}SqList; /* Ë³Ğò±íÀàĞÍ */
+  RedType r[MAXSIZE+1]; /* r[0]é—²ç½®æˆ–ç”¨ä½œå“¨å…µå•å…ƒ */
+  int length; /* é¡ºåºè¡¨é•¿åº¦ */
+}SqList; /* é¡ºåºè¡¨ç±»å‹ */
 void TreeSort(SqList *L)
-{ /* Ê÷ĞÎÑ¡ÔñÅÅĞò */
+{ /* æ ‘å½¢é€‰æ‹©æ’åº */
   int i,j,j1,k,k1,l,n=(*L).length;
   RedType *t;
-  l=(int)ceil(log(n)/log(2))+1; /* ÍêÈ«¶ş²æÊ÷µÄ²ãÊı */
-  k=(int)pow(2,l)-1; /* l²ãÍêÈ«¶ş²æÊ÷µÄ½áµã×ÜÊı */
-  k1=(int)pow(2,l-1)-1; /* l-1²ãÍêÈ«¶ş²æÊ÷µÄ½áµã×ÜÊı */
-  t=(RedType*)malloc(k*sizeof(RedType)); /* ¶ş²æÊ÷²ÉÓÃË³Ğò´æ´¢½á¹¹ */
-  for(i=1;i<=n;i++) /* ½«L.r¸³¸øÒ¶×Ó½áµã */
+  l=(int)ceil(log(n)/log(2))+1; /* å®Œå…¨äºŒå‰æ ‘çš„å±‚æ•° */
+  k=(int)pow(2,l)-1; /* lå±‚å®Œå…¨äºŒå‰æ ‘çš„ç»“ç‚¹æ€»æ•° */
+  k1=(int)pow(2,l-1)-1; /* l-1å±‚å®Œå…¨äºŒå‰æ ‘çš„ç»“ç‚¹æ€»æ•° */
+  t=(RedType*)malloc(k*sizeof(RedType)); /* äºŒå‰æ ‘é‡‡ç”¨é¡ºåºå­˜å‚¨ç»“æ„ */
+  for(i=1;i<=n;i++) /* å°†L.rèµ‹ç»™å¶å­ç»“ç‚¹ */
     t[k1+i-1]=(*L).r[i];
-  for(i=k1+n;i<k;i++) /* ¸ø¶àÓàµÄÒ¶×ÓµÄ¹Ø¼ü×Ö¸³ÎŞÇî´ó */
+  for(i=k1+n;i<k;i++) /* ç»™å¤šä½™çš„å¶å­çš„å…³é”®å­—èµ‹æ— ç©·å¤§ */
     t[i].key=INT_MAX;
   j1=k1;
   j=k;
   while(j1)
-  { /* ¸ø·ÇÒ¶×Ó½áµã¸³Öµ */
+  { /* ç»™éå¶å­ç»“ç‚¹èµ‹å€¼ */
     for(i=j1;i<j;i+=2)
       t[i].key<t[i+1].key?(t[(i+1)/2-1]=t[i]):(t[(i+1)/2-1]=t[i+1]);
     j=j1;
@@ -38,14 +38,14 @@ void TreeSort(SqList *L)
   }
   for(i=0;i<n;i++)
   {
-    (*L).r[i+1]=t[0]; /* ½«µ±Ç°×îĞ¡Öµ¸³¸øL.r[i] */
+    (*L).r[i+1]=t[0]; /* å°†å½“å‰æœ€å°å€¼èµ‹ç»™L.r[i] */
     j1=0;
-    for(j=1;j<l;j++) /* ÑØÊ÷¸ùÕÒ½áµãt[0]ÔÚÒ¶×ÓÖĞµÄĞòºÅj1 */
+    for(j=1;j<l;j++) /* æ²¿æ ‘æ ¹æ‰¾ç»“ç‚¹t[0]åœ¨å¶å­ä¸­çš„åºå·j1 */
       t[2*j1+1].key==t[j1].key?(j1=2*j1+1):(j1=2*j1+2);
     t[j1].key=INT_MAX;
     while(j1)
     {
-      j1=(j1+1)/2-1; /* ĞòºÅÎªj1µÄ½áµãµÄË«Ç×½áµãĞòºÅ */
+      j1=(j1+1)/2-1; /* åºå·ä¸ºj1çš„ç»“ç‚¹çš„åŒäº²ç»“ç‚¹åºå· */
       t[2*j1+1].key<=t[2*j1+2].key?(t[j1]=t[2*j1+1]):(t[j1]=t[2*j1+2]);
     }
   }
@@ -66,9 +66,9 @@ void main()
   for(i=0;i<N;i++)
     l.r[i+1]=d[i];
   l.length=N;
-  printf("ÅÅĞòÇ°:\n");
+  printf("æ’åºå‰:\n");
   print(l);
   TreeSort(&l);
-  printf("ÅÅĞòºó:\n");
+  printf("æ’åºå:\n");
   print(l);
 }

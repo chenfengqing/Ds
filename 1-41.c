@@ -8,20 +8,20 @@ typedef 	struct queue{
 	position 	*front;
 	position 	*rear;
 }queuetype;
-/*Ê¹¶ÓÁĞÎª¿Õ£º*/
+/*ä½¿é˜Ÿåˆ—ä¸ºç©ºï¼š*/
 void MakeNull(queuetype * q)
 {
 		q->rear=q->front;
 		while(q->front!=NULL){
 			q->front=q->front->next;
-			free(q->rear);/*ÊÍ·Å¿Õ¼ä*/
+			free(q->rear);/*é‡Šæ”¾ç©ºé—´*/
 			q->rear=q->front;
 		}
 		q->front=(position*)malloc(sizeof(position));
 		q->front->next=NULL;
 		q->rear=q->front;
 }
-/* È¡¶ÓÁĞµÄ¶ÓÍ·ÔªËØ£º*/
+/* å–é˜Ÿåˆ—çš„é˜Ÿå¤´å…ƒç´ ï¼š*/
 datatype Front(queuetype *q)
 {
 		if(Empty(q))
@@ -29,7 +29,7 @@ datatype Front(queuetype *q)
 		else
 			return(q->front->next->data);
 }
-/*É¾³ı¶ÓÁĞÍ·ÔªËØ£º*/
+/*åˆ é™¤é˜Ÿåˆ—å¤´å…ƒç´ ï¼š*/
 void dequeue(queuetype * q)
 {
 		position* p;
@@ -41,7 +41,7 @@ void dequeue(queuetype * q)
 			free(p);
 		}
 }
-/* ÔÚ¶ÓÁĞÖĞ¼ÓÈëĞÂÔªËØ£º*/
+/* åœ¨é˜Ÿåˆ—ä¸­åŠ å…¥æ–°å…ƒç´ ï¼š*/
 void Enqueue(datatype x,queuetype * q)
 {
 		position* p;
@@ -51,7 +51,7 @@ void Enqueue(datatype x,queuetype * q)
 		q->rear->next=p;
 		q->rear=p;
 }
-/*ÅĞ¶ÏÊÇ·ñÎª¿Õ¶ÓÁĞ£º*/
+/*åˆ¤æ–­æ˜¯å¦ä¸ºç©ºé˜Ÿåˆ—ï¼š*/
 int Empty(queuetype * q)
 {
 	return (q->front==q->rear);

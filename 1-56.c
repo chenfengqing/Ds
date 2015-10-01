@@ -1,25 +1,25 @@
- #define CHAR /* ×Ö·ûĞÍ */
- #include<stdio.h> /* EOF(=^Z»òF6),NULL */
+ #define CHAR /* å­—ç¬¦å‹ */
+ #include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
  #include<math.h> /* floor(),ceil(),abs() */
  #define TRUE 1
  #define FALSE 0
  #define OK 1
- typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+ typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
  #ifdef CHAR
    typedef char TElemType;
-   TElemType Nil=' '; /* ×Ö·ûĞÍÒÔ¿Õ¸ñ·ûÎª¿Õ */
+   TElemType Nil=' '; /* å­—ç¬¦å‹ä»¥ç©ºæ ¼ç¬¦ä¸ºç©º */
  #endif
  #ifdef INT
    typedef int TElemType;
-   TElemType Nil=0; /* ÕûĞÍÒÔ0Îª¿Õ */
+   TElemType Nil=0; /* æ•´å‹ä»¥0ä¸ºç©º */
  #endif
  typedef struct BiTNode
  {
    TElemType data;
-   struct BiTNode *lchild,*rchild; /* ×óÓÒº¢×ÓÖ¸Õë */
+   struct BiTNode *lchild,*rchild; /* å·¦å³å­©å­æŒ‡é’ˆ */
  }BiTNode,*BiTree;
  Status InitBiTree(BiTree *T)
- { /* ²Ù×÷½á¹û: ¹¹Ôì¿Õ¶ş²æÊ÷T */
+ { /* æ“ä½œç»“æœ: æ„é€ ç©ºäºŒå‰æ ‘T */
    *T=NULL;
    return OK;
  }
@@ -32,22 +32,22 @@
  #ifdef INT
    scanf("%d",&ch);
  #endif
-   if(ch==Nil) /* ¿Õ */
+   if(ch==Nil) /* ç©º */
      *T=NULL;
    else
    {
      *T=(BiTree)malloc(sizeof(BiTNode));
      if(!*T)
        exit(OVERFLOW);
-     (*T)->data=ch; /* Éú³É¸ù½áµã */
-     CreateBiTree(&(*T)->lchild); /* ¹¹Ôì×ó×ÓÊ÷ */
-     CreateBiTree(&(*T)->rchild); /* ¹¹ÔìÓÒ×ÓÊ÷ */
+     (*T)->data=ch; /* ç”Ÿæˆæ ¹ç»“ç‚¹ */
+     CreateBiTree(&(*T)->lchild); /* æ„é€ å·¦å­æ ‘ */
+     CreateBiTree(&(*T)->rchild); /* æ„é€ å³å­æ ‘ */
    }
  }
 
  Status BiTreeEmpty(BiTree T)
- { /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ */
-   /* ²Ù×÷½á¹û: ÈôTÎª¿Õ¶ş²æÊ÷,Ôò·µ»ØTRUE,·ñÔòFALSE */
+ { /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ */
+   /* æ“ä½œç»“æœ: è‹¥Tä¸ºç©ºäºŒå‰æ ‘,åˆ™è¿”å›TRUE,å¦åˆ™FALSE */
    if(T)
      return FALSE;
    else
@@ -55,7 +55,7 @@
  }
 
  int BiTreeDepth(BiTree T)
- { /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ¡£²Ù×÷½á¹û: ·µ»ØTµÄÉî¶È */
+ { /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: è¿”å›Tçš„æ·±åº¦ */
    int i,j;
    if(!T)
      return 0;
@@ -71,7 +71,7 @@
  }
 
  TElemType Root(BiTree T)
- { /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ¡£²Ù×÷½á¹û: ·µ»ØTµÄ¸ù */
+ { /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ã€‚æ“ä½œç»“æœ: è¿”å›Tçš„æ ¹ */
    if(BiTreeEmpty(T))
      return Nil;
    else
@@ -83,34 +83,34 @@
    BiTree T;
    TElemType e1;
    InitBiTree(&T);
-   printf("¹¹Ôì¿Õ¶ş²æÊ÷ºó,Ê÷¿Õ·ñ£¿%d(1:ÊÇ 0:·ñ) Ê÷µÄÉî¶È=%d\n",BiTreeEmpty(T),BiTreeDepth(T));
+   printf("æ„é€ ç©ºäºŒå‰æ ‘å,æ ‘ç©ºå¦ï¼Ÿ%d(1:æ˜¯ 0:å¦) æ ‘çš„æ·±åº¦=%d\n",BiTreeEmpty(T),BiTreeDepth(T));
    e1=Root(T);
    if(e1!=Nil)
  #ifdef CHAR
-     printf("¶ş²æÊ÷µÄ¸ùÎª: %c\n",e1);
+     printf("äºŒå‰æ ‘çš„æ ¹ä¸º: %c\n",e1);
  #endif
  #ifdef INT
-     printf("¶ş²æÊ÷µÄ¸ùÎª: %d\n",e1);
+     printf("äºŒå‰æ ‘çš„æ ¹ä¸º: %d\n",e1);
  #endif
    else
-     printf("Ê÷¿Õ£¬ÎŞ¸ù\n");
+     printf("æ ‘ç©ºï¼Œæ— æ ¹\n");
  #ifdef CHAR
-   printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:abÈı¸ö¿Õ¸ñ±íÊ¾aÎª¸ù½áµã,bÎª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+   printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:abä¸‰ä¸ªç©ºæ ¼è¡¨ç¤ºaä¸ºæ ¹ç»“ç‚¹,bä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
  #endif
  #ifdef INT
-   printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:1 2 0 0 0±íÊ¾1Îª¸ù½áµã,2Îª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+   printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:1 2 0 0 0è¡¨ç¤º1ä¸ºæ ¹ç»“ç‚¹,2ä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
  #endif
    CreateBiTree(&T);
-   printf("½¨Á¢¶ş²æÊ÷ºó,Ê÷¿Õ·ñ£¿%d(1:ÊÇ 0:·ñ) Ê÷µÄÉî¶È=%d\n",BiTreeEmpty(T),BiTreeDepth(T));
+   printf("å»ºç«‹äºŒå‰æ ‘å,æ ‘ç©ºå¦ï¼Ÿ%d(1:æ˜¯ 0:å¦) æ ‘çš„æ·±åº¦=%d\n",BiTreeEmpty(T),BiTreeDepth(T));
    e1=Root(T);
    if(e1!=Nil)
  #ifdef CHAR
-     printf("¶ş²æÊ÷µÄ¸ùÎª: %c\n",e1);
+     printf("äºŒå‰æ ‘çš„æ ¹ä¸º: %c\n",e1);
  #endif
  #ifdef INT
-     printf("¶ş²æÊ÷µÄ¸ùÎª: %d\n",e1);
+     printf("äºŒå‰æ ‘çš„æ ¹ä¸º: %d\n",e1);
  #endif
    else
-     printf("Ê÷¿Õ£¬ÎŞ¸ù\n");
+     printf("æ ‘ç©ºï¼Œæ— æ ¹\n");
  }
 

@@ -1,69 +1,69 @@
 #include "stdio.h"
-#define QueueSize 100 /*¼Ù¶¨Ô¤·ÖÅäµÄ¶ÓÁĞ¿Õ¼ä×î¶àÎª100¸öÔªËØ*/  
-typedef char DataType ; /*¼Ù¶¨¶ÓÁĞÔªËØµÄÊı¾İÀàĞÍÎª×Ö·û*/
+#define QueueSize 100 /*å‡å®šé¢„åˆ†é…çš„é˜Ÿåˆ—ç©ºé—´æœ€å¤šä¸º100ä¸ªå…ƒç´ */  
+typedef char DataType ; /*å‡å®šé˜Ÿåˆ—å…ƒç´ çš„æ•°æ®ç±»å‹ä¸ºå­—ç¬¦*/
 typedef struct node{
 	DataType data;
 	struct node *next;
 }QueueNode;
 typedef struct{
-	QueueNode *front;  /*Í·Ö¸Õë*/
+	QueueNode *front;  /*å¤´æŒ‡é’ˆ*/
 	QueueNode *rear;
 }LinkQueue;
-/* ÖÃ¶ÓÁĞ¿Õ*/
+/* ç½®é˜Ÿåˆ—ç©º*/
 
 void Initial(LinkQueue *Q)
-/*½«Ë³Ğò¶ÓÁĞÖÃ¿Õ*/
+/*å°†é¡ºåºé˜Ÿåˆ—ç½®ç©º*/
 
 {    Q->front=Q->rear=NULL;
 } 
 
-/*ÅĞ¶ÓÁĞ¿Õ*/
+/*åˆ¤é˜Ÿåˆ—ç©º*/
 int IsEmpty(LinkQueue *Q)
 {
     return Q->front==NULL&&Q->rear==NULL;
 }
 
-/*½ø¶ÓÁĞ*/
+/*è¿›é˜Ÿåˆ—*/
 void Push(LinkQueue *Q,DataType x)
 {
-/*½«ÔªËØx²åÈëÁ´¶ÓÁĞÎ²²¿*/
-	QueueNode *p=(QueueNode *)malloc(sizeof(QueueNode));/*ÉêÇëĞÂ½áµã*/
+/*å°†å…ƒç´ xæ’å…¥é“¾é˜Ÿåˆ—å°¾éƒ¨*/
+	QueueNode *p=(QueueNode *)malloc(sizeof(QueueNode));/*ç”³è¯·æ–°ç»“ç‚¹*/
 	p->data=x;
 	p->next=NULL;
     if(IsEmpty(Q))
-		Q->front=Q->rear=p;  /*½«x²åÈë¿Õ¶ÓÁĞ*/
+		Q->front=Q->rear=p;  /*å°†xæ’å…¥ç©ºé˜Ÿåˆ—*/
 	else 
-	{ /*x²åÈë·Ç¿Õ¶ÓÁĞµÄÎ²*/
-		Q->rear->next=p;     /*pÁ´µ½Ô­¶ÓÎ²½áµãºó*/
-		Q->rear=p;           /*¶ÓÎ²Ö¸ÕëÖ¸ÏòĞÂµÄÎ²*/
+	{ /*xæ’å…¥éç©ºé˜Ÿåˆ—çš„å°¾*/
+		Q->rear->next=p;     /*pé“¾åˆ°åŸé˜Ÿå°¾ç»“ç‚¹å*/
+		Q->rear=p;           /*é˜Ÿå°¾æŒ‡é’ˆæŒ‡å‘æ–°çš„å°¾*/
 	}
 }
 
-/*³ö¶ÓÁĞ*/
+/*å‡ºé˜Ÿåˆ—*/
 DataType Pop(LinkQueue *Q)
 {
 	DataType x;
 	QueueNode *p;
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁĞÎª¿Õ");/*ÏÂÒç*/
+		printf("é˜Ÿåˆ—ä¸ºç©º");/*ä¸‹æº¢*/
 		exit(1);
 	}
-	p=Q->front;                   /*Ö¸Ïò¶ÔÍ·½áµã*/
-	x=p->data;                    /*±£´æ¶ÔÍ·½áµãµÄÊı¾İ*/
-	Q->front=p->next;             /*½«¶ÔÍ·½áµã´ÓÁ´ÉÏÕªÏÂ*/
-    if(Q->rear==p)/*Ô­¶ÓÖĞÖ»ÓĞÒ»¸ö½áµã£¬É¾È¥ºó¶ÓÁĞ±ä¿Õ£¬´ËÊ±¶ÓÍ·Ö¸ÕëÒÑÎª¿Õ*/
+	p=Q->front;                   /*æŒ‡å‘å¯¹å¤´ç»“ç‚¹*/
+	x=p->data;                    /*ä¿å­˜å¯¹å¤´ç»“ç‚¹çš„æ•°æ®*/
+	Q->front=p->next;             /*å°†å¯¹å¤´ç»“ç‚¹ä»é“¾ä¸Šæ‘˜ä¸‹*/
+    if(Q->rear==p)/*åŸé˜Ÿä¸­åªæœ‰ä¸€ä¸ªç»“ç‚¹ï¼Œåˆ å»åé˜Ÿåˆ—å˜ç©ºï¼Œæ­¤æ—¶é˜Ÿå¤´æŒ‡é’ˆå·²ä¸ºç©º*/
 		Q->rear=NULL;
-	free(p);   /*ÊÍ·Å±»É¾¶ÓÍ·½áµã*/
-	return x;  /*·µ»ØÔ­¶ÓÍ·Êı¾İ*/
+	free(p);   /*é‡Šæ”¾è¢«åˆ é˜Ÿå¤´ç»“ç‚¹*/
+	return x;  /*è¿”å›åŸé˜Ÿå¤´æ•°æ®*/
 }
 
-/* È¡¶ÓÁĞ¶¥ÔªËØ*/
+/* å–é˜Ÿåˆ—é¡¶å…ƒç´ */
 DataType Front(LinkQueue *Q)
 {
 	if(IsEmpty(Q))
 	{
-		printf("¶ÓÁĞÎª¿Õ"); /*ÏÂÒç,ÍË³öÔËĞĞ*/
+		printf("é˜Ÿåˆ—ä¸ºç©º"); /*ä¸‹æº¢,é€€å‡ºè¿è¡Œ*/
 		exit(1);
 	}
 	return Q->front->data;

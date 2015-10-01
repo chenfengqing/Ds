@@ -1,25 +1,25 @@
-#define CHAR /* ×Ö·ûĞÍ */
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#define CHAR /* å­—ç¬¦å‹ */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #define TRUE 1
 #define FALSE 0
 #define OK 1
 #define ERROR 0
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 #ifdef CHAR
   typedef char TElemType;
-  TElemType Nil=' '; /* ×Ö·ûĞÍÒÔ¿Õ¸ñ·ûÎª¿Õ */
+  TElemType Nil=' '; /* å­—ç¬¦å‹ä»¥ç©ºæ ¼ç¬¦ä¸ºç©º */
 #endif
 #ifdef INT
   typedef int TElemType;
-  TElemType Nil=0; /* ÕûĞÍÒÔ0Îª¿Õ */
+  TElemType Nil=0; /* æ•´å‹ä»¥0ä¸ºç©º */
 #endif
  typedef struct BiTNode
 {
   TElemType data;
-  struct BiTNode *lchild,*rchild; /* ×óÓÒº¢×ÓÖ¸Õë */
+  struct BiTNode *lchild,*rchild; /* å·¦å³å­©å­æŒ‡é’ˆ */
 }BiTNode,*BiTree;
-typedef BiTree QElemType; /* Éè¶ÓÁĞÔªËØÎª¶ş²æÊ÷µÄÖ¸ÕëÀàĞÍ */
+typedef BiTree QElemType; /* è®¾é˜Ÿåˆ—å…ƒç´ ä¸ºäºŒå‰æ ‘çš„æŒ‡é’ˆç±»å‹ */
 typedef struct QNode
 {
   QElemType data;
@@ -28,10 +28,10 @@ typedef struct QNode
 
 typedef struct
 {
-  QueuePtr front,rear; /* ¶ÓÍ·¡¢¶ÓÎ²Ö¸Õë */
+  QueuePtr front,rear; /* é˜Ÿå¤´ã€é˜Ÿå°¾æŒ‡é’ˆ */
 }LinkQueue;
 Status InitBiTree(BiTree *T)
-{ /* ²Ù×÷½á¹û: ¹¹Ôì¿Õ¶ş²æÊ÷T */
+{ /* æ“ä½œç»“æœ: æ„é€ ç©ºäºŒå‰æ ‘T */
   *T=NULL;
   return OK;
 }
@@ -44,51 +44,51 @@ void CreateBiTree(BiTree *T)
 #ifdef INT
   scanf("%d",&ch);
 #endif
-  if(ch==Nil) /* ¿Õ */
+  if(ch==Nil) /* ç©º */
     *T=NULL;
   else
   {
     *T=(BiTree)malloc(sizeof(BiTNode));
     if(!*T)
       exit(OVERFLOW);
-    (*T)->data=ch; /* Éú³É¸ù½áµã */
-    CreateBiTree(&(*T)->lchild); /* ¹¹Ôì×ó×ÓÊ÷ */
-    CreateBiTree(&(*T)->rchild); /* ¹¹ÔìÓÒ×ÓÊ÷ */
+    (*T)->data=ch; /* ç”Ÿæˆæ ¹ç»“ç‚¹ */
+    CreateBiTree(&(*T)->lchild); /* æ„é€ å·¦å­æ ‘ */
+    CreateBiTree(&(*T)->rchild); /* æ„é€ å³å­æ ‘ */
   }
 }
  TElemType Value(BiTree p)
-{ /* ³õÊ¼Ìõ¼ş: ¶ş²æÊ÷T´æÔÚ£¬pÖ¸ÏòTÖĞÄ³¸ö½áµã */
-  /* ²Ù×÷½á¹û: ·µ»ØpËùÖ¸½áµãµÄÖµ */
+{ /* åˆå§‹æ¡ä»¶: äºŒå‰æ ‘Tå­˜åœ¨ï¼ŒpæŒ‡å‘Tä¸­æŸä¸ªç»“ç‚¹ */
+  /* æ“ä½œç»“æœ: è¿”å›pæ‰€æŒ‡ç»“ç‚¹çš„å€¼ */
   return p->data;
 }
 
 void Assign(BiTree p,TElemType value)
-{ /* ¸øpËùÖ¸½áµã¸³ÖµÎªvalue */
+{ /* ç»™pæ‰€æŒ‡ç»“ç‚¹èµ‹å€¼ä¸ºvalue */
   p->data=value;
 }
  BiTree Point(BiTree T,TElemType s)
-{ /* ·µ»Ø¶ş²æÊ÷TÖĞÖ¸ÏòÔªËØÖµÎªsµÄ½áµãµÄÖ¸Õë¡£Áí¼Ó */
+{ /* è¿”å›äºŒå‰æ ‘Tä¸­æŒ‡å‘å…ƒç´ å€¼ä¸ºsçš„ç»“ç‚¹çš„æŒ‡é’ˆã€‚å¦åŠ  */
   LinkQueue q;
   QElemType a;
-  if(T) /* ·Ç¿ÕÊ÷ */
+  if(T) /* éç©ºæ ‘ */
   {
-    InitQueue(&q); /* ³õÊ¼»¯¶ÓÁĞ */
-    EnQueue(&q,T); /* ¸ù½áµãÈë¶Ó */
-    while(!QueueEmpty(q)) /* ¶Ó²»¿Õ */
+    InitQueue(&q); /* åˆå§‹åŒ–é˜Ÿåˆ— */
+    EnQueue(&q,T); /* æ ¹ç»“ç‚¹å…¥é˜Ÿ */
+    while(!QueueEmpty(q)) /* é˜Ÿä¸ç©º */
     {
-      DeQueue(&q,&a); /* ³ö¶Ó,¶ÓÁĞÔªËØ¸³¸øa */
+      DeQueue(&q,&a); /* å‡ºé˜Ÿ,é˜Ÿåˆ—å…ƒç´ èµ‹ç»™a */
       if(a->data==s)
         return a;
-      if(a->lchild) /* ÓĞ×óº¢×Ó */
-        EnQueue(&q,a->lchild); /* Èë¶Ó×óº¢×Ó */
-      if(a->rchild) /* ÓĞÓÒº¢×Ó */
-        EnQueue(&q,a->rchild); /* Èë¶ÓÓÒº¢×Ó */
+      if(a->lchild) /* æœ‰å·¦å­©å­ */
+        EnQueue(&q,a->lchild); /* å…¥é˜Ÿå·¦å­©å­ */
+      if(a->rchild) /* æœ‰å³å­©å­ */
+        EnQueue(&q,a->rchild); /* å…¥é˜Ÿå³å­©å­ */
     }
   }
   return NULL;
 }
 Status InitQueue(LinkQueue *Q)
-{ /* ¹¹ÔìÒ»¸ö¿Õ¶ÓÁĞQ */
+{ /* æ„é€ ä¸€ä¸ªç©ºé˜Ÿåˆ—Q */
   (*Q).front=(*Q).rear=(QueuePtr)malloc(sizeof(QNode));
   if(!(*Q).front)
     exit(OVERFLOW);
@@ -96,16 +96,16 @@ Status InitQueue(LinkQueue *Q)
   return OK;
 }
  Status QueueEmpty(LinkQueue Q)
-{ /* ÈôQÎª¿Õ¶ÓÁĞ,Ôò·µ»ØTRUE,·ñÔò·µ»ØFALSE */
+{ /* è‹¥Qä¸ºç©ºé˜Ÿåˆ—,åˆ™è¿”å›TRUE,å¦åˆ™è¿”å›FALSE */
   if(Q.front==Q.rear)
     return TRUE;
   else
     return FALSE;
 }
 Status EnQueue(LinkQueue *Q,QElemType e)
-{ /* ²åÈëÔªËØeÎªQµÄĞÂµÄ¶ÓÎ²ÔªËØ */
+{ /* æ’å…¥å…ƒç´ eä¸ºQçš„æ–°çš„é˜Ÿå°¾å…ƒç´  */
   QueuePtr p=(QueuePtr)malloc(sizeof(QNode));
-  if(!p) /* ´æ´¢·ÖÅäÊ§°Ü */
+  if(!p) /* å­˜å‚¨åˆ†é…å¤±è´¥ */
     exit(OVERFLOW);
   p->data=e;
   p->next=NULL;
@@ -114,7 +114,7 @@ Status EnQueue(LinkQueue *Q,QElemType e)
   return OK;
 }
 Status DeQueue(LinkQueue *Q,QElemType *e)
-{ /* Èô¶ÓÁĞ²»¿Õ,É¾³ıQµÄ¶ÓÍ·ÔªËØ,ÓÃe·µ»ØÆäÖµ,²¢·µ»ØOK,·ñÔò·µ»ØERROR */
+{ /* è‹¥é˜Ÿåˆ—ä¸ç©º,åˆ é™¤Qçš„é˜Ÿå¤´å…ƒç´ ,ç”¨eè¿”å›å…¶å€¼,å¹¶è¿”å›OK,å¦åˆ™è¿”å›ERROR */
   QueuePtr p;
   if((*Q).front==(*Q).rear)
     return ERROR;
@@ -128,8 +128,8 @@ Status DeQueue(LinkQueue *Q,QElemType *e)
 }
 
 void LevelOrderTraverse(BiTree T,Status(*Visit)(TElemType))
-{ /* ³õÊ¼Ìõ¼ş£º¶ş²æÊ÷T´æÔÚ,VisitÊÇ¶Ô½áµã²Ù×÷µÄÓ¦ÓÃº¯Êı */
-  /* ²Ù×÷½á¹û£º²ãĞòµİ¹é±éÀúT(ÀûÓÃ¶ÓÁĞ),¶ÔÃ¿¸ö½áµãµ÷ÓÃº¯ÊıVisitÒ»´ÎÇÒ½öÒ»´Î */
+{ /* åˆå§‹æ¡ä»¶ï¼šäºŒå‰æ ‘Tå­˜åœ¨,Visitæ˜¯å¯¹ç»“ç‚¹æ“ä½œçš„åº”ç”¨å‡½æ•° */
+  /* æ“ä½œç»“æœï¼šå±‚åºé€’å½’éå†T(åˆ©ç”¨é˜Ÿåˆ—),å¯¹æ¯ä¸ªç»“ç‚¹è°ƒç”¨å‡½æ•°Visitä¸€æ¬¡ä¸”ä»…ä¸€æ¬¡ */
   LinkQueue q;
   QElemType a;
   if(T)
@@ -164,27 +164,27 @@ void main()
   TElemType e1,e2;
   InitBiTree(&T);
    #ifdef CHAR
-  printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:abÈı¸ö¿Õ¸ñ±íÊ¾aÎª¸ù½áµã,bÎª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+  printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:abä¸‰ä¸ªç©ºæ ¼è¡¨ç¤ºaä¸ºæ ¹ç»“ç‚¹,bä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
 #endif
 #ifdef INT
-  printf("ÇëÏÈĞòÊäÈë¶ş²æÊ÷(Èç:1 2 0 0 0±íÊ¾1Îª¸ù½áµã,2Îª×ó×ÓÊ÷µÄ¶ş²æÊ÷)\n");
+  printf("è¯·å…ˆåºè¾“å…¥äºŒå‰æ ‘(å¦‚:1 2 0 0 0è¡¨ç¤º1ä¸ºæ ¹ç»“ç‚¹,2ä¸ºå·¦å­æ ‘çš„äºŒå‰æ ‘)\n");
 #endif
   CreateBiTree(&T);
-  printf("ÇëÊäÈëÒ»¸ö½áµãµÄÖµ: ");
+  printf("è¯·è¾“å…¥ä¸€ä¸ªç»“ç‚¹çš„å€¼: ");
 #ifdef CHAR
   scanf("%*c%c",&e1);
 #endif
 #ifdef INT
   scanf("%d",&e1);
 #endif
-  p=Point(T,e1); /* pÎªe1µÄÖ¸Õë */
+  p=Point(T,e1); /* pä¸ºe1çš„æŒ‡é’ˆ */
 #ifdef CHAR
-  printf("½áµãµÄÖµÎª%c\n",Value(p));
+  printf("ç»“ç‚¹çš„å€¼ä¸º%c\n",Value(p));
 #endif
 #ifdef INT
-  printf("½áµãµÄÖµÎª%d\n",Value(p));
+  printf("ç»“ç‚¹çš„å€¼ä¸º%d\n",Value(p));
 #endif
-  printf("Óû¸Ä±ä´Ë½áµãµÄÖµ£¬ÇëÊäÈëĞÂÖµ: ");
+  printf("æ¬²æ”¹å˜æ­¤ç»“ç‚¹çš„å€¼ï¼Œè¯·è¾“å…¥æ–°å€¼: ");
 #ifdef CHAR
   scanf("%*c%c%*c",&e2);
 #endif
@@ -192,6 +192,6 @@ void main()
   scanf("%d",&e2);
 #endif
   Assign(p,e2);
-  printf("²ã´Î±éÀú¶ş²æÊ÷:\n");
+  printf("å±‚æ¬¡éå†äºŒå‰æ ‘:\n");
   LevelOrderTraverse(T,visitT);
 }

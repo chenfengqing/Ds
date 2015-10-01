@@ -1,15 +1,15 @@
 #include "stdio.h"
 #define n 3
 #define m 3
-void Get_Saddle(int A[m][n])/*Çó¾ØÕóAÖĞµÄÂí°°µã*/
+void Get_Saddle(int A[m][n])/*æ±‚çŸ©é˜µAä¸­çš„é©¬éç‚¹*/
 {
   	int i,j,flag,min,k;
 	for(i=0;i<m;i++)
   	{
     		for(min=A[i][0],j=0;j<n;j++)
-      		if(A[i][j]<min) min=A[i][j]; /*ÇóÒ»ĞĞÖĞµÄ×îĞ¡Öµ*/
+      		if(A[i][j]<min) min=A[i][j]; /*æ±‚ä¸€è¡Œä¸­çš„æœ€å°å€¼*/
     			for(j=0;j<n;j++)
-      		if(A[i][j]==min) /*ÅĞ¶ÏÕâ¸ö(Ğ©)×îĞ¡ÖµÊÇ·ñ°°µã*/
+      		if(A[i][j]==min) /*åˆ¤æ–­è¿™ä¸ª(äº›)æœ€å°å€¼æ˜¯å¦éç‚¹*/
       		{
         		for(flag=1,k=0;k<m;k++)
          			 if(min<A[k][j]) flag=0;
@@ -22,6 +22,6 @@ void Get_Saddle(int A[m][n])/*Çó¾ØÕóAÖĞµÄÂí°°µã*/
 void main()
 {
 	int A[m][n]={1,2,3,4,5,6,7,8,9};
-	/*³õÊ¼»¯A[n] */
+	/*åˆå§‹åŒ–A[n] */
 	Get_Saddle(A);
 }

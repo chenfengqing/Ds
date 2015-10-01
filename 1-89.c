@@ -1,49 +1,49 @@
 #include<stdio.h>
 #define N 8
-#define MAXSIZE 20 /* Ò»¸öÓÃ×÷Ê¾ÀıµÄĞ¡Ë³Ğò±íµÄ×î´ó³¤¶È */
-typedef int InfoType; /* ¶¨ÒåÆäËüÊı¾İÏîµÄÀàĞÍ */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàĞÍÎªÕûĞÍ */
+#define MAXSIZE 20 /* ä¸€ä¸ªç”¨ä½œç¤ºä¾‹çš„å°é¡ºåºè¡¨çš„æœ€å¤§é•¿åº¦ */
+typedef int InfoType; /* å®šä¹‰å…¶å®ƒæ•°æ®é¡¹çš„ç±»å‹ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»å‹ä¸ºæ•´å‹ */
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊı¾İÏî£¬¾ßÌåÀàĞÍÔÚÖ÷³ÌÖĞ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàĞÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»å‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»å‹ */
 typedef struct
 {
-  RedType r[MAXSIZE+1]; /* r[0]ÏĞÖÃ»òÓÃ×÷ÉÚ±øµ¥Ôª */
-  int length; /* Ë³Ğò±í³¤¶È */
-}SqList; /* Ë³Ğò±íÀàĞÍ */
+  RedType r[MAXSIZE+1]; /* r[0]é—²ç½®æˆ–ç”¨ä½œå“¨å…µå•å…ƒ */
+  int length; /* é¡ºåºè¡¨é•¿åº¦ */
+}SqList; /* é¡ºåºè¡¨ç±»å‹ */
 #define LT(a,b) ((a)<(b))
-typedef SqList HeapType; /* ¶Ñ²ÉÓÃË³Ğò±í´æ´¢±íÊ¾ */
+typedef SqList HeapType; /* å †é‡‡ç”¨é¡ºåºè¡¨å­˜å‚¨è¡¨ç¤º */
 void HeapAdjust(HeapType *H,int s,int m) 
-{ /* ÒÑÖªH.r[s..m]ÖĞ¼ÇÂ¼µÄ¹Ø¼ü×Ö³ıH.r[s].keyÖ®Íâ¾ùÂú×ã¶ÑµÄ¶¨Òå£¬±¾º¯Êı */
-  /* µ÷ÕûH.r[s]µÄ¹Ø¼ü×Ö,Ê¹H.r[s..m]³ÉÎªÒ»¸ö´ó¶¥¶Ñ(¶ÔÆäÖĞ¼ÇÂ¼µÄ¹Ø¼ü×Ö¶øÑÔ) */
+{ /* å·²çŸ¥H.r[s..m]ä¸­è®°å½•çš„å…³é”®å­—é™¤H.r[s].keyä¹‹å¤–å‡æ»¡è¶³å †çš„å®šä¹‰ï¼Œæœ¬å‡½æ•° */
+  /* è°ƒæ•´H.r[s]çš„å…³é”®å­—,ä½¿H.r[s..m]æˆä¸ºä¸€ä¸ªå¤§é¡¶å †(å¯¹å…¶ä¸­è®°å½•çš„å…³é”®å­—è€Œè¨€) */
   RedType rc;
   int j;
   rc=(*H).r[s];
   for(j=2*s;j<=m;j*=2)
-  { /* ÑØkey½Ï´óµÄº¢×Ó½áµãÏòÏÂÉ¸Ñ¡ */
+  { /* æ²¿keyè¾ƒå¤§çš„å­©å­ç»“ç‚¹å‘ä¸‹ç­›é€‰ */
     if(j<m&&LT((*H).r[j].key,(*H).r[j+1].key))
-      ++j; /* jÎªkey½Ï´óµÄ¼ÇÂ¼µÄÏÂ±ê */
+      ++j; /* jä¸ºkeyè¾ƒå¤§çš„è®°å½•çš„ä¸‹æ ‡ */
     if(!LT(rc.key,(*H).r[j].key))
-      break; /* rcÓ¦²åÈëÔÚÎ»ÖÃsÉÏ */
+      break; /* rcåº”æ’å…¥åœ¨ä½ç½®sä¸Š */
     (*H).r[s]=(*H).r[j];
     s=j;
   }
-  (*H).r[s]=rc; /* ²åÈë */
+  (*H).r[s]=rc; /* æ’å…¥ */
 }
 void HeapSort(HeapType *H)
-{ /* ¶ÔË³Ğò±íH½øĞĞ¶ÑÅÅĞò¡£*/
+{ /* å¯¹é¡ºåºè¡¨Hè¿›è¡Œå †æ’åºã€‚*/
   RedType t;
   int i;
-  for(i=(*H).length/2;i>0;--i) /* °ÑH.r[1..H.length]½¨³É´ó¶¥¶Ñ */
+  for(i=(*H).length/2;i>0;--i) /* æŠŠH.r[1..H.length]å»ºæˆå¤§é¡¶å † */
     HeapAdjust(H,i,(*H).length);
   for(i=(*H).length;i>1;--i)
-  { /* ½«¶Ñ¶¥¼ÇÂ¼ºÍµ±Ç°Î´¾­ÅÅĞò×ÓĞòÁĞH.r[1..i]ÖĞ×îºóÒ»¸ö¼ÇÂ¼Ïà»¥½»»» */
+  { /* å°†å †é¡¶è®°å½•å’Œå½“å‰æœªç»æ’åºå­åºåˆ—H.r[1..i]ä¸­æœ€åä¸€ä¸ªè®°å½•ç›¸äº’äº¤æ¢ */
     t=(*H).r[1];
     (*H).r[1]=(*H).r[i];
     (*H).r[i]=t;
-    HeapAdjust(H,1,i-1); /* ½«H.r[1..i-1]ÖØĞÂµ÷ÕûÎª´ó¶¥¶Ñ */
+    HeapAdjust(H,1,i-1); /* å°†H.r[1..i-1]é‡æ–°è°ƒæ•´ä¸ºå¤§é¡¶å † */
   }
 }
 void print(HeapType H)
@@ -61,9 +61,9 @@ void main()
   for(i=0;i<N;i++)
     h.r[i+1]=d[i];
   h.length=N;
-  printf("ÅÅĞòÇ°:\n");
+  printf("æ’åºå‰:\n");
   print(h);
   HeapSort(&h);
-  printf("ÅÅĞòºó:\n");
+  printf("æ’åºå:\n");
   print(h);
 }

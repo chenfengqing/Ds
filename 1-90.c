@@ -1,50 +1,50 @@
 #include<stdio.h>
 #define N 7
 #define LQ(a,b) ((a)<=(b))
-#define MAXSIZE 20 /* Ò»¸öÓÃ×÷Ê¾ÀýµÄÐ¡Ë³Ðò±íµÄ×î´ó³¤¶È */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàÐÍÎªÕûÐÍ */
-typedef int InfoType; /* ¶¨ÒåÆäËüÊý¾ÝÏîµÄÀàÐÍ */
+#define MAXSIZE 20 /* ä¸€ä¸ªç”¨ä½œç¤ºä¾‹çš„å°é¡ºåºè¡¨çš„æœ€å¤§é•¿åº¦ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»åž‹ä¸ºæ•´åž‹ */
+typedef int InfoType; /* å®šä¹‰å…¶å®ƒæ•°æ®é¡¹çš„ç±»åž‹ */
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊý¾ÝÏî£¬¾ßÌåÀàÐÍÔÚÖ÷³ÌÖÐ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàÐÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»åž‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»åž‹ */
 typedef struct
 {
-  RedType r[MAXSIZE+1]; /* r[0]ÏÐÖÃ»òÓÃ×÷ÉÚ±øµ¥Ôª */
-  int length; /* Ë³Ðò±í³¤¶È */
-}SqList; /* Ë³Ðò±íÀàÐÍ */
+  RedType r[MAXSIZE+1]; /* r[0]é—²ç½®æˆ–ç”¨ä½œå“¨å…µå•å…ƒ */
+  int length; /* é¡ºåºè¡¨é•¿åº¦ */
+}SqList; /* é¡ºåºè¡¨ç±»åž‹ */
 void Merge(RedType SR[],RedType TR[],int i,int m,int n)
-{ /* ½«ÓÐÐòµÄSR[i..m]ºÍSR[m+1..n]¹é²¢ÎªÓÐÐòµÄTR[i..n] */
+{ /* å°†æœ‰åºçš„SR[i..m]å’ŒSR[m+1..n]å½’å¹¶ä¸ºæœ‰åºçš„TR[i..n] */
   int j,k,l;
-  for(j=m+1,k=i;i<=m&&j<=n;++k) /* ½«SRÖÐ¼ÇÂ¼ÓÉÐ¡µ½´óµØ²¢ÈëTR */
+  for(j=m+1,k=i;i<=m&&j<=n;++k) /* å°†SRä¸­è®°å½•ç”±å°åˆ°å¤§åœ°å¹¶å…¥TR */
     if LQ(SR[i].key,SR[j].key)
       TR[k]=SR[i++];
     else
       TR[k]=SR[j++];
   if(i<=m)
     for(l=0;l<=m-i;l++)
-      TR[k+l]=SR[i+l]; /* ½«Ê£ÓàµÄSR[i..m]¸´ÖÆµ½TR */
+      TR[k+l]=SR[i+l]; /* å°†å‰©ä½™çš„SR[i..m]å¤åˆ¶åˆ°TR */
   if(j<=n)
     for(l=0;l<=n-j;l++)
-      TR[k+l]=SR[j+l]; /* ½«Ê£ÓàµÄSR[j..n]¸´ÖÆµ½TR */
+      TR[k+l]=SR[j+l]; /* å°†å‰©ä½™çš„SR[j..n]å¤åˆ¶åˆ°TR */
 }
 void MSort(RedType SR[],RedType TR1[],int s, int t)
-{ /* ½«SR[s..t]¹é²¢ÅÅÐòÎªTR1[s..t]¡£*/
+{ /* å°†SR[s..t]å½’å¹¶æŽ’åºä¸ºTR1[s..t]ã€‚*/
   int m;
   RedType TR2[MAXSIZE+1];
   if(s==t)
     TR1[s]=SR[s];
   else
   {
-    m=(s+t)/2; /* ½«SR[s..t]Æ½·ÖÎªSR[s..m]ºÍSR[m+1..t] */
-    MSort(SR,TR2,s,m); /* µÝ¹éµØ½«SR[s..m]¹é²¢ÎªÓÐÐòµÄTR2[s..m] */
-    MSort(SR,TR2,m+1,t); /* µÝ¹éµØ½«SR[m+1..t]¹é²¢ÎªÓÐÐòµÄTR2[m+1..t] */
-    Merge(TR2,TR1,s,m,t); /* ½«TR2[s..m]ºÍTR2[m+1..t]¹é²¢µ½TR1[s..t] */
+    m=(s+t)/2; /* å°†SR[s..t]å¹³åˆ†ä¸ºSR[s..m]å’ŒSR[m+1..t] */
+    MSort(SR,TR2,s,m); /* é€’å½’åœ°å°†SR[s..m]å½’å¹¶ä¸ºæœ‰åºçš„TR2[s..m] */
+    MSort(SR,TR2,m+1,t); /* é€’å½’åœ°å°†SR[m+1..t]å½’å¹¶ä¸ºæœ‰åºçš„TR2[m+1..t] */
+    Merge(TR2,TR1,s,m,t); /* å°†TR2[s..m]å’ŒTR2[m+1..t]å½’å¹¶åˆ°TR1[s..t] */
   }
 }
 void MergeSort(SqList *L)
-{ /* ¶ÔË³Ðò±íL×÷¹é²¢ÅÅÐò¡£*/
+{ /* å¯¹é¡ºåºè¡¨Lä½œå½’å¹¶æŽ’åºã€‚*/
   MSort((*L).r,(*L).r,1,(*L).length);
 }
 void print(SqList L)
@@ -62,9 +62,9 @@ void main()
   for(i=0;i<N;i++)
     l.r[i+1]=d[i];
   l.length=N;
-  printf("ÅÅÐòÇ°:\n");
+  printf("æŽ’åºå‰:\n");
   print(l);
   MergeSort(&l);
-  printf("ÅÅÐòºó:\n");
+  printf("æŽ’åºåŽ:\n");
   print(l);
 }

@@ -1,51 +1,51 @@
 #include<stdio.h>
 #define N 8
-#define MAXSIZE 20 /* Ò»¸öÓÃ×÷Ê¾ÀýµÄÐ¡Ë³Ðò±íµÄ×î´ó³¤¶È */
-typedef int KeyType; /* ¶¨Òå¹Ø¼ü×ÖÀàÐÍÎªÕûÐÍ */
+#define MAXSIZE 20 /* ä¸€ä¸ªç”¨ä½œç¤ºä¾‹çš„å°é¡ºåºè¡¨çš„æœ€å¤§é•¿åº¦ */
+typedef int KeyType; /* å®šä¹‰å…³é”®å­—ç±»åž‹ä¸ºæ•´åž‹ */
 typedef int InfoType;
 typedef struct
 {
-  KeyType key; /* ¹Ø¼ü×ÖÏî */
-  InfoType otherinfo; /* ÆäËüÊý¾ÝÏî£¬¾ßÌåÀàÐÍÔÚÖ÷³ÌÖÐ¶¨Òå */
-}RedType; /* ¼ÇÂ¼ÀàÐÍ */
+  KeyType key; /* å…³é”®å­—é¡¹ */
+  InfoType otherinfo; /* å…¶å®ƒæ•°æ®é¡¹ï¼Œå…·ä½“ç±»åž‹åœ¨ä¸»ç¨‹ä¸­å®šä¹‰ */
+}RedType; /* è®°å½•ç±»åž‹ */
 typedef struct
 {
-  RedType r[MAXSIZE+1]; /* r[0]ÏÐÖÃ»òÓÃ×÷ÉÚ±øµ¥Ôª */
-  int length; /* Ë³Ðò±í³¤¶È */
-}SqList; /* Ë³Ðò±íÀàÐÍ */
+  RedType r[MAXSIZE+1]; /* r[0]é—²ç½®æˆ–ç”¨ä½œå“¨å…µå•å…ƒ */
+  int length; /* é¡ºåºè¡¨é•¿åº¦ */
+}SqList; /* é¡ºåºè¡¨ç±»åž‹ */
 int Partition(SqList *L,int low,int high)
-{ /* ½»»»Ë³Ðò±íLÖÐ×Ó±íL.r[low..high]µÄ¼ÇÂ¼£¬Ê¹ÊàÖá¼ÇÂ¼µ½Î»£¬ */
-  /* ²¢·µ»ØÆäËùÔÚÎ»ÖÃ£¬´ËÊ±ÔÚËüÖ®Ç°(ºó)µÄ¼ÇÂ¼¾ù²»´ó(Ð¡)ÓÚËü¡£*/
+{ /* äº¤æ¢é¡ºåºè¡¨Lä¸­å­è¡¨L.r[low..high]çš„è®°å½•ï¼Œä½¿æž¢è½´è®°å½•åˆ°ä½ï¼Œ */
+  /* å¹¶è¿”å›žå…¶æ‰€åœ¨ä½ç½®ï¼Œæ­¤æ—¶åœ¨å®ƒä¹‹å‰(åŽ)çš„è®°å½•å‡ä¸å¤§(å°)äºŽå®ƒã€‚*/
   RedType t;
   KeyType pivotkey;
-  pivotkey=(*L).r[low].key; /* ÓÃ×Ó±íµÄµÚÒ»¸ö¼ÇÂ¼×÷ÊàÖá¼ÇÂ¼ */
+  pivotkey=(*L).r[low].key; /* ç”¨å­è¡¨çš„ç¬¬ä¸€ä¸ªè®°å½•ä½œæž¢è½´è®°å½• */
   while(low<high)
-  { /* ´Ó±íµÄÁ½¶Ë½»ÌæµØÏòÖÐ¼äÉ¨Ãè */
+  { /* ä»Žè¡¨çš„ä¸¤ç«¯äº¤æ›¿åœ°å‘ä¸­é—´æ‰«æ */
     while(low<high&&(*L).r[high].key>=pivotkey)
       --high;
-    t=(*L).r[low]; /* ½«±ÈÊàÖá¼ÇÂ¼Ð¡µÄ¼ÇÂ¼½»»»µ½µÍ¶Ë */
+    t=(*L).r[low]; /* å°†æ¯”æž¢è½´è®°å½•å°çš„è®°å½•äº¤æ¢åˆ°ä½Žç«¯ */
     (*L).r[low]=(*L).r[high];
     (*L).r[high]=t;
     while(low<high&&(*L).r[low].key<=pivotkey)
       ++low;
-    t=(*L).r[low]; /* ½«±ÈÊàÖá¼ÇÂ¼´óµÄ¼ÇÂ¼½»»»µ½¸ß¶Ë */
+    t=(*L).r[low]; /* å°†æ¯”æž¢è½´è®°å½•å¤§çš„è®°å½•äº¤æ¢åˆ°é«˜ç«¯ */
     (*L).r[low]=(*L).r[high];
     (*L).r[high]=t;
   }
-  return low; /* ·µ»ØÊàÖáËùÔÚÎ»ÖÃ */
+  return low; /* è¿”å›žæž¢è½´æ‰€åœ¨ä½ç½® */
 }
 void QSort(SqList *L,int low,int high)
-{ /* ¶ÔË³Ðò±íLÖÐµÄ×ÓÐòÁÐL.r[low..high]×÷¿ìËÙÅÅÐò¡£*/
+{ /* å¯¹é¡ºåºè¡¨Lä¸­çš„å­åºåˆ—L.r[low..high]ä½œå¿«é€ŸæŽ’åºã€‚*/
   int pivotloc;
   if(low<high)
-  { /* ³¤¶È´óÓÚ1 */
-    pivotloc=Partition(L,low,high); /* ½«L.r[low..high]Ò»·ÖÎª¶þ */
-    QSort(L,low,pivotloc-1); /* ¶ÔµÍ×Ó±íµÝ¹éÅÅÐò£¬pivotlocÊÇÊàÖáÎ»ÖÃ */
-    QSort(L,pivotloc+1,high); /* ¶Ô¸ß×Ó±íµÝ¹éÅÅÐò */
+  { /* é•¿åº¦å¤§äºŽ1 */
+    pivotloc=Partition(L,low,high); /* å°†L.r[low..high]ä¸€åˆ†ä¸ºäºŒ */
+    QSort(L,low,pivotloc-1); /* å¯¹ä½Žå­è¡¨é€’å½’æŽ’åºï¼Œpivotlocæ˜¯æž¢è½´ä½ç½® */
+    QSort(L,pivotloc+1,high); /* å¯¹é«˜å­è¡¨é€’å½’æŽ’åº */
   }
 }
 void QuickSort(SqList *L)
-{ /* ¶ÔË³Ðò±íL×÷¿ìËÙÅÅÐò¡£*/
+{ /* å¯¹é¡ºåºè¡¨Lä½œå¿«é€ŸæŽ’åºã€‚*/
   QSort(L,1,(*L).length);
 }
 void print(SqList L)
@@ -63,9 +63,9 @@ void main()
   for(i=0;i<N;i++)
     l.r[i+1]=d[i];
   l.length=N;
-  printf("ÅÅÐòÇ°:\n");
+  printf("æŽ’åºå‰:\n");
   print(l);
   QuickSort(&l);
-  printf("ÅÅÐòºó:\n");
+  printf("æŽ’åºåŽ:\n");
   print(l);
 }

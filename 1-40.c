@@ -9,29 +9,29 @@ stack *  creat(void)
       char ch;
       stack *  head;
       stack *p;
-      head=NULL;/*³õÊ¼»¯Îª¿Õ*/
+      head=NULL;/*åˆå§‹åŒ–ä¸ºç©º*/
       ch=getchar( );
       while (ch!='\n'){
-           p=(stack*)malloc(sizeof(stack));/*·ÖÅä¿Õ¼ä*/
-           p->data=ch;/*Êý¾ÝÓò¸³Öµ*/
-           p->next=head;/*Ö¸¶¨ºó¼ÌÖ¸Õë*/
-		   head=p;/*headÖ¸ÕëÖ¸¶¨µ½ÐÂ²åÈëµÄ½áµãÉÏ*/
+           p=(stack*)malloc(sizeof(stack));/*åˆ†é…ç©ºé—´*/
+           p->data=ch;/*æ•°æ®åŸŸèµ‹å€¼*/
+           p->next=head;/*æŒ‡å®šåŽç»§æŒ‡é’ˆ*/
+		   head=p;/*headæŒ‡é’ˆæŒ‡å®šåˆ°æ–°æ’å…¥çš„ç»“ç‚¹ä¸Š*/
        	   ch=getchar( );
       }
       return (head);
 }
-void MakeNull(stack *s)/*Ê¹Õ»sÎª¿Õ*/
+void MakeNull(stack *s)/*ä½¿æ ˆsä¸ºç©º*/
 {
 		stack *p=s;
 		while(s!=NULL){
 			s=s->next;
-			free(p);/*ÊÍ·Å¿Õ¼ä*/
+			free(p);/*é‡Šæ”¾ç©ºé—´*/
 			p=s;
 		}
 }
 datatype Top(stack *s)
 {
-	if(Empty(s))/*sÎª¿ÕÕ»£¬Ö±½ÓÌø³ö£¬ÌáÊ¾³ö´íÐÅÏ¢*/
+	if(Empty(s))/*sä¸ºç©ºæ ˆï¼Œç›´æŽ¥è·³å‡ºï¼Œæç¤ºå‡ºé”™ä¿¡æ¯*/
 		printf("The stack is empty.");
 	else
 		return s->data;
@@ -39,12 +39,12 @@ datatype Top(stack *s)
 void Pop(stack *s)
 {
 		stack *p;
-		if(Empty(s)) /*sÎª¿ÕÕ»£¬Ö±½ÓÌø³ö£¬ÌáÊ¾³ö´íÐÅÏ¢*/
+		if(Empty(s)) /*sä¸ºç©ºæ ˆï¼Œç›´æŽ¥è·³å‡ºï¼Œæç¤ºå‡ºé”™ä¿¡æ¯*/
 			printf("The stack is empty.");
 		else{
 			p=s;
 			s=s->next;
-			free(p);/*ÊÍ·ÅÕ»¶¥¿Õ¼ä*/
+			free(p);/*é‡Šæ”¾æ ˆé¡¶ç©ºé—´*/
 		}
 }
 void Push(stack *s,datatype x)

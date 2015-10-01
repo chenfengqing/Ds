@@ -1,22 +1,22 @@
-#include<stdio.h> /* EOF(=^Z»òF6),NULL */
+#include<stdio.h> /* EOF(=^Zæˆ–F6),NULL */
 #include<math.h> /* floor(),ceil(),abs() */
 #include<stdarg.h>
 #define OK 1
 #define ERROR 0
 #define MAX_ARRAY_DIM 8
 typedef int ElemType;
-typedef int Status; /* StatusÊÇº¯ÊıµÄÀàĞÍ,ÆäÖµÊÇº¯Êı½á¹û×´Ì¬´úÂë£¬ÈçOKµÈ */
+typedef int Status; /* Statusæ˜¯å‡½æ•°çš„ç±»å‹,å…¶å€¼æ˜¯å‡½æ•°ç»“æœçŠ¶æ€ä»£ç ï¼Œå¦‚OKç­‰ */
 typedef struct
 {
-  ElemType *base; /* Êı×éÔªËØ»ùÖ·£¬ÓÉInitArray·ÖÅä */
-  int dim; /* Êı×éÎ¬Êı */
-  int *bounds; /* Êı×éÎ¬½ç»ùÖ·£¬ÓÉInitArray·ÖÅä */
-  int *constants; /* Êı×éÓ³Ïóº¯Êı³£Á¿»ùÖ·£¬ÓÉInitArray·ÖÅä */
+  ElemType *base; /* æ•°ç»„å…ƒç´ åŸºå€ï¼Œç”±InitArrayåˆ†é… */
+  int dim; /* æ•°ç»„ç»´æ•° */
+  int *bounds; /* æ•°ç»„ç»´ç•ŒåŸºå€ï¼Œç”±InitArrayåˆ†é… */
+  int *constants; /* æ•°ç»„æ˜ è±¡å‡½æ•°å¸¸é‡åŸºå€ï¼Œç”±InitArrayåˆ†é… */
 }Array;
-/* Ë³Ğò´æ´¢Êı×éµÄ»ù±¾²Ù×÷*/
+/* é¡ºåºå­˜å‚¨æ•°ç»„çš„åŸºæœ¬æ“ä½œ*/
 Status InitArray(Array *A,int dim,...)
-{ /* ÈôÎ¬ÊıdimºÍ¸÷Î¬³¤¶ÈºÏ·¨£¬Ôò¹¹ÔìÏàÓ¦µÄÊı×éA£¬²¢·µ»ØOK */
-  int elemtotal=1,i; /* elemtotalÊÇÔªËØ×ÜÖµ */
+{ /* è‹¥ç»´æ•°dimå’Œå„ç»´é•¿åº¦åˆæ³•ï¼Œåˆ™æ„é€ ç›¸åº”çš„æ•°ç»„Aï¼Œå¹¶è¿”å›OK */
+  int elemtotal=1,i; /* elemtotalæ˜¯å…ƒç´ æ€»å€¼ */
   va_list ap;
   if(dim<1||dim>MAX_ARRAY_DIM)
     return ERROR;
@@ -29,7 +29,7 @@ Status InitArray(Array *A,int dim,...)
   {
     (*A).bounds[i]=va_arg(ap,int);
     if((*A).bounds[i]<0)
-      return UNDERFLOW; /* ÔÚmath.hÖĞ¶¨ÒåÎª4 */
+      return UNDERFLOW; /* åœ¨math.hä¸­å®šä¹‰ä¸º4 */
     elemtotal*=(*A).bounds[i];
   }
   va_end(ap);
@@ -45,7 +45,7 @@ Status InitArray(Array *A,int dim,...)
   return OK;
 }
 Status DestroyArray(Array *A)
-{ /* Ïú»ÙÊı×éA */
+{ /* é”€æ¯æ•°ç»„A */
   if((*A).base)
   {
     free((*A).base);
@@ -69,8 +69,8 @@ Status DestroyArray(Array *A)
     return ERROR;
   return OK;
 }
-Status Locate(Array A,va_list ap,int *off) /* Value()¡¢Assign()µ÷ÓÃ´Ëº¯Êı */
-{ /* ÈôapÖ¸Ê¾µÄ¸÷ÏÂ±êÖµºÏ·¨£¬ÔòÇó³ö¸ÃÔªËØÔÚAÖĞµÄÏà¶ÔµØÖ·off */
+Status Locate(Array A,va_list ap,int *off) /* Value()ã€Assign()è°ƒç”¨æ­¤å‡½æ•° */
+{ /* è‹¥apæŒ‡ç¤ºçš„å„ä¸‹æ ‡å€¼åˆæ³•ï¼Œåˆ™æ±‚å‡ºè¯¥å…ƒç´ åœ¨Aä¸­çš„ç›¸å¯¹åœ°å€off */
   int i,ind;
   *off=0;
   for(i=0;i<A.dim;i++)
@@ -83,23 +83,23 @@ Status Locate(Array A,va_list ap,int *off) /* Value()¡¢Assign()µ÷ÓÃ´Ëº¯Êı */
   return OK;
 }
 Status Value(ElemType *e,Array A,...)
-{ /* ...ÒÀ´ÎÎª¸÷Î¬µÄÏÂ±êÖµ£¬Èô¸÷ÏÂ±êºÏ·¨£¬Ôòe±»¸³ÖµÎªAµÄÏàÓ¦µÄÔªËØÖµ */
+{ /* ...ä¾æ¬¡ä¸ºå„ç»´çš„ä¸‹æ ‡å€¼ï¼Œè‹¥å„ä¸‹æ ‡åˆæ³•ï¼Œåˆ™eè¢«èµ‹å€¼ä¸ºAçš„ç›¸åº”çš„å…ƒç´ å€¼ */
   va_list ap;
   Status result;
   int off;
   va_start(ap,A);
-  if((result=Locate(A,ap,&off))==OVERFLOW) /* µ÷ÓÃLocate() */
+  if((result=Locate(A,ap,&off))==OVERFLOW) /* è°ƒç”¨Locate() */
     return result;
   *e=*(A.base+off);
   return OK;
 }
 Status Assign(Array *A,ElemType e,...)
-{ /* ...ÒÀ´ÎÎª¸÷Î¬µÄÏÂ±êÖµ£¬Èô¸÷ÏÂ±êºÏ·¨£¬Ôò½«eµÄÖµ¸³¸øAµÄÖ¸¶¨µÄÔªËØ */
+{ /* ...ä¾æ¬¡ä¸ºå„ç»´çš„ä¸‹æ ‡å€¼ï¼Œè‹¥å„ä¸‹æ ‡åˆæ³•ï¼Œåˆ™å°†eçš„å€¼èµ‹ç»™Açš„æŒ‡å®šçš„å…ƒç´  */
   va_list ap;
   Status result;
   int off;
   va_start(ap,e);
-  if((result=Locate(*A,ap,&off))==OVERFLOW) /* µ÷ÓÃLocate() */
+  if((result=Locate(*A,ap,&off))==OVERFLOW) /* è°ƒç”¨Locate() */
     return result;
   *((*A).base+off)=e;
   return OK;
@@ -107,27 +107,27 @@ Status Assign(Array *A,ElemType e,...)
 void main()
 {
   Array A;
-  int i,j,k,*p,dim=3,bound1=3,bound2=4,bound3=2; /* a[3][4][2]Êı×é */
+  int i,j,k,*p,dim=3,bound1=3,bound2=4,bound3=2; /* a[3][4][2]æ•°ç»„ */
   ElemType e,*p1;
-  InitArray(&A,dim,bound1,bound2,bound3); /* ¹¹Ôì3£ª4£ª2µÄ3Î¬Êı×éA */
+  InitArray(&A,dim,bound1,bound2,bound3); /* æ„é€ 3ï¼Š4ï¼Š2çš„3ç»´æ•°ç»„A */
   p=A.bounds;
   printf("A.bounds=");
-  for(i=0;i<dim;i++) /* Ë³ĞòÊä³öA.bounds */
+  for(i=0;i<dim;i++) /* é¡ºåºè¾“å‡ºA.bounds */
     printf("%d ",*(p+i));
   p=A.constants;
   printf("\nA.constants=");
-  for(i=0;i<dim;i++) /* Ë³ĞòÊä³öA.constants */
+  for(i=0;i<dim;i++) /* é¡ºåºè¾“å‡ºA.constants */
     printf("%d ",*(p+i));
-  printf("\n%dÒ³%dĞĞ%dÁĞ¾ØÕóÔªËØÈçÏÂ:\n",bound1,bound2,bound3);
+  printf("\n%dé¡µ%dè¡Œ%dåˆ—çŸ©é˜µå…ƒç´ å¦‚ä¸‹:\n",bound1,bound2,bound3);
   for(i=0;i<bound1;i++)
   {
     for(j=0;j<bound2;j++)
     {
       for(k=0;k<bound3;k++)
       {
-        Assign(&A,i*100+j*10+k,i,j,k); /* ½«i*100+j*10+k¸³Öµ¸øA[i][j][k] */
-        Value(&e,A,i,j,k); /* ½«A[i][j][k]µÄÖµ¸³¸øe */
-        printf("A[%d][%d][%d]=%2d ",i,j,k,e); /* Êä³öA[i][j][k] */
+        Assign(&A,i*100+j*10+k,i,j,k); /* å°†i*100+j*10+kèµ‹å€¼ç»™A[i][j][k] */
+        Value(&e,A,i,j,k); /* å°†A[i][j][k]çš„å€¼èµ‹ç»™e */
+        printf("A[%d][%d][%d]=%2d ",i,j,k,e); /* è¾“å‡ºA[i][j][k] */
       }
       printf("\n");
     }
@@ -135,7 +135,7 @@ void main()
   }
   p1=A.base;
   printf("A.base=\n");
-  for(i=0;i<bound1*bound2*bound3;i++) /* Ë³ĞòÊä³öA.base */
+  for(i=0;i<bound1*bound2*bound3;i++) /* é¡ºåºè¾“å‡ºA.base */
   {
     printf("%4d",*(p1+i));
     if(i%(bound2*bound3)==bound2*bound3-1)

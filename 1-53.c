@@ -1,5 +1,5 @@
 #include "stdio.h"
-#define MAX_SIZE  50   /* ×î´óµÄÏ¡Êè¾ØÕó */
+#define MAX_SIZE  50   /* æœ€å¤§çš„ç¨€ç–çŸ©é˜µ */
 typedef enum  {head, entry} tagfield;
 struct entry_node  {
       int  row;
@@ -35,7 +35,7 @@ matrix_pointer Create(void)
     printf("Enter the number of rows, columns and number of nonzero terms: ");
     scanf("%d%d%d",&num_rows,&num_cols,&num_terms);
     num_heads = (num_cols > num_rows) ? num_cols :num_rows;
-		/* ½¨Á¢ÐÂ½áµã */
+		/* å»ºç«‹æ–°ç»“ç‚¹ */
     node = new_node(); 
 	node->tag = entry;
     node->u.entry.row = num_rows;
@@ -56,7 +56,7 @@ matrix_pointer Create(void)
             printf("Enter row, column and value: ");
             scanf("%d%d%d",&row,&col,&value);
             if ( row > current_row ) {
-                /* ×ªµ½rowËùÔÚÐÐÈ¥*/
+                /* è½¬åˆ°rowæ‰€åœ¨è¡ŒåŽ»*/
                 last->right = hdnode[current_row];
                 current_row = row; 
 				last = hdnode[row];
@@ -68,16 +68,16 @@ matrix_pointer Create(void)
             temp->u.entry.value = value;
 			  last->right = temp;	
             last = temp;
-			/*Á´½Óµ½ÁÐ½áµãÉÏ */
+			/*é“¾æŽ¥åˆ°åˆ—ç»“ç‚¹ä¸Š */
             hdnode[col]->u.next->down = temp;  
             hdnode[col]->u.next = temp;  
         }
-			/* ½áÊøÉÏÒ»ÐÐ½áµã */
+			/* ç»“æŸä¸Šä¸€è¡Œç»“ç‚¹ */
         last->right = hdnode[current_row]; 
-			/*½áÊøËùÓÐÐÐ½áµã*/
+			/*ç»“æŸæ‰€æœ‰è¡Œç»“ç‚¹*/
         for ( i=0; i<num_cols; i++ )
 			hdnode[i]->u.next->down= hdnode[i];  
-			/*Á´½ÓËùÓÐµÄÍ·½áµã */
+			/*é“¾æŽ¥æ‰€æœ‰çš„å¤´ç»“ç‚¹ */
         for ( i=0; i<num_heads-1; i++ )
              hdnode[i]->u.next = hdnode[i+1];
         hdnode[num_heads-1]->u.next = node;

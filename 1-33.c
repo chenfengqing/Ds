@@ -13,7 +13,7 @@ linklist  createlist(int n)
     linklist  head;
 	listnode *p;
     head=NULL;
-    for(i=n;i>0;--i)/*Ö¸¶¨³¤¶ÈÎªn,²åÈë´ÎÊıÊÜÏŞÖÆ*/
+    for(i=n;i>0;--i)/*æŒ‡å®šé•¿åº¦ä¸ºn,æ’å…¥æ¬¡æ•°å—é™åˆ¶*/
 	{
 		p=(listnode*)malloc(sizeof(listnode));
         scanf("%c",&p->data);

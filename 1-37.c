@@ -11,13 +11,13 @@ linklist  createlist(void)
       char ch;
       linklist  head;
       listnode  *p;
-      head=NULL;/*³õÊ¼»¯Îª¿Õ*/
+      head=NULL;/*åˆå§‹åŒ–ä¸ºç©º*/
       ch=getchar( );
       while (ch!='\n'){
-           p=(listnode*)malloc(sizeof(listnode));/*·ÖÅä¿Õ¼ä*/
-           p->data=ch;/*Êı¾İÓò¸³Öµ*/
-           p->next=head;/*Ö¸¶¨ºó¼ÌÖ¸Õë*/
-		   head=p;/*headÖ¸ÕëÖ¸¶¨µ½ĞÂ²åÈëµÄ½áµãÉÏ*/
+           p=(listnode*)malloc(sizeof(listnode));/*åˆ†é…ç©ºé—´*/
+           p->data=ch;/*æ•°æ®åŸŸèµ‹å€¼*/
+           p->next=head;/*æŒ‡å®šåç»§æŒ‡é’ˆ*/
+		   head=p;/*headæŒ‡é’ˆæŒ‡å®šåˆ°æ–°æ’å…¥çš„ç»“ç‚¹ä¸Š*/
        	   ch=getchar( );
       }
       return (head);
